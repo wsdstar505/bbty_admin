@@ -1,5 +1,7 @@
 package com.bbty.service.realm;
 
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -15,8 +17,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bbty.dao.inf.IUserDao;
+import com.bbty.dao.UserDao;
+import com.bbty.dao.UserRoleDao;
 import com.bbty.pojo.User;
+import com.bbty.pojo.UserRole;
 
 /**
  * 自定义的指定Shiro验证用户登录的类
@@ -28,7 +32,10 @@ import com.bbty.pojo.User;
 public class BbtyRealm extends AuthorizingRealm {
 
 	@Autowired
-	private IUserDao userDao;
+	private UserDao userDao;
+	
+	@Autowired
+	private UserRoleDao userRoleDao;
 	
 	/**
 	 * 为当前登录的Subject授予角色和权限
@@ -45,28 +52,17 @@ public class BbtyRealm extends AuthorizingRealm {
 		String currentUsername = (String) super.getAvailablePrincipal(principals);
 
 		// 为当前用户设置角色和权限
-
 		SimpleAuthorizationInfo simpleAuthorInfo = new SimpleAuthorizationInfo();
-
-		if (null != currentUsername && "wsd".equals(currentUsername)) {
-			
-			// 添加一个角色,不是配置意义上的添加,而是证明该用户拥有admin角色
-			simpleAuthorInfo.addRole("normal");
-			// 添加权限
-			simpleAuthorInfo.addStringPermission("admin:manage");
-			System.out.println("已为用户[wsd]赋予了[normal]角色和[admin:manage]权限");
+		//查询用户在数据库中所拥有的角色
+		List<String> roles = userRoleDao.getUserRoleByUserName(currentUsername);
+		if(roles !=null && roles.size() !=0){
+			//添加角色
+			simpleAuthorInfo.addRoles(roles);
 			return simpleAuthorInfo;
-			
-		} else if (null != currentUsername && "翁仕达".equals(currentUsername)) {
-			
-			System.out.println("当前用户[翁仕达]无授权");
-			return simpleAuthorInfo;
-			
 		}
-
-		// 若该方法什么都不做直接返回null的话,就会导致任何用户访问/admin/listUser.jsp时都会自动跳转到unauthorizedUrl指定的地址
-		// 详见applicationContext.xml中的<bean id="shiroFilter">的配置
+		
 		return null;
+		
 	}
 
 	/**

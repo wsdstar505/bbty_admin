@@ -62,7 +62,7 @@ public class LoginController {
 
 			System.out.println("对用户[" + username + "]进行登录验证..验证通过");
 			
-			if (currentUser.hasRole("admin")) {
+			if (currentUser.hasRole("admin") || currentUser.hasRole("normal")) {
 				resultPageURL = "/main/index";
 			} else {
 				throw new UnauthorizedException("没有访问权限");

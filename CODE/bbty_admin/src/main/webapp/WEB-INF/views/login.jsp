@@ -48,7 +48,7 @@
                         <h3 class="panel-title">账户登录</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="<%=contextPath %>/login/toLogin" method="post">
+                        <form role="form" action="<%=contextPath %>/login/toLogin" method="post" >
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="邮箱/用户名/已验证手机号" name="username" type="text" autofocus>
