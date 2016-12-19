@@ -17,16 +17,16 @@
     <title>棒棒体育后台管理系统</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<%=path%>/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=path%>/sb-admin-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="<%=path%>/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="<%=path%>/sb-admin-2/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="<%=path%>/dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="<%=path%>/sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<%=path%>/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=path%>/sb-admin-2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -73,16 +73,16 @@
     </div>
 
     <!-- jQuery -->
-    <script src="<%=path%>/vendor/jquery/jquery.min.js"></script>
+    <script src="<%=path%>/sb-admin-2/vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="<%=path%>/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="<%=path%>/sb-admin-2/vendor/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="<%=path%>/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="<%=path%>/sb-admin-2/vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="<%=path%>/dist/js/sb-admin-2.js"></script>
+    <script src="<%=path%>/sb-admin-2/dist/js/sb-admin-2.js"></script>
 
 	<script type="text/javascript">
 	</script>
