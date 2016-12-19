@@ -17,10 +17,7 @@
     <title>棒棒体育后台管理系统</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="<%=path%>/sb-admin-2/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- MetisMenu CSS -->
-    <link href="<%=path%>/sb-admin-2/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <link href="<%=path%>/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<%=path%>/sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
@@ -73,13 +70,10 @@
     </div>
 
     <!-- jQuery -->
-    <script src="<%=path%>/sb-admin-2/vendor/jquery/jquery.min.js"></script>
+    <script src="<%=path%>/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="<%=path%>/sb-admin-2/vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="<%=path%>/sb-admin-2/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="<%=path%>/bootstrap/js/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="<%=path%>/sb-admin-2/dist/js/sb-admin-2.js"></script>
