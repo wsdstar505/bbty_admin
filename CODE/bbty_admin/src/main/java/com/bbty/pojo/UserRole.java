@@ -17,6 +17,17 @@ public class UserRole implements Serializable{
 	
 	private Long empid;
 	private String roleid;
+	
+	public UserRole() {
+		super();
+	}
+	
+	public UserRole(Long empid, String roleid) {
+		super();
+		this.empid = empid;
+		this.roleid = roleid;
+	}
+
 	public Long getEmpid() {
 		return empid;
 	}

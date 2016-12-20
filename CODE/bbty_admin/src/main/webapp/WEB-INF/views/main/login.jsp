@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%
-	String path = request.getContextPath()+"/resources";
-	String contextPath = request.getContextPath();
-%>
+<%@ include file="/common/common.jsp"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,15 +13,6 @@
     <meta name="author" content="">
 
     <title>棒棒体育后台管理系统</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="<%=path%>/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="<%=path%>/sb-admin-2/dist/css/sb-admin-2.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="<%=path%>/sb-admin-2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,21 +34,21 @@
                         <h3 class="panel-title">账户登录</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="<%=contextPath %>/login/toLogin" method="post" >
+                        <form id="loginForm" role="form" action="<%=contextPath %>/login/login" method="post" >
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="邮箱/用户名/已验证手机号" name="username" type="text" autofocus>
+                                    <input class="form-control" placeholder="用户名" name="username" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="密码" name="password" type="password" value="">
                                 </div>
+                               
                                 <div class="checkbox">
                                     <label>
-                                        <input name="remember" type="checkbox" value="Remember Me">自动登录
+                                        <input name="remember" type="checkbox" value="readMe">自动登录
                                     </label>
                                 </div>
-                                <!-- Change this to a button or input when using this as a form -->
-                                <!-- <a class="btn btn-lg btn-success btn-block" onclick="login();">登录</a> -->
+                                 
                                 <button class="btn btn-lg btn-success btn-block" type="submit">登录</button>
                             </fieldset>
                         </form>
@@ -69,16 +58,41 @@
         </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="<%=path%>/jquery/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<%=path%>/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="<%=path%>/sb-admin-2/dist/js/sb-admin-2.js"></script>
-
 	<script type="text/javascript">
+	 $(function() {
+	    /**
+	     * 下面是进行插件初始化
+	     * 你只需传入相应的键值对
+	     * */
+	    $('#loginForm').bootstrapValidator({
+	            message: 'This value is not valid',
+	            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
+	                valid: 'glyphicon glyphicon-ok',
+	                invalid: 'glyphicon glyphicon-remove',
+	                validating: 'glyphicon glyphicon-refresh'
+	            },
+	            fields: {/*验证*/
+	                username: {/*键名username和input name值对应*/
+	                    message: 'The username is not valid',
+	                    validators: {
+	                        notEmpty: {/*非空提示*/
+	                            message: '用户名不能为空'
+	                        }
+	                    }
+	                },
+	                password: {
+	                    message:'密码无效',
+	                    validators: {
+	                        notEmpty: {
+	                            message: '密码不能为空'
+	                        }
+	                    }
+	                }
+	                
+	            }
+	        });
+	});
+	
 	</script>
 </body>
 

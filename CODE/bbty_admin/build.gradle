@@ -120,7 +120,7 @@ dependencies {
 	providedCompile 'javax.servlet:servlet-api:2.5'
 	
 	//Jackson
-	//compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+	compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 	
 	//Tomcat
 	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",

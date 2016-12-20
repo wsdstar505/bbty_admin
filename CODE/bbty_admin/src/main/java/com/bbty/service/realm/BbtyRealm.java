@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import com.bbty.dao.UserDao;
 import com.bbty.dao.UserRoleDao;
 import com.bbty.pojo.User;
-import com.bbty.pojo.UserRole;
 
 /**
  * 自定义的指定Shiro验证用户登录的类

@@ -19,6 +19,18 @@ public class User implements Serializable{
 	private String username;
 	private String password;
 	
+	
+	public User() {
+		super();
+	}
+
+	public User(Long empid, String username, String password) {
+		super();
+		this.empid = empid;
+		this.username = username;
+		this.password = password;
+	}
+	
 	public Long getEmpid() {
 		return empid;
 	}

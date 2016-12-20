@@ -11,7 +11,6 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -24,7 +23,7 @@ public class LoginController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/toLogin")
+	@RequestMapping(value = "/login")
 	public String login(HttpServletRequest request) throws UnauthorizedException,UnknownAccountException{
 
 		String resultPageURL = "";
@@ -34,16 +33,15 @@ public class LoginController {
 		String password = request.getParameter("password");
 
 		logger.debug("username:" + username + ",password:" + password);
-		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-
-			request.setAttribute("message_login", "用户名或密码不能为空");
-			return resultPageURL;
-
-		}
 
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 
-		token.setRememberMe(true);
+		String readme = request.getParameter("remember");
+		
+		if(readme != null && "readme".equals(readme)){
+			token.setRememberMe(true);
+		}
+		
 
 		// 获取当前的Subject
 		Subject currentUser = SecurityUtils.getSubject();
