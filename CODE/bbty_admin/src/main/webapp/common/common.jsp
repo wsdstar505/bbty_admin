@@ -16,15 +16,18 @@
 
     <!-- Custom Fonts -->
     <link href="<%=path%>/sb-admin-2/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
     <!-- DataTables CSS -->
     <link href="<%=path%>/sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
-
-    <!-- DataTables Responsive CSS -->
-    <link href="<%=path%>/sb-admin-2/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
     
+ 	<link href="<%=path%>/sb-admin-2/vendor/datatables/css/jquery.dataTables.css" rel="stylesheet">
+    <!-- DataTables Responsive CSS -->
+     <link href="<%=path%>/sb-admin-2/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
+     
      <!-- jQuery -->
     <script src="<%=path%>/jquery/jquery.min.js"></script>
+    
+     <!-- jQuery form-->
+    <script src="<%=path%>/jquery/jquery.form.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<%=path%>/bootstrap/js/bootstrap.min.js"></script>
