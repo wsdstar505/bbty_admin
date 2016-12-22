@@ -135,7 +135,7 @@
 						onclick="toAddRole();">新增</button>
 					<button type="button" class="btn btn-primary"
 						onclick="toUptRole();">修改</button>
-					<button type="button" class="btn btn-primary" onclick="toDeleteRoles();">批量删除</button>
+					<button type="button" class="btn btn-danger" onclick="toDeleteRoles();">批量删除</button>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
@@ -233,11 +233,19 @@
 				}, {
 					"data" : "rolename",
 					"title" : "角色名称"
-				},
-					{ "data": null,
-					defaultContent: '<button type="button" class="btn btn-primary" onclick="singleUpt();">修改</button>  <button type="button" class="btn btn-primary" onclick="singleDel();">删除</button>',
-					orderable: false 
 				}
+					
+		         ],
+		         columnDefs: [ {
+		             targets: 2,
+		             data: null,
+		             title : "操作",
+		             orderable: false,
+		             render: function (data, type, row, meta) {
+	                        return '<button type="button" class="btn btn-primary" onclick="singleUpt('+"'" + data.roleid+"'"+ ');">修改</button>' +'&nbsp'+'&nbsp'+'&nbsp'+ '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
+	                    }
+		         }
+		         
 		         ],
 				language : {
 					loadingRecords : "加载中...",
@@ -497,24 +505,29 @@
 	        });
 		}
 		
-		function singleUpt(){
-			var roleTables = $('#roleTables').DataTable();
-	    	var length = roleTables.rows('.selected').data().length;
-	    	/* if(length >1 || length ==0){
-	    		oneRowAlert();
-	    	}else{
-	    		alert('单选修改');
-	    	} */
+		function singleUpt(roleid){
+			var role = {roleid:roleid};
+    		$.ajax({
+    			type : "post",
+                url : "<%=contextPath%>/role/getRoleByRoleId",
+					data : role,
+					dataType : "json",
+					success : function(dataRtn) {
+						var rtnStr = dataRtn.rtn;
+						if (rtnStr == "success") {
+							$("#roleid").val(dataRtn.role.roleid);
+							$("#roleUptid").val(dataRtn.role.roleid);
+							$("#rolename").val(dataRtn.role.rolename);
+							$('#roleUptModal').modal('show');
+						} else {
+							dangerAlert();
+						}
+					}
+				});
 		}
 		
-		function singleDel(){
-			var roleTables = $('#roleTables').DataTable();
-	    	var length = roleTables.rows('.selected').data().length;
-	    	/* if(length >1 || length ==0){
-	    		oneRowAlert();
-	    	}else{
-	    		alert('单选删除');
-	    	} */
+		function singleDel(roleid){
+			$("#confirmDelModal").modal('show');
 		}
 	</script>
 </body>
