@@ -6,7 +6,7 @@
 <html lang="en">
 
 <head>
-    
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,10 +26,27 @@
 	<!-- 警告提示框 -->
 	<div class="alert alert-warning" id="oneRowAlert">请选择一条记录！</div>
 	
+	<!-- 警告提示框 -->
+	<div class="alert alert-warning" id="noRowAlert">请选择记录！</div>
+
+	<div class="modal fade bs-example-modal-sm"  id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-sm">
+    		<div class="modal-content">
+    		<div class="modal-body">
+    			确定要删除选中的角色吗？
+    		</div>
+    		<div class="modal-footer">
+							<button type="button" class="btn btn-primary"
+								onclick="deleteRoles();">确定</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						</div>
+    		</div>
+  		</div>
+  	
+	</div>
+	
 	<!-- 新增角色 -->
-	<div class="modal fade" id="roleModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true"
-		data-backdrop="static">
+	<div class="modal fade" id="roleAddModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -39,7 +56,7 @@
 					<h4 class="modal-title">新增角色</h4>
 				</div>
 				<div class="modal-body">
-					<form id="roleForm" class="form-horizontal" role="form"
+					<form id="roleAddForm" class="form-horizontal" role="form"
 						action="<%=contextPath%>/role/saveRole" method="post">
 						<div class="form-group">
 							<label for="firstname" class="col-sm-2 control-label">角色ID:</label>
@@ -53,12 +70,52 @@
 								<input type="text" class="form-control" name="rolename">
 							</div>
 						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary"
+								onclick="saveRole();">保存</button>
+							<button type="button" class="btn btn-default"
+								onclick="closeModal(1);">关闭</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+	<!-- 修改角色 -->
+	<div class="modal fade" id="roleUptModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">修改角色</h4>
+				</div>
+				<div class="modal-body">
+					<form id="roleUptForm" class="form-horizontal" role="form"
+						action="<%=contextPath%>/role/uptRole" method="post">
+						<div class="form-group">
+							<label for="firstname" class="col-sm-2 control-label">角色ID:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="roleUptid" id="roleUptid" disabled="disabled">
+								<input type="hidden" name="roleid" id="roleid">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">角色名称:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="rolename"
+									id="rolename">
+							</div>
+						</div>
 						<div class="form-group">
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary"
-									onclick="saveRole();">保存</button>
+									onclick="uptRole();">保存</button>
 								<button type="button" class="btn btn-default"
-									onclick="closeModal();">关闭</button>
+									onclick="closeModal(2);">关闭</button>
 							</div>
 						</div>
 					</form>
@@ -76,8 +133,9 @@
 				<div class="panel-body">
 					<button type="button" class="btn btn-primary"
 						onclick="toAddRole();">新增</button>
-					<button type="button" class="btn btn-primary" onclick="toUptRole();">修改</button>
-					<button type="button" class="btn btn-primary">删除</button>
+					<button type="button" class="btn btn-primary"
+						onclick="toUptRole();">修改</button>
+					<button type="button" class="btn btn-primary" onclick="toDeleteRoles();">删除</button>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
@@ -90,15 +148,16 @@
 
 	<script type="text/javascript">
     $(function() {
-    	
     	//隐藏成功提示框
     	$("#successAlert").hide();
     	//隐藏失败提示框
     	$("#dangerAlert").hide();
     	//隐藏警告提示框
     	$("#oneRowAlert").hide();
-    	//表单校验
-    	$('#roleForm').bootstrapValidator({
+    	$("#noRowAlert").hide();
+    	
+    	//新增角色表单校验
+    	$('#roleAddForm').bootstrapValidator({
 	            message: 'This value is not valid',
 	            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
 	                valid: 'glyphicon glyphicon-ok',
@@ -113,7 +172,7 @@
 	                            message: '角色id不能为空'
 	                        },
 	                        remote: {
-	                        	url: '<%=contextPath%>/role/getRoleByRoleId',
+	                        	url: '<%=contextPath%>/role/checkRoleId',
 	                            message: '角色id已存在',//提示消息
 	                            type: 'post'//请求方式
 	                        }
@@ -129,7 +188,35 @@
 	                }
 	            }
 	        });
-    	 
+    	
+      	//修改角色表单校验
+    	$('#roleUptForm').bootstrapValidator({
+	            message: 'This value is not valid',
+	            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
+	                valid: 'glyphicon glyphicon-ok',
+	                invalid: 'glyphicon glyphicon-remove',
+	                validating: 'glyphicon glyphicon-refresh'
+	            },
+	            fields: {/*验证*/
+	            	roleid: {/*键名username和input name值对应*/
+	                    message: '角色id无效',
+	                    validators: {
+	                        notEmpty: {/*非空提示*/
+	                            message: '角色id不能为空'
+	                        }
+	                    }
+	                },
+	                rolename: {
+	                    message:'角色名称无效',
+	                    validators: {
+	                        notEmpty: {
+	                            message: '角色名称不能为空'
+	                        }
+	                    }
+	                }
+	            }
+	        });
+      	
     	//表格初始化
         $('#roleTables').DataTable({
         	pagingType:"full_numbers",//设置分页控件的模式
@@ -174,21 +261,60 @@
     
     //打开新增角色窗口
     function toAddRole(){
-    	$('#roleModal').modal('show');
+    	$('#roleAddModal').modal('show');
     }
     
-    //关闭新增角色窗口
-    function closeModal(){
-    	$('#roleForm').data('bootstrapValidator').resetForm(); 
-    	$('#roleModal').modal('hide');
+  	//关闭角色窗口
+    function closeModal(par){
+  		if(par =="1"){
+  			$("#roleAddModal").modal('hide');
+  		}else if(par =="2"){
+  			$("#roleUptModal").modal('hide');
+  		}else{
+  			$("#confirmDelModal").modal('hide');
+  		}
+    	
+    }
+    
+    function successAlert(){
+    	$("#successAlert").show();
+    	//3秒后关闭提示
+    	setTimeout('$("#successAlert").hide()',3000);
+    }
+    
+    function dangerAlert(){
+    	//失败提示
+    	$("#dangerAlert").show();
+		
+    	//3秒后关闭提示
+    	setTimeout('$("#dangerAlert").hide()',3000);
+    }
+    
+    function oneRowAlert(){
+    	$("#oneRowAlert").show();
+		
+    	//3秒后关闭提示
+    	setTimeout('$("#oneRowAlert").hide()',3000);
+    }
+    
+    function noRowAlert(){
+		$("#noRowAlert").show();
+		
+    	//3秒后关闭提示
+    	setTimeout('$("#noRowAlert").hide()',3000);
+    }
+    
+    function reloadTable(){
+    	var roleTables = $('#roleTables').DataTable();
+    	roleTables.ajax.reload();
     }
     
     //保存新增角色
     function saveRole(){
     	
-    	var roleForm = $('#roleForm');
+    	var roleForm = $('#roleAddForm');
     	//验证表单
-    	var validator = $('#roleForm').data('bootstrapValidator');
+    	var validator = $('#roleAddForm').data('bootstrapValidator');
         
     	if (validator) {
         // 修复记忆的组件不验证
@@ -204,44 +330,32 @@
             data : roleForm.serializeArray(),
             dataType : "json",
             cache : false,
-            success : function call(dataRtn){
+            success : function (dataRtn){
             	var rtnStr = dataRtn.rtn;
             	if(rtnStr == "success"){
             		
             		//清空表单验证
-            		$('#roleForm').data('bootstrapValidator').resetForm(); 
-            		
+            		$('#roleAddForm').data('bootstrapValidator').resetForm(); 
             		//清空表单内容
-            		$('#roleForm').resetForm();
-            		
+            		$('#roleAddForm').resetForm();
             		//关闭窗口
-                	$('#roleModal').modal('hide');
-            		
+                	closeModal(1);
             		//成功提示
-                	$("#successAlert").show();
-            		
-                	//3秒后关闭提示
-                	setTimeout('$("#successAlert").hide()',3000);
-                	
+                	successAlert();
             		//列表刷新
-                	var roleTables=$('#roleTables').DataTable();
-                	roleTables.ajax.reload();
+                	reloadTable();
             		
             	}else{
             		//清空表单验证
-            		$('#roleForm').data('bootstrapValidator').resetForm(); 
+            		$('#roleAddForm').data('bootstrapValidator').resetForm(); 
             		
             		//清空表单内容
-            		$('#roleForm').resetForm();
+            		$('#roleAddForm').resetForm();
             		
             		//关闭窗口
-                	$('#roleModal').modal('hide');
-            		
-            		//失败提示
-                	$("#dangerAlert").show();
-            		
-                	//3秒后关闭提示
-                	setTimeout('$("#dangerAlert").hide()',3000);
+                	closeModal(1);
+            		//成功提示
+                	dangerAlert();
             	}
             }
         });
@@ -253,16 +367,129 @@
     	var roleTables = $('#roleTables').DataTable();
     	var length = roleTables.rows('.selected').data().length;
     	if(length >1 || length ==0){
-    		//成功提示
-        	$("#oneRowAlert").show();
-        	//3秒后关闭提示
-        	setTimeout('$("#oneRowAlert").hide()',3000);
+    		oneRowAlert();
     	}else{
     		var row = roleTables.rows('.selected').data();
-    		//row[0].roleid
-    		
-    	}
+    		var roleid = row[0].roleid;
+    		var role = {roleid:roleid};
+    		$.ajax({
+    			type : "post",
+                url : "<%=contextPath%>/role/getRoleByRoleId",
+					data : role,
+					dataType : "json",
+					success : function(dataRtn) {
+						var rtnStr = dataRtn.rtn;
+						if (rtnStr == "success") {
+							$("#roleid").val(dataRtn.role.roleid);
+							$("#roleUptid").val(dataRtn.role.roleid);
+							$("#rolename").val(dataRtn.role.rolename);
+							$('#roleUptModal').modal('show');
+						} else {
+							dangerAlert();
+						}
+					}
+				});
+			}
+		}
+    
+  //保存修改角色
+    function uptRole(){
+    	
+    	var roleForm = $('#roleUptForm');
+    	//验证表单
+    	var validator = $('#roleUptForm').data('bootstrapValidator');
+        
+    	if (validator) {
+        // 修复记忆的组件不验证
+            validator.validate();
+            if (!validator.isValid()) {
+                return false;
+            }
+        }
+        
+        $.ajax({
+            type : "post",
+            url : roleForm.attr("action"),
+            data : roleForm.serializeArray(),
+            dataType : "json",
+            cache : false,
+            success : function (dataRtn){
+            	var rtnStr = dataRtn.rtn;
+            	if(rtnStr == "success"){
+            		
+            		//清空表单验证
+            		$('#roleUptForm').data('bootstrapValidator').resetForm(); 
+            		//清空表单内容
+            		$('#roleUptForm').resetForm();
+            		//关闭窗口
+                	closeModal(2);
+            		//成功提示
+                	successAlert();
+            		//列表刷新
+                	reloadTable();
+            		
+            	}else{
+            		//清空表单验证
+            		$('#roleUptForm').data('bootstrapValidator').resetForm(); 
+            		
+            		//清空表单内容
+            		$('#roleUptForm').resetForm();
+            		
+            		//关闭窗口
+                	closeModal(2);
+            		//错误提示
+                	dangerAlert();
+            	}
+            }
+        });
+
     }
+  
+  		//批量删除角色
+		function toDeleteRoles() {
+			var roleTables = $('#roleTables').DataTable();
+			var length = roleTables.rows('.selected').data().length;
+			if (length == 0) {
+				noRowAlert();
+			} else {
+				$("#confirmDelModal").modal('show');
+			}
+		}
+
+		function deleteRoles() {
+			var roleTables = $('#roleTables').DataTable();
+			var rows = roleTables.rows('.selected').data();
+			var length = roleTables.rows('.selected').data().length;
+			var rowIdArray = [];
+			for(var i =0; i<length; i++){
+				rowIdArray.push(rows[i].roleid);
+			}
+			
+			$.ajax({
+	            type : "post",
+	            url : "<%=contextPath%>/role/delRole",
+	            data : JSON.stringify(rowIdArray),
+	            contentType:"application/json",
+	            dataType : "json",
+	            cache : false,
+	            success : function (dataRtn){
+	            	var rtnStr = dataRtn.rtn;
+	            	if(rtnStr == "success"){
+	            		//关闭窗口
+	                	closeModal(3);
+	            		//成功提示
+	                	successAlert();
+	            		//列表刷新
+	                	reloadTable();
+	            	}else{
+	            		//关闭窗口
+	                	closeModal(3);
+	            		//错误提示
+	                	dangerAlert();
+	            	}
+	            }
+	        });
+		}
 	</script>
 </body>
 </html>

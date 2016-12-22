@@ -122,6 +122,9 @@ dependencies {
 	//Jackson
 	compile "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
 	
+	//Freemarker
+	compile "org.freemarker:freemarker:2.3.23"
+	
 	//Tomcat
 	tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
            "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",

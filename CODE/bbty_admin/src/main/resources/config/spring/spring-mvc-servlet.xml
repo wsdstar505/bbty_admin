@@ -9,32 +9,29 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- 它背后注册了很多用于解析注解的处理器,其中就包括<context:annotation-config/>配置的注解所使用的处理器 -->  
-    <!-- 所以配置了<context:component-scan base-package="">之后,便无需再配置<context:annotation-config> -->  
+	<!-- 它背后注册了很多用于解析注解的处理器,其中就包括<context:annotation-config/>配置的注解所使用的处理器 -->
+	<!-- 所以配置了<context:component-scan base-package="">之后,便无需再配置<context:annotation-config> -->
 	<!-- 对包中的所有类进行自动扫描，以完成Bean创建和自动依赖注入的功能 -->
 	<!-- 这个必须配置在mvc的xml里面 -->
 	<context:component-scan base-package="com.bbty.*" />
-	
+
 	<!-- 1、当两种标签都没有的时候，框架默认注册的有AnnotationMethodHandlerAdapter这个bean， 所以能够处理@RequestMapping这个注解 
-		 2、只有<mvc:default-servlet-handler/>时 所注册的bean都不能处理@RequestMapping注解，因此无法找到相应的Controller， 
-		进而无法进行访问路径的映射 
-		 3、当两种标签都有的时候， <mvc:annotation-driven/>会注册一个RequestMappingHandlerAdapter的bean， 
+		2、只有<mvc:default-servlet-handler/>时 所注册的bean都不能处理@RequestMapping注解，因此无法找到相应的Controller， 
+		进而无法进行访问路径的映射 3、当两种标签都有的时候， <mvc:annotation-driven/>会注册一个RequestMappingHandlerAdapter的bean， 
 		这个bean能够处理@RequestMapping这个注解 -->
-	<!-- 启用SpringMVC的注解功能,它会自动注册HandlerMapping、HandlerAdapter、ExceptionResolver的相关实例 -->  
-    <mvc:annotation-driven/>  
-    
-	 <!-- 对静态资源文件的访问，交给default servlet handler处理 -->  
+	<!-- 启用SpringMVC的注解功能,它会自动注册HandlerMapping、HandlerAdapter、ExceptionResolver的相关实例 -->
+	<mvc:annotation-driven />
+
+	<!-- 对静态资源文件的访问，交给default servlet handler处理 -->
 	<mvc:default-servlet-handler />
-	
-	<!-- 由于web.xml中设置是：由SpringMVC拦截所有请求,于是在读取静态资源文件的时候就会受到影响(说白了就是读不到) -->  
-    <!-- 经过下面的配置，该标签的作用就是：所有页面中引用"/js/**"的资源，都会从"/resources/js/"里面进行查找 -->  
-    <!-- 我们可以访问http://IP:8080/xxx/js/my.css和http://IP:8080/xxx/resources/js/my.css对比出来 -->
-	<!-- 
-		<mvc:resources mapping="/vendor/**" location="./vendor/" />
-		<mvc:resources mapping="/dist/**" location="./dist/" />
- 	-->
-	
-	<!-- 配置SpringMVC的视图解析器 -->  
+
+	<!-- 由于web.xml中设置是：由SpringMVC拦截所有请求,于是在读取静态资源文件的时候就会受到影响(说白了就是读不到) -->
+	<!-- 经过下面的配置，该标签的作用就是：所有页面中引用"/js/**"的资源，都会从"/resources/js/"里面进行查找 -->
+	<!-- 我们可以访问http://IP:8080/xxx/js/my.css和http://IP:8080/xxx/resources/js/my.css对比出来 -->
+	<!-- <mvc:resources mapping="/vendor/**" location="./vendor/" /> <mvc:resources 
+		mapping="/dist/**" location="./dist/" /> -->
+
+	<!-- 配置SpringMVC的视图解析器 -->
 	<bean id="internalResourceViewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass"
@@ -46,22 +43,54 @@
 		<!-- 后缀 -->
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	<bean  
-        class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">  
-        <property name="messageConverters">  
-            <list>  
-                    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>  
-                <bean  
-                    class="org.springframework.http.converter.StringHttpMessageConverter">  
-                    <property name="supportedMediaTypes">  
-                        <list>  
-                            <value>text/plain; charset=UTF-8</value>  
-                        </list>  
-                    </property>  
-                </bean>  
-            </list>  
-        </property>  
-    </bean>
 
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/plain; charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 设置freeMarker的配置文件路径 -->
+	<bean id="freemarkerConfiguration"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location"
+			value="classpath:config/freemarker/freemarker.properties" />
+	</bean>
+
+	<!-- freeMarker的模板配置 -->
+	<bean id="freemarkerConfig"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="freemarkerSettings" ref="freemarkerConfiguration" />
+	</bean>
+
+	<!-- 配置freeMarker视图解析器 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+		<!--查找对应下所有以jsp结尾的文件 -->
+		<property name="viewNames" value="*.jsp" />
+		<property name="contentType" value="text/html; charset=utf-8" />
+		<property name="cache" value="true" />
+		<property name="prefix" value="" />
+		<property name="suffix" value="" />
+		<property name="order" value="1"></property>
+		<property name="requestContextAttribute" value="rc" />
+	</bean>
+	
 </beans>

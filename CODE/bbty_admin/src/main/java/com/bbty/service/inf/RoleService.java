@@ -11,5 +11,9 @@ public interface RoleService {
 	public void saveRole(Role role);
 
 	public Role getRoleByRoleId(Role role);
+
+	public void uptRole(Role role);
+	
+	public void delRole(String[] roleids);
 	
 }

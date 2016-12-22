@@ -2,6 +2,7 @@ package com.bbty.pojo;
 
 import java.io.Serializable;
 
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,7 @@ public class Role implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Id
 	private String roleid;
 	private String rolename;
 	

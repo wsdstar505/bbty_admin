@@ -30,4 +30,17 @@ public class RoleServiceImpl implements RoleService{
 		return roleDao.selectOne(role);
 	}
 
+	@Override
+	public void uptRole(Role role) {
+		roleDao.updateByPrimaryKey(role);
+	}
+
+	@Override
+	public void delRole(String[] roleids) {
+		for (String roleid : roleids) {
+			roleDao.deleteByPrimaryKey(roleid);
+		}
+		
+	}
+
 }
