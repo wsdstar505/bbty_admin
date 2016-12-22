@@ -135,7 +135,7 @@
 						onclick="toAddRole();">新增</button>
 					<button type="button" class="btn btn-primary"
 						onclick="toUptRole();">修改</button>
-					<button type="button" class="btn btn-primary" onclick="toDeleteRoles();">删除</button>
+					<button type="button" class="btn btn-primary" onclick="toDeleteRoles();">批量删除</button>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
@@ -220,10 +220,10 @@
     	//表格初始化
         $('#roleTables').DataTable({
         	pagingType:"full_numbers",//设置分页控件的模式
-        	searching: false,//datatales的查询框,true:开启;false:关闭
-        	aLengthMenu:[10,20,30],//设置一页展示多少条记录
-        	bLengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
-            responsive: true,//是否需要分页控件,true:需要,false:不需要
+        	searching: true,//datatales的查询框,true:开启;false:关闭
+        	lengthMenu:[10,20,30],//设置一页展示多少条记录
+        	lengthChange: true,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
+        	responsive: true,//是否需要分页控件,true:需要,false:不需要
             ajax: {
                 "url": "<%=contextPath%>/role/getRoleList"
 				},
@@ -233,10 +233,16 @@
 				}, {
 					"data" : "rolename",
 					"title" : "角色名称"
-				} ],
+				},
+					{ "data": null,
+					defaultContent: '<button type="button" class="btn btn-primary" onclick="singleUpt();">修改</button>  <button type="button" class="btn btn-primary" onclick="singleDel();">删除</button>',
+					orderable: false 
+				}
+		         ],
 				language : {
 					loadingRecords : "加载中...",
 					processing : "查询中...",
+					search : "智能搜索:",
 					lengthMenu : "每页显示 _MENU_ 条记录",
 					zeroRecords : "没有找到记录",
 					info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
@@ -489,6 +495,26 @@
 	            	}
 	            }
 	        });
+		}
+		
+		function singleUpt(){
+			var roleTables = $('#roleTables').DataTable();
+	    	var length = roleTables.rows('.selected').data().length;
+	    	/* if(length >1 || length ==0){
+	    		oneRowAlert();
+	    	}else{
+	    		alert('单选修改');
+	    	} */
+		}
+		
+		function singleDel(){
+			var roleTables = $('#roleTables').DataTable();
+	    	var length = roleTables.rows('.selected').data().length;
+	    	/* if(length >1 || length ==0){
+	    		oneRowAlert();
+	    	}else{
+	    		alert('单选删除');
+	    	} */
 		}
 	</script>
 </body>
