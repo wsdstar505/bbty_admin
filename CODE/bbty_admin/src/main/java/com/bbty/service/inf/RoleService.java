@@ -16,4 +16,6 @@ public interface RoleService {
 	
 	public void delRole(String[] roleids);
 	
+	public void uptRoleByExampleSelective(Role role);
+	
 }

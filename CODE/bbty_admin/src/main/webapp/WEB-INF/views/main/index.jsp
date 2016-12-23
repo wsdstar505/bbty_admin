@@ -89,7 +89,7 @@
 								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a href="javascript:void(0);" onclick="toTab('<%=contextPath %>/index/toRoleManager');">角色管理</a></li>
-								<li><a href="#">人员列表</a></li>
+								<li><a href="javascript:void(0);" onclick="toTab('<%=contextPath %>/index/toUserManager');">员工管理</a></li>
 								<li><a href="#">个人信息</a></li>
 							</ul></li>
 					</ul>

@@ -19,18 +19,38 @@ public class Role implements Serializable{
 	@Id
 	private String roleid;
 	private String rolename;
+	private String status;
+	private String remark;
 	
 	public Role() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Role(String roleid, String rolename) {
+	public Role(String roleid, String rolename, String status, String remark) {
 		super();
 		this.roleid = roleid;
 		this.rolename = rolename;
+		this.status = status;
+		this.remark = remark;
 	}
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	public String getRoleid() {
 		return roleid;
 	}

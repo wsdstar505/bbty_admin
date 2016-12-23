@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbty.pojo.Role;
@@ -42,12 +41,17 @@ public class RoleManagerController {
 
 		String rolename = request.getParameter("rolename");
 
-		Role role = new Role(roleid, rolename);
+		String status = request.getParameter("status");
+		
+		String remark = request.getParameter("remark");
+		
+		Role role = new Role(roleid, rolename,status,remark);
 
 		try {
 			roleService.saveRole(role);
 			map.put("rtn", "success");
 		} catch (Exception e) {
+			e.printStackTrace();
 			map.put("rtn", "fail");
 		}
 
@@ -64,10 +68,14 @@ public class RoleManagerController {
 
 		String rolename = request.getParameter("rolename");
 
-		Role role = new Role(roleid, rolename);
+		String status = request.getParameter("status");
+		
+		String remark = request.getParameter("remark");
+		
+		Role role = new Role(roleid, rolename,status,remark);
 
 		try {
-			roleService.uptRole(role);
+			roleService.uptRoleByExampleSelective(role);
 			map.put("rtn", "success");
 		} catch (Exception e) {
 			map.put("rtn", "fail");
@@ -138,6 +146,32 @@ public class RoleManagerController {
 			}
 
 		} catch (Exception e) {
+			map.put("rtn", "fail");
+		}
+
+		return map;
+	}
+	
+	@RequestMapping(value = "/changeRoleStatus")
+	@ResponseBody
+	public Map<String,Object> changeRoleStatus(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String roleid = request.getParameter("roleid");
+		String status = request.getParameter("status");
+		Role role = new Role();
+
+		role.setRoleid(roleid);
+		role.setStatus(status);
+		
+		try {
+			roleService.uptRoleByExampleSelective(role);
+			if (role != null) {
+				map.put("rtn", "success");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
 			map.put("rtn", "fail");
 		}
 

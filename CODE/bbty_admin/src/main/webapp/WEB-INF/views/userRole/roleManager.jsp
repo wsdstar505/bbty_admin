@@ -70,6 +70,23 @@
 								<input type="text" class="form-control" name="rolename">
 							</div>
 						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">角色状态:</label>
+							<div class="col-sm-10">
+							 <label class="radio-inline">
+                             	<input type="radio" name="status" id="statusOpen" value="1" checked>启用
+                             </label>
+                             <label class="radio-inline">
+                             <input type="radio" name="status" id="statusStop" value="0">停用
+                             </label>
+                             </div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">角色备注:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="3" name="remark"></textarea>
+							</div>
+						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary"
 								onclick="saveRole();">保存</button>
@@ -111,6 +128,23 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">角色状态:</label>
+							<div class="col-sm-10">
+							 <label class="radio-inline">
+                             	<input type="radio" name="status" id="statusOpen" value="1">启用
+                             </label>
+                             <label class="radio-inline">
+                             <input type="radio" name="status" id="statusStop" value="0">停用
+                             </label>
+                             </div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">角色备注:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary"
 									onclick="uptRole();">保存</button>
@@ -133,7 +167,7 @@
 				<div class="panel-body">
 					<button type="button" class="btn btn-primary"
 						onclick="toAddRole();">新增</button>
-					<button type="button" class="btn btn-primary"
+					<button type="button" class="btn btn-warning"
 						onclick="toUptRole();">修改</button>
 					<button type="button" class="btn btn-danger" onclick="toDeleteRoles();">批量删除</button>
 				</div>
@@ -233,16 +267,42 @@
 				}, {
 					"data" : "rolename",
 					"title" : "角色名称"
+				},{
+					"data" : "status",
+					"title" : "角色状态",
+					 render: function (data, type, row, meta) {
+						 if(row.status =='1'){
+							 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
+						 }else if (row.status =='0'){
+							 return '<span style="background-color:#888888;color:#fff">已停用</span>';
+						 }
+	                 }
+				},{
+					"data" : "remark",
+					"title" : "角色备注"
 				}
 					
 		         ],
 		         columnDefs: [ {
-		             targets: 2,
+		             targets: 4,
 		             data: null,
 		             title : "操作",
 		             orderable: false,
 		             render: function (data, type, row, meta) {
-	                        return '<button type="button" class="btn btn-primary" onclick="singleUpt('+"'" + data.roleid+"'"+ ');">修改</button>' +'&nbsp'+'&nbsp'+'&nbsp'+ '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
+		            	 if(row.status =='1'){
+		            		 return '<button type="button" class="btn btn-default btn-circle" onclick="stopStatus('+"'" + row.roleid+"'"+ ');"><i class="fa fa-times"></i></button>' 
+							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+							 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
+							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
+						 }else if (row.status =='0'){
+							 return '<button type="button" class="btn btn-success btn-circle" onclick="openStatus('+"'" + row.roleid+"'"+ ');"><i class="fa fa-check"></i></button>' 
+							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+							 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
+							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
+						 }
+	                       
 	                    }
 		         }
 		         
@@ -397,6 +457,12 @@
 							$("#roleid").val(dataRtn.role.roleid);
 							$("#roleUptid").val(dataRtn.role.roleid);
 							$("#rolename").val(dataRtn.role.rolename);
+							$("#remark").val(dataRtn.role.remark);
+							if(dataRtn.role.status=="1"){
+								$("input:radio[value='1']").attr('checked','true');
+							}else if(dataRtn.role.status=="0"){
+								$("input:radio[value='0']").attr('checked','true');
+							}
 							$('#roleUptModal').modal('show');
 						} else {
 							dangerAlert();
@@ -518,6 +584,12 @@
 							$("#roleid").val(dataRtn.role.roleid);
 							$("#roleUptid").val(dataRtn.role.roleid);
 							$("#rolename").val(dataRtn.role.rolename);
+							$("#remark").val(dataRtn.role.remark);
+							if(dataRtn.role.status=="1"){
+								$("input:radio[value='1']").attr('checked','true');
+							}else if(dataRtn.role.status=="0"){
+								$("input:radio[value='0']").attr('checked','true');
+							}
 							$('#roleUptModal').modal('show');
 						} else {
 							dangerAlert();
@@ -528,6 +600,48 @@
 		
 		function singleDel(roleid){
 			$("#confirmDelModal").modal('show');
+		}
+		
+		function stopStatus(roleid){
+			var role = {roleid:roleid,status:"0"};
+    		$.ajax({
+    			type : "post",
+                url : "<%=contextPath%>/role/changeRoleStatus",
+					data : role,
+					dataType : "json",
+					success : function(dataRtn) {
+						var rtnStr = dataRtn.rtn;
+						if (rtnStr == "success") {
+							//成功提示
+		                	successAlert();
+		            		//列表刷新
+		                	reloadTable();
+						} else {
+							dangerAlert();
+						}
+					}
+				});
+		}
+		
+		function openStatus(roleid){
+			var role = {roleid:roleid,status:"1"};
+    		$.ajax({
+    			type : "post",
+                url : "<%=contextPath%>/role/changeRoleStatus",
+					data : role,
+					dataType : "json",
+					success : function(dataRtn) {
+						var rtnStr = dataRtn.rtn;
+						if (rtnStr == "success") {
+							//成功提示
+		                	successAlert();
+		            		//列表刷新
+		                	reloadTable();
+						} else {
+							dangerAlert();
+						}
+					}
+				});
 		}
 	</script>
 </body>

@@ -22,7 +22,7 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public void saveRole(Role role) {
-		roleDao.insert(role);
+		roleDao.insertSelective(role);
 	}
 
 	@Override
@@ -41,6 +41,11 @@ public class RoleServiceImpl implements RoleService{
 			roleDao.deleteByPrimaryKey(roleid);
 		}
 		
+	}
+
+	@Override
+	public void uptRoleByExampleSelective(Role role) {
+		roleDao.updateByPrimaryKeySelective(role);
 	}
 
 }
