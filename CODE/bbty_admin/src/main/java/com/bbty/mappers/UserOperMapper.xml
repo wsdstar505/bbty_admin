@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
-<mapper namespace="com.bbty.dao.UserOperDao" >    
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbty.dao.UserOperDao">
 
-<select id="selectUserOperByUserOper" parameterType="com.bbty.pojo.UserOper" resultType="com.bbty.pojo.UserOper">
-	
-</select>  
+	<!-- 根据UserOper属性多条件关联查询UserOper -->
+	<select id="selectOneByUserOper" parameterType="com.bbty.pojo.UserOper"
+		resultType="com.bbty.pojo.UserOper">
+		SELECT UO.* FROM T_USER_OPER UO,T_USER U WHERE UO.USERID=U.USERID AND UO.STATUS='1' 
+		<if test="userid != null">
+			AND UO.USERID=#{userid}
+		</if>
+		
+	</select>
 
 </mapper>

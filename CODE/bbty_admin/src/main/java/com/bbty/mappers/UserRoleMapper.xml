@@ -2,8 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 <mapper namespace="com.bbty.dao.UserRoleDao" >    
   
-  <select id="getUserRoleByUserName" parameterType="string" resultType="string">
-　　　SELECT T.ROLEID FROM T_USER_ROLE T,T_USER U WHERE T.EMPID=U.EMPID AND U.USERNAME=#{username}
+  <select id="selectAllByUser" parameterType="com.bbty.pojo.User" resultType="com.bbty.pojo.UserRole">
+	SELECT UR.* FROM T_USER_ROLE UR,T_USER U,T_USER_OPER UO WHERE UO.USERID=U.USERID AND U.EMPID=UR.EMPID AND UO.STATUS='1'
+	<if test="userid != null">
+			AND UO.USERID=#{userid}
+	</if>
+	
 　  </select>
 
 </mapper>
