@@ -7,7 +7,6 @@
 	<if test="userid != null">
 			AND UO.USERID=#{userid}
 	</if>
-	
 　  </select>
 
 </mapper>
