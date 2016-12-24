@@ -18,8 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bbty.dao.UserDao;
+import com.bbty.dao.UserOperDao;
 import com.bbty.dao.UserRoleDao;
 import com.bbty.pojo.User;
+import com.bbty.pojo.UserOper;
 
 /**
  * 自定义的指定Shiro验证用户登录的类
@@ -35,6 +37,9 @@ public class BbtyRealm extends AuthorizingRealm {
 	
 	@Autowired
 	private UserRoleDao userRoleDao;
+	
+	@Autowired
+	private UserOperDao userOperDao;
 	
 	/**
 	 * 为当前登录的Subject授予角色和权限
@@ -86,14 +91,17 @@ public class BbtyRealm extends AuthorizingRealm {
 //      }else{  
 //          return null;  
 //      }  
-		User user = new User();
-		user.setUsername(token.getUsername());
-		user = userDao.selectOne(user);
-        //此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息  
+
+		UserOper userOper = new UserOper();
+		userOper.setUserid(token.getUsername());
+        userOper = this.userOperDao.selectUserOperByUserOper(userOper);
+        
+		//此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息  
         //说白了就是第一个参数填登录用户名,第二个参数填合法的登录密码(可以是从数据库中取到的,本例中为了演示就硬编码了)  
         //这样一来,在随后的登录页面上就只有这里指定的用户和密码才能通过验证
 		String password = String.valueOf(token.getPassword());
-		if("wsd".equals(token.getUsername()) && "111".equals(password)){  
+		
+		if(userOper.getUserid().equals(token.getUsername()) && userOper.getPassword().equals(password)){  
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getPrincipal(),token.getCredentials(), this.getName());  
             this.setSession("currentUser",token.getCredentials());  
             return authcInfo;  

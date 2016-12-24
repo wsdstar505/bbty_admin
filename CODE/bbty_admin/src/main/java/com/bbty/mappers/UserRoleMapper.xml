@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>  
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >  
 <mapper namespace="com.bbty.dao.UserRoleDao" >    
-  <resultMap id="userRole" type="com.bbty.pojo.UserRole" >
-  	 <result column="EMPID" property="empid" jdbcType="NUMERIC" />    
-     <result column="ROLEID" property="roleid" jdbcType="VARCHAR" />  
-  </resultMap>
   
   <select id="getUserRoleByUserName" parameterType="string" resultType="string">
 　　　SELECT T.ROLEID FROM T_USER_ROLE T,T_USER U WHERE T.EMPID=U.EMPID AND U.USERNAME=#{username}
-　　</select>
+　  </select>
 
 </mapper>

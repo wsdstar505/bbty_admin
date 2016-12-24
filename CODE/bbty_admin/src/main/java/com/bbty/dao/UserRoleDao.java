@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.mybatis.spring.annotation.MapperScan;
 
-import com.bbty.pojo.UserRole;
-
 @MapperScan
 public interface UserRoleDao {
 
