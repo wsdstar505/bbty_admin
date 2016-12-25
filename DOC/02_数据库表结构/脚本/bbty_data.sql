@@ -1,5 +1,5 @@
 prompt PL/SQL Developer import file
-prompt Created on 2016年12月24日 by 翁仕达
+prompt Created on 2016年12月25日 by wsdstar
 set feedback off
 set define off
 prompt Disabling triggers for T_ROLE...
@@ -28,7 +28,7 @@ values ('admin', '超级管理员', '1', null);
 insert into T_ROLE (roleid, rolename, status, remark)
 values ('normal', '普通员工', '1', null);
 insert into T_ROLE (roleid, rolename, status, remark)
-values ('test01', '测试角色1号', '1', '测试用的');
+values ('test01', '测试角色1号', '0', '测试用的');
 insert into T_ROLE (roleid, rolename, status, remark)
 values ('test02', '测试角色2号', '0', '停用了');
 insert into T_ROLE (roleid, rolename, status, remark)
@@ -36,9 +36,15 @@ values ('test03', '测试角色3号', '0', '哈哈哈');
 commit;
 prompt 5 records loaded
 prompt Loading T_USER...
-prompt Table is empty
+insert into T_USER (empid, userid, username, gender, birthdate, mobileno, htel, haddress, createtime, lastupttime, remark)
+values (1, 'wsd', null, '1', null, null, null, null, null, null, null);
+commit;
+prompt 1 records loaded
 prompt Loading T_USER_OPER...
-prompt Table is empty
+insert into T_USER_OPER (userid, password, status, lastlogin, lastupttime, uptempid)
+values ('wsd', '111', '1', null, null, null);
+commit;
+prompt 1 records loaded
 prompt Loading T_USER_ROLE...
 insert into T_USER_ROLE (empid, roleid)
 values (1, 'admin');

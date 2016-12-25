@@ -1,7 +1,7 @@
--------------------------------------------
--- Export file for user BBTY             --
--- Created by 翁仕达 on 2016/12/24, 9:11:09 --
--------------------------------------------
+------------------------------------------------
+-- Export file for user BBTY                  --
+-- Created by wsdstar on 2016/12/25, 10:58:28 --
+------------------------------------------------
 
 set define off
 spool bbty_table.log
@@ -130,10 +130,9 @@ create table BBTY.T_USER_OPER
   userid      VARCHAR2(30) not null,
   password    VARCHAR2(100) not null,
   status      VARCHAR2(1) not null,
-  lastlogin   VARCHAR2(14) not null,
-  lastupttime VARCHAR2(14) not null,
-  uptempid    NUMBER(10) not null,
-  empid       NUMBER(10) not null
+  lastlogin   VARCHAR2(14),
+  lastupttime VARCHAR2(14),
+  uptempid    NUMBER(10)
 )
 tablespace BBTY
   pctfree 10
@@ -142,6 +141,7 @@ tablespace BBTY
   storage
   (
     initial 64K
+    next 1M
     minextents 1
     maxextents unlimited
   );
@@ -159,15 +159,20 @@ comment on column BBTY.T_USER_OPER.lastupttime
   is '最近更新日期,格式YYYYMMDDHHMMSS';
 comment on column BBTY.T_USER_OPER.uptempid
   is '修改人员';
-comment on column BBTY.T_USER_OPER.empid
-  is '员工号';
 alter table BBTY.T_USER_OPER
   add constraint PK_USER_OPER primary key (USERID)
   using index 
   tablespace BBTYIDX
   pctfree 10
   initrans 2
-  maxtrans 255;
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
 
 prompt
 prompt Creating table T_USER_ROLE
