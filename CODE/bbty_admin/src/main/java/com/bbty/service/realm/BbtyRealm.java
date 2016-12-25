@@ -96,7 +96,7 @@ public class BbtyRealm extends AuthorizingRealm {
 		if(userOper != null){
 			if(userOper.getUserid().equals(token.getUsername()) && userOper.getPassword().equals(password)){  
 	            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getPrincipal(),token.getCredentials(), this.getName());  
-	            this.setSession("currentUser",token.getCredentials());  
+	            this.setSession("currentUser",userOper);  
 	            return authcInfo;  
 	        }
 		}

@@ -3,6 +3,7 @@ package com.bbty.pojo;
 import java.io.Serializable;
 
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@SequenceGenerator(name="Any",sequenceName="SEQ_T_USER")
 	private Long empid;
 	private String userid;
 	private String username;

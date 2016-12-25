@@ -65,6 +65,18 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="password" class="col-sm-2 control-label">密码:</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" name="password">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="repassword" class="col-sm-2 control-label">确认密码:</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" name="repassword">
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="username" class="col-sm-2 control-label">姓名:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="username">
@@ -84,7 +96,7 @@
 						<div class="form-group">
 							<label for="birthdate" class="col-sm-2 control-label">出生日期:</label>
 							<div class="col-sm-6 date form_date ">
-								<input type="text" class="form-control" id="birthdate" name="birthdate">
+								<input type="text" class="form-control" id="birthdate" readonly name="birthdate">
 							</div>
 						</div>
 						<div class="form-group">
@@ -201,6 +213,34 @@
 	                        }
 	                    }
 	                },
+	                password: {
+	                    message:'密码无效',
+	                    validators: {
+	                        notEmpty: {
+	                            message: '密码不能为空'
+	                        },
+	                        different: {//不能和用户名相同
+	                            field: 'userid',//需要进行比较的input name值
+	                            message: '不能和登录名相同'
+	                        }
+	                    }
+	                },
+	                repassword: {
+	                    message: '密码无效',
+	                    validators: {
+	                        notEmpty: {
+	                            message: '密码不能为空'
+	                        },
+	                        identical: {//相同
+	                            field: 'password',
+	                            message: '两次密码不一致'
+	                        },
+	                        different: {//不能和用户名相同
+	                            field: 'userid',
+	                            message: '不能和登录名相同'
+	                        }
+	                    }
+	                }
 	            }
 	        });
     	
@@ -247,10 +287,10 @@
 					"title" : "员工编号"
 				},{
 					"data" : "userid",
-					"title" : "员工登录名"
+					"title" : "登录名"
 				}, {
 					"data" : "username",
-					"title" : "员工姓名"
+					"title" : "姓名"
 				},{
 					"data" : "gender",
 					"title" : "性别",
@@ -273,9 +313,6 @@
 					"data" : "mobileno",
 					"title" : "手机号码"
 				},{
-					"data" : "htel",
-					"title" : "家庭电话"
-				},{
 					"data" : "status",
 					"title" : "员工状态",
 					 render: function (data, type, row, meta) {
@@ -285,14 +322,11 @@
 							 return '<span style="background-color:#888888;color:#fff">已停用</span>';
 						 }
 	                 }
-				},{
-					"data" : "remark",
-					"title" : "员工备注"
 				}
 		         ],
 		         columnDefs: [ 
 		        	 {
-			             targets: 8,
+			             targets: 7,
 			             data: null,
 			             title : "操作",
 			             orderable: false,
@@ -310,7 +344,6 @@
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
 								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.roleid+"'"+ ');">删除</button>';
 							 }
-		                       
 		                    }
 			         }		         
 		         ],
@@ -341,7 +374,7 @@
     	//初始化时间控件
         $('#birthdate').datetimepicker({
             language:  'zh-CN',
-            format: 'yyyy-mm-dd',
+            format: 'yyyymmdd',
             weekStart: 1,
             todayBtn:  1,
     		autoclose: 1,
@@ -383,21 +416,18 @@
     function dangerAlert(){
     	//失败提示
     	$("#dangerAlert").show();
-		
     	//3秒后关闭提示
     	setTimeout('$("#dangerAlert").hide()',3000);
     }
     
     function oneRowAlert(){
     	$("#oneRowAlert").show();
-		
     	//3秒后关闭提示
     	setTimeout('$("#oneRowAlert").hide()',3000);
     }
     
     function noRowAlert(){
 		$("#noRowAlert").show();
-		
     	//3秒后关闭提示
     	setTimeout('$("#noRowAlert").hide()',3000);
     }
