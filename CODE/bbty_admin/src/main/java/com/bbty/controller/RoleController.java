@@ -17,7 +17,7 @@ import com.bbty.service.inf.RoleService;
 
 @Controller
 @RequestMapping(value = "/role")
-public class RoleManagerController {
+public class RoleController {
 
 	@Autowired
 	public RoleService roleService;

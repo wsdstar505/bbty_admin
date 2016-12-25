@@ -23,14 +23,12 @@ public class UserOper implements Serializable{
 	private String lastlogin;
 	private String lastupttime;
 	private Long uptempid;
-	private Long empid;
 	
 	public UserOper() {
 		super();
 	}
 
-	public UserOper(String userid, String password, String status, String lastlogin, String lastupttime, Long uptempid,
-			Long empid) {
+	public UserOper(String userid, String password, String status, String lastlogin, String lastupttime, Long uptempid) {
 		super();
 		this.userid = userid;
 		this.password = password;
@@ -38,7 +36,6 @@ public class UserOper implements Serializable{
 		this.lastlogin = lastlogin;
 		this.lastupttime = lastupttime;
 		this.uptempid = uptempid;
-		this.empid = empid;
 	}
 
 	public String getUserid() {
@@ -89,12 +86,4 @@ public class UserOper implements Serializable{
 		this.uptempid = uptempid;
 	}
 
-	public Long getEmpid() {
-		return empid;
-	}
-
-	public void setEmpid(Long empid) {
-		this.empid = empid;
-	}
-	
 }

@@ -37,7 +37,7 @@
     		</div>
     		<div class="modal-footer">
 							<button type="button" class="btn btn-primary"
-								onclick="deleteRoles();">确定</button>
+								onclick="deleteUsers();">确定</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 						</div>
     		</div>
@@ -46,32 +46,55 @@
 	</div>
 	
 	<!-- 新增员工 -->
-	<div class="modal fade" id="roleAddModal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="userAddModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
-					<h4 class="modal-title">新增角色</h4>
+					<h4 class="modal-title">新增员工</h4>
 				</div>
 				<div class="modal-body">
-					<form id="roleAddForm" class="form-horizontal" role="form"
-						action="<%=contextPath%>/role/saveRole" method="post">
+					<form id="userAddForm" class="form-horizontal" role="form"
+						action="<%=contextPath%>/user/saveUserAndOper" method="post">
 						<div class="form-group">
-							<label for="firstname" class="col-sm-2 control-label">角色ID:</label>
+							<label for="userid" class="col-sm-2 control-label">登录名:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="roleid">
+								<input type="text" class="form-control" name="userid">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色名称:</label>
+							<label for="username" class="col-sm-2 control-label">姓名:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="rolename">
+								<input type="text" class="form-control" name="username">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色状态:</label>
+							<label for="gender" class="col-sm-2 control-label">性别:</label>
+							<div class="col-sm-10">
+							 <label class="radio-inline">
+                             	<input type="radio" name="gender" id="genderOpen" value="1" checked>男
+                             </label>
+                             <label class="radio-inline">
+                             <input type="radio" name="gender" id="genderStop" value="0">女
+                             </label>
+                             </div>
+						</div>
+						<div class="form-group">
+							<label for="birthdate" class="col-sm-2 control-label">出生日期:</label>
+							<div class="col-sm-6 date form_date ">
+								<input type="text" class="form-control" id="birthdate" name="birthdate">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="mobileno" class="col-sm-2 control-label">手机号码:</label>
+							<div class="col-sm-6">
+								<input type="text" class="form-control" name="mobileno">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="status" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
 							 <label class="radio-inline">
                              	<input type="radio" name="status" id="statusOpen" value="1" checked>启用
@@ -82,14 +105,14 @@
                              </div>
 						</div>
 						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色备注:</label>
+							<label for="remark" class="col-sm-2 control-label">备注:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="3" name="remark"></textarea>
 							</div>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary"
-								onclick="saveRole();">保存</button>
+								onclick="saveUserAndOper();">保存</button>
 							<button type="button" class="btn btn-default"
 								onclick="closeModal(1);">关闭</button>
 						</div>
@@ -100,80 +123,21 @@
 		</div>
 	</div>
 
-	<!-- 修改角色 -->
-	<div class="modal fade" id="roleUptModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title">修改角色</h4>
-				</div>
-				<div class="modal-body">
-					<form id="roleUptForm" class="form-horizontal" role="form"
-						action="<%=contextPath%>/role/uptRole" method="post">
-						<div class="form-group">
-							<label for="firstname" class="col-sm-2 control-label">角色ID:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="roleUptid" id="roleUptid" disabled="disabled">
-								<input type="hidden" name="roleid" id="roleid">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色名称:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="rolename"
-									id="rolename">
-							</div>
-						</div>
-						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色状态:</label>
-							<div class="col-sm-10">
-							 <label class="radio-inline">
-                             	<input type="radio" name="status" id="statusOpen" value="1">启用
-                             </label>
-                             <label class="radio-inline">
-                             <input type="radio" name="status" id="statusStop" value="0">停用
-                             </label>
-                             </div>
-						</div>
-						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色备注:</label>
-							<div class="col-sm-10">
-								<textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
-							</div>
-						</div>
-						<div class="form-group">
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary"
-									onclick="uptRole();">保存</button>
-								<button type="button" class="btn btn-default"
-									onclick="closeModal(2);">关闭</button>
-							</div>
-						</div>
-					</form>
-				</div>
-
-			</div>
-		</div>
-	</div>
-
-	<!-- 角色管理列表 -->
+	<!-- 员工管理列表 -->
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">角色管理列表</div>
+				<div class="panel-heading">员工管理列表</div>
 				<div class="panel-body">
 					<button type="button" class="btn btn-primary"
-						onclick="toAddRole();">新增</button>
+						onclick="toAddUser();">新增</button>
 					<button type="button" class="btn btn-warning"
-						onclick="toUptRole();">修改</button>
-					<button type="button" class="btn btn-danger" onclick="toDeleteRoles();">批量删除</button>
+						onclick="toUptUser();">修改</button>
+					<button type="button" class="btn btn-danger" onclick="toDeleteUsers();">批量删除</button>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
-						id="roleTables">
+						id="userTables">
 					</table>
 				</div>
 			</div>
@@ -190,8 +154,8 @@
     	$("#oneRowAlert").hide();
     	$("#noRowAlert").hide();
     	
-    	//新增角色表单校验
-    	$('#roleAddForm').bootstrapValidator({
+    	//新增员工表单校验
+    	$('#userAddForm').bootstrapValidator({
 	            message: 'This value is not valid',
 	            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
 	                valid: 'glyphicon glyphicon-ok',
@@ -199,27 +163,44 @@
 	                validating: 'glyphicon glyphicon-refresh'
 	            },
 	            fields: {/*验证*/
-	            	roleid: {/*键名username和input name值对应*/
-	                    message: '角色id无效',
+	            	userid: {/*键名username和input name值对应*/
+	                    message: '登录名无效',
 	                    validators: {
 	                        notEmpty: {/*非空提示*/
-	                            message: '角色id不能为空'
+	                            message: '登录名不能为空'
 	                        },
 	                        remote: {
-	                        	url: '<%=contextPath%>/role/checkRoleId',
-	                            message: '角色id已存在',//提示消息
+	                        	url: '<%=contextPath%>/user/checkUserId',
+	                            message: '登录名已存在',//提示消息
 	                            type: 'post'//请求方式
 	                        }
 	                    }
 	                },
-	                rolename: {
-	                    message:'角色名称无效',
+	                username: {
+	                    message:'用户 姓名无效',
 	                    validators: {
 	                        notEmpty: {
-	                            message: '角色名称不能为空'
+	                            message: '用户 姓名不能为空'
 	                        }
 	                    }
-	                }
+	                },
+	                mobileno: {
+	                    message: '手机号码无效',
+	                    validators: {
+	                        notEmpty: {
+	                            message: '手机号码不能为空'
+	                        },
+	                        stringLength: {
+	                            min: 11,
+	                            max: 11,
+	                            message: '请输入11位手机号码'
+	                        },
+	                        regexp: {
+	                            regexp: /^1[3|4|5|7|8][0-9]{9}$/,
+	                            message: '请输入正确的手机号码'
+	                        }
+	                    }
+	                },
 	            }
 	        });
     	
@@ -252,24 +233,51 @@
 	        });
       	
     	//表格初始化
-        $('#roleTables').DataTable({
+        $('#userTables').DataTable({
         	pagingType:"full_numbers",//设置分页控件的模式
         	searching: true,//datatales的查询框,true:开启;false:关闭
         	lengthMenu:[10,20,30],//设置一页展示多少条记录
         	lengthChange: true,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
         	responsive: true,//是否需要分页控件,true:需要,false:不需要
             ajax: {
-                "url": "<%=contextPath%>/role/getRoleList"
+                "url": "<%=contextPath%>/user/getUserList"
 				},
 				columns : [ {
-					"data" : "roleid",
-					"title" : "角色ID"
+					"data" : "empid",
+					"title" : "员工编号"
+				},{
+					"data" : "userid",
+					"title" : "员工登录名"
 				}, {
-					"data" : "rolename",
-					"title" : "角色名称"
+					"data" : "username",
+					"title" : "员工姓名"
+				},{
+					"data" : "gender",
+					"title" : "性别",
+					render: function (data, type, row, meta) {
+						 if(row.gender =='1'){
+							 return '<span>男</span>';
+						 }else if (row.status =='0'){
+							 return '<span>女</span>';
+						 }else if (row.status =='2'){
+							 return '<span>保密</span>';
+						 }else{
+							 return '<span></span>';
+						 }
+	                 }
+
+				},{
+					"data" : "birthdate",
+					"title" : "出生日期"
+				},{
+					"data" : "mobileno",
+					"title" : "手机号码"
+				},{
+					"data" : "htel",
+					"title" : "家庭电话"
 				},{
 					"data" : "status",
-					"title" : "角色状态",
+					"title" : "员工状态",
 					 render: function (data, type, row, meta) {
 						 if(row.status =='1'){
 							 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
@@ -279,33 +287,32 @@
 	                 }
 				},{
 					"data" : "remark",
-					"title" : "角色备注"
+					"title" : "员工备注"
 				}
-					
 		         ],
-		         columnDefs: [ {
-		             targets: 4,
-		             data: null,
-		             title : "操作",
-		             orderable: false,
-		             render: function (data, type, row, meta) {
-		            	 if(row.status =='1'){
-		            		 return '<button type="button" class="btn btn-default btn-circle" onclick="stopStatus('+"'" + row.roleid+"'"+ ');"><i class="fa fa-times"></i></button>' 
-							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-							 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
-							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
-						 }else if (row.status =='0'){
-							 return '<button type="button" class="btn btn-success btn-circle" onclick="openStatus('+"'" + row.roleid+"'"+ ');"><i class="fa fa-check"></i></button>' 
-							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-							 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
-							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
-						 }
-	                       
-	                    }
-		         }
-		         
+		         columnDefs: [ 
+		        	 {
+			             targets: 8,
+			             data: null,
+			             title : "操作",
+			             orderable: false,
+			             render: function (data, type, row, meta) {
+			            	 if(row.status =='1'){
+			            		 return '<button type="button" class="btn btn-default btn-circle" onclick="stopStatus('+"'" + row.roleid+"'"+ ');"><i class="fa fa-times"></i></button>' 
+								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
+								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.roleid+"'"+ ');">删除</button>';
+							 }else if (row.status =='0'){
+								 return '<button type="button" class="btn btn-success btn-circle" onclick="openStatus('+"'" + row.roleid+"'"+ ');"><i class="fa fa-check"></i></button>' 
+								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
+								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
+								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.roleid+"'"+ ');">删除</button>';
+							 }
+		                       
+		                    }
+			         }		         
 		         ],
 				language : {
 					loadingRecords : "加载中...",
@@ -331,19 +338,36 @@
             $(this).toggleClass('selected');
         } );
         
+    	//初始化时间控件
+        $('#birthdate').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyy-mm-dd',
+            weekStart: 1,
+            todayBtn:  1,
+    		autoclose: 1,
+    		todayHighlight: 1,
+    		startView: 2,
+    		minView: 2,
+    		forceParse: 0
+        });
+        
 		});
     
-    //打开新增角色窗口
-    function toAddRole(){
-    	$('#roleAddModal').modal('show');
+    //打开新增员工窗口
+    function toAddUser(){
+    	$('#userAddModal').modal('show');
     }
     
-  	//关闭角色窗口
+  	//关闭员工窗口
     function closeModal(par){
   		if(par =="1"){
-  			$("#roleAddModal").modal('hide');
+  			//清空表单验证
+    		$('#userAddForm').data('bootstrapValidator').resetForm(); 
+    		//清空表单内容
+    		$('#userAddForm').resetForm();
+  			$("#userAddModal").modal('hide');
   		}else if(par =="2"){
-  			$("#roleUptModal").modal('hide');
+  			$("#userUptModal").modal('hide');
   		}else{
   			$("#confirmDelModal").modal('hide');
   		}
@@ -379,16 +403,16 @@
     }
     
     function reloadTable(){
-    	var roleTables = $('#roleTables').DataTable();
-    	roleTables.ajax.reload();
+    	var userTables = $('#userTables').DataTable();
+    	userTables.ajax.reload();
     }
     
-    //保存新增角色
-    function saveRole(){
+    //保存新增员工
+    function saveUserAndOper(){
     	
-    	var roleForm = $('#roleAddForm');
+    	var userForm = $('#userAddForm');
     	//验证表单
-    	var validator = $('#roleAddForm').data('bootstrapValidator');
+    	var validator = $('#userAddForm').data('bootstrapValidator');
         
     	if (validator) {
         // 修复记忆的组件不验证
@@ -400,8 +424,8 @@
         
         $.ajax({
             type : "post",
-            url : roleForm.attr("action"),
-            data : roleForm.serializeArray(),
+            url : userForm.attr("action"),
+            data : userForm.serializeArray(),
             dataType : "json",
             cache : false,
             success : function (dataRtn){
@@ -409,9 +433,9 @@
             	if(rtnStr == "success"){
             		
             		//清空表单验证
-            		$('#roleAddForm').data('bootstrapValidator').resetForm(); 
+            		$('#userAddForm').data('bootstrapValidator').resetForm(); 
             		//清空表单内容
-            		$('#roleAddForm').resetForm();
+            		$('#userAddForm').resetForm();
             		//关闭窗口
                 	closeModal(1);
             		//成功提示
@@ -421,10 +445,10 @@
             		
             	}else{
             		//清空表单验证
-            		$('#roleAddForm').data('bootstrapValidator').resetForm(); 
+            		$('#userAddForm').data('bootstrapValidator').resetForm(); 
             		
             		//清空表单内容
-            		$('#roleAddForm').resetForm();
+            		$('#userAddForm').resetForm();
             		
             		//关闭窗口
                 	closeModal(1);

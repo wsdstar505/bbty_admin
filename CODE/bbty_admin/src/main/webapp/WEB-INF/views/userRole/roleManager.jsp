@@ -71,7 +71,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色状态:</label>
+							<label for="lastname" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
 							 <label class="radio-inline">
                              	<input type="radio" name="status" id="statusOpen" value="1" checked>启用
@@ -82,7 +82,7 @@
                              </div>
 						</div>
 						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色备注:</label>
+							<label for="lastname" class="col-sm-2 control-label">备注:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="3" name="remark"></textarea>
 							</div>
@@ -128,7 +128,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色状态:</label>
+							<label for="lastname" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
 							 <label class="radio-inline">
                              	<input type="radio" name="status" id="statusOpen" value="1">启用
@@ -139,7 +139,7 @@
                              </div>
 						</div>
 						<div class="form-group">
-							<label for="lastname" class="col-sm-2 control-label">角色备注:</label>
+							<label for="lastname" class="col-sm-2 control-label">备注:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
 							</div>
@@ -294,13 +294,13 @@
 							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
 							 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
 							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
+							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.roleid+"'"+ ');">删除</button>';
 						 }else if (row.status =='0'){
 							 return '<button type="button" class="btn btn-success btn-circle" onclick="openStatus('+"'" + row.roleid+"'"+ ');"><i class="fa fa-check"></i></button>' 
 							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
 							 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
 							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + data.roleid+"'"+ ');">删除</button>';
+							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.roleid+"'"+ ');">删除</button>';
 						 }
 	                       
 	                    }
@@ -341,8 +341,16 @@
   	//关闭角色窗口
     function closeModal(par){
   		if(par =="1"){
+  			//清空表单验证
+    		$('#roleAddForm').data('bootstrapValidator').resetForm(); 
+    		//清空表单内容
+    		$('#roleAddForm').resetForm();
   			$("#roleAddModal").modal('hide');
   		}else if(par =="2"){
+  			//清空表单验证
+    		$('#roleUptForm').data('bootstrapValidator').resetForm(); 
+    		//清空表单内容
+    		$('#roleUptForm').resetForm();
   			$("#roleUptModal").modal('hide');
   		}else{
   			$("#confirmDelModal").modal('hide');

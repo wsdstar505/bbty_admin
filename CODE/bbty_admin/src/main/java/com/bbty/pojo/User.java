@@ -29,6 +29,8 @@ public class User implements Serializable{
 	private String lastupttime;
 	private String remark;
 	
+	private String status;
+	
 	public User() {
 		super();
 	}
@@ -132,6 +134,14 @@ public class User implements Serializable{
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }
