@@ -1,5 +1,6 @@
 package com.bbty.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,22 @@ public class RoleController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Role> roles = roleService.getRoles();
 		map.put("data", roles);
+		return map;
+	}
+	
+	@RequestMapping(value = "/getRoleJson")
+	@ResponseBody
+	public Map<String, Object> getRoleJson() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Role> roles = roleService.getRoles();
+		List<Map<String, Object>> res = new ArrayList<Map<String, Object>>();
+		for (Role role : roles) {
+			Map<String, Object> remap = new HashMap<String, Object>();
+			remap.put("id", role.getRoleid());
+			remap.put("text", role.getRolename());
+			res.add(remap);
+		}
+		map.put("data", res);
 		return map;
 	}
 

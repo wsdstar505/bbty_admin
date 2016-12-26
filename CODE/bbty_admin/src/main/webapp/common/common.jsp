@@ -24,7 +24,15 @@
     <link href="<%=path%>/sb-admin-2/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
      
     <link href="<%=path%>/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-     
+    
+	<link href="<%=path%>/select2/css/select2.min.css" rel="stylesheet">
+    
+
+
+
+
+
+    
      <!-- jQuery -->
     <script src="<%=path%>/jquery/jquery.min.js"></script>
     
@@ -52,8 +60,10 @@
    <script src="<%=path%>/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
    <script src="<%=path%>/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
    
-   
-   
+
+   <script src="<%=path%>/select2/js/select2.full.min.js"></script>
+   <script src="<%=path%>/select2/js/i18n/zh-CN.js"></script>
+     
    <script type="text/javascript">
    
    </script>

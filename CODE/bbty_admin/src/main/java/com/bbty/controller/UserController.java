@@ -6,21 +6,18 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.bbty.pojo.User;
 import com.bbty.pojo.UserOper;
 import com.bbty.service.inf.UserOperService;
 import com.bbty.service.inf.UserService;
+import com.bbty.session.UserSession;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -72,9 +69,9 @@ public class UserController {
 	@RequestMapping(value = "/saveUserAndOper")
 	@ResponseBody
 	public Map<String, Object> saveUserAndOper(HttpServletRequest request) {
-		Subject sub = SecurityUtils.getSubject();
-		Session session = sub.getSession();
-		UserOper userOper = (UserOper) session.getAttribute("currentUser");
+		Session session = SecurityUtils.getSubject().getSession();
+		UserSession userSession = (UserSession) session.getAttribute("userSession");
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		String userid = request.getParameter("userid");
@@ -106,12 +103,16 @@ public class UserController {
 		user.setRemark(remark);
 		user.setCreatetime(dateStr);
 		user.setLastupttime(dateStr);
+		//htel
+		//haddress
+		
 		
 		UserOper oper = new UserOper();
-		oper.setLastupttime(dateStr);
-		oper.setStatus(status);
 		oper.setUserid(userid);
 		oper.setPassword(password);
+		oper.setStatus(status);
+		oper.setLastupttime(dateStr);
+		oper.setUptempid(userSession.getEmpid());
 		
 		try {
 			userService.saveUser(user);

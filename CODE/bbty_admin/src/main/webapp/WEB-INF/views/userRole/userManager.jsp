@@ -106,6 +106,12 @@
 							</div>
 						</div>
 						<div class="form-group">
+                           <label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
+                           <div class="col-sm-6">
+            				<select id="roleids" style="width: 460px"></select>
+                           </div>
+                        </div>
+						<div class="form-group">
 							<label for="status" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
 							 <label class="radio-inline">
@@ -384,125 +390,153 @@
     		forceParse: 0
         });
         
-		});
-    
-    //打开新增员工窗口
-    function toAddUser(){
-    	$('#userAddModal').modal('show');
-    }
-    
-  	//关闭员工窗口
-    function closeModal(par){
-  		if(par =="1"){
-  			//清空表单验证
-    		$('#userAddForm').data('bootstrapValidator').resetForm(); 
-    		//清空表单内容
-    		$('#userAddForm').resetForm();
-  			$("#userAddModal").modal('hide');
-  		}else if(par =="2"){
-  			$("#userUptModal").modal('hide');
-  		}else{
-  			$("#confirmDelModal").modal('hide');
-  		}
-    	
-    }
-    
-    function successAlert(){
-    	$("#successAlert").show();
-    	//3秒后关闭提示
-    	setTimeout('$("#successAlert").hide()',3000);
-    }
-    
-    function dangerAlert(){
-    	//失败提示
-    	$("#dangerAlert").show();
-    	//3秒后关闭提示
-    	setTimeout('$("#dangerAlert").hide()',3000);
-    }
-    
-    function oneRowAlert(){
-    	$("#oneRowAlert").show();
-    	//3秒后关闭提示
-    	setTimeout('$("#oneRowAlert").hide()',3000);
-    }
-    
-    function noRowAlert(){
-		$("#noRowAlert").show();
-    	//3秒后关闭提示
-    	setTimeout('$("#noRowAlert").hide()',3000);
-    }
-    
-    function reloadTable(){
-    	var userTables = $('#userTables').DataTable();
-    	userTables.ajax.reload();
-    }
-    
-    //保存新增员工
-    function saveUserAndOper(){
-    	
-    	var userForm = $('#userAddForm');
-    	//验证表单
-    	var validator = $('#userAddForm').data('bootstrapValidator');
+       
         
-    	if (validator) {
-        // 修复记忆的组件不验证
-            validator.validate();
-            if (!validator.isValid()) {
-                return false;
-            }
-        }
-        
-        $.ajax({
-            type : "post",
-            url : userForm.attr("action"),
-            data : userForm.serializeArray(),
-            dataType : "json",
-            cache : false,
-            success : function (dataRtn){
-            	var rtnStr = dataRtn.rtn;
-            	if(rtnStr == "success"){
-            		
-            		//清空表单验证
-            		$('#userAddForm').data('bootstrapValidator').resetForm(); 
-            		//清空表单内容
-            		$('#userAddForm').resetForm();
-            		//关闭窗口
-                	closeModal(1);
-            		//成功提示
-                	successAlert();
-            		//列表刷新
-                	reloadTable();
-            		
-            	}else{
-            		//清空表单验证
-            		$('#userAddForm').data('bootstrapValidator').resetForm(); 
-            		
-            		//清空表单内容
-            		$('#userAddForm').resetForm();
-            		
-            		//关闭窗口
-                	closeModal(1);
-            		//成功提示
-                	dangerAlert();
-            	}
-            }
-        });
+		$("#roleids").select2({
+			ajax: {
+			    url: "<%=contextPath%>/role/getRoleJson",
+			    dataType: 'json',
+			    delay: 250,
+			    data: function (params) {
+			      return {
+			        q: params.term,
+			      };
+			    },
+			    processResults: function (data) {
+			      /* return {
+			        results: data
+			      }; */
+			      console.log(data.data);
+			    },
+			    cache: true
+			  },
+			  escapeMarkup: function (markup) { return markup; }, 
+			  minimumInputLength: 1
+			});
 
-    }
-    
-    //打开修改角色窗口
-    function toUptRole(){
-    	var roleTables = $('#roleTables').DataTable();
-    	var length = roleTables.rows('.selected').data().length;
-    	if(length >1 || length ==0){
-    		oneRowAlert();
-    	}else{
-    		var row = roleTables.rows('.selected').data();
-    		var roleid = row[0].roleid;
-    		var role = {roleid:roleid};
-    		$.ajax({
-    			type : "post",
-                url : "<%=contextPath%>/role/getRoleByRoleId",
+		});
+
+		//打开新增员工窗口
+		function toAddUser() {
+			$('#userAddModal').modal('show');
+		}
+
+		//关闭员工窗口
+		function closeModal(par) {
+			if (par == "1") {
+				//清空表单验证
+				$('#userAddForm').data('bootstrapValidator').resetForm();
+				//清空表单内容
+				$('#userAddForm').resetForm();
+				$("#userAddModal").modal('hide');
+			} else if (par == "2") {
+				$("#userUptModal").modal('hide');
+			} else {
+				$("#confirmDelModal").modal('hide');
+			}
+
+		}
+
+		function successAlert() {
+			$("#successAlert").show();
+			//3秒后关闭提示
+			setTimeout('$("#successAlert").hide()', 3000);
+		}
+
+		function dangerAlert() {
+			//失败提示
+			$("#dangerAlert").show();
+			//3秒后关闭提示
+			setTimeout('$("#dangerAlert").hide()', 3000);
+		}
+
+		function oneRowAlert() {
+			$("#oneRowAlert").show();
+			//3秒后关闭提示
+			setTimeout('$("#oneRowAlert").hide()', 3000);
+		}
+
+		function noRowAlert() {
+			$("#noRowAlert").show();
+			//3秒后关闭提示
+			setTimeout('$("#noRowAlert").hide()', 3000);
+		}
+
+		function reloadTable() {
+			var userTables = $('#userTables').DataTable();
+			userTables.ajax.reload();
+		}
+
+		//保存新增员工
+		function saveUserAndOper() {
+
+			var userForm = $('#userAddForm');
+			//验证表单
+			var validator = $('#userAddForm').data('bootstrapValidator');
+
+			if (validator) {
+				// 修复记忆的组件不验证
+				validator.validate();
+				if (!validator.isValid()) {
+					return false;
+				}
+			}
+
+			$.ajax({
+				type : "post",
+				url : userForm.attr("action"),
+				data : userForm.serializeArray(),
+				dataType : "json",
+				cache : false,
+				success : function(dataRtn) {
+					var rtnStr = dataRtn.rtn;
+					if (rtnStr == "success") {
+
+						//清空表单验证
+						$('#userAddForm').data('bootstrapValidator')
+								.resetForm();
+						//清空表单内容
+						$('#userAddForm').resetForm();
+						//关闭窗口
+						closeModal(1);
+						//成功提示
+						successAlert();
+						//列表刷新
+						reloadTable();
+
+					} else {
+						//清空表单验证
+						$('#userAddForm').data('bootstrapValidator')
+								.resetForm();
+
+						//清空表单内容
+						$('#userAddForm').resetForm();
+
+						//关闭窗口
+						closeModal(1);
+						//成功提示
+						dangerAlert();
+					}
+				}
+			});
+
+		}
+
+		//打开修改角色窗口
+		function toUptRole() {
+			var roleTables = $('#roleTables').DataTable();
+			var length = roleTables.rows('.selected').data().length;
+			if (length > 1 || length == 0) {
+				oneRowAlert();
+			} else {
+				var row = roleTables.rows('.selected').data();
+				var roleid = row[0].roleid;
+				var role = {
+					roleid : roleid
+				};
+				$.ajax({
+					type : "post",
+					url : "<%=contextPath%>/role/getRoleByRoleId",
 					data : role,
 					dataType : "json",
 					success : function(dataRtn) {

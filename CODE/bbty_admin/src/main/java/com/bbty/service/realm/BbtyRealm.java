@@ -1,5 +1,6 @@
 package com.bbty.service.realm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
@@ -17,11 +18,13 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bbty.dao.UserDao;
 import com.bbty.dao.UserOperDao;
 import com.bbty.dao.UserRoleDao;
 import com.bbty.pojo.User;
 import com.bbty.pojo.UserOper;
 import com.bbty.pojo.UserRole;
+import com.bbty.session.UserSession;
 
 /**
  * 自定义的指定Shiro验证用户登录的类
@@ -37,6 +40,9 @@ public class BbtyRealm extends AuthorizingRealm {
 	
 	@Autowired
 	private UserOperDao userOperDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	/**
 	 * 为当前登录的Subject授予角色和权限
@@ -81,6 +87,11 @@ public class BbtyRealm extends AuthorizingRealm {
         //实际上这个authcToken是从LoginController里面currentUser.login(token)传过来的  
         //两个token的引用都是一样的
 		
+		//此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息  
+        //说白了就是第一个参数填登录用户名,第二个参数填合法的登录密码(可以是从数据库中取到的,本例中为了演示就硬编码了)  
+        //这样一来,在随后的登录页面上就只有这里指定的用户和密码才能通过验证
+		
+		
 		UsernamePasswordToken token = (UsernamePasswordToken)authcToken; 
 
 		String password = String.valueOf(token.getPassword());
@@ -89,14 +100,35 @@ public class BbtyRealm extends AuthorizingRealm {
 		userOper.setUserid(token.getUsername());
         userOper = this.userOperDao.selectOneByUserOper(userOper);
         
-		//此处无需比对,比对的逻辑Shiro会做,我们只需返回一个和令牌相关的正确的验证信息  
-        //说白了就是第一个参数填登录用户名,第二个参数填合法的登录密码(可以是从数据库中取到的,本例中为了演示就硬编码了)  
-        //这样一来,在随后的登录页面上就只有这里指定的用户和密码才能通过验证
+        User user = new User();
+		user.setUserid(token.getUsername());
+		user = this.userDao.selectOneWithUserOper(user);
 		
-		if(userOper != null){
+		List<UserRole> userRoles = this.userRoleDao.selectAllByUser(user);
+		
+		if(userOper != null && user != null && userRoles.size() !=0){
+			
 			if(userOper.getUserid().equals(token.getUsername()) && userOper.getPassword().equals(password)){  
 	            AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(token.getPrincipal(),token.getCredentials(), this.getName());  
-	            this.setSession("currentUser",userOper);  
+	            UserSession userSession = new UserSession();
+	            userSession.setEmpid(user.getEmpid());
+	            userSession.setUserid(user.getUserid());
+	            userSession.setUsername(user.getUsername());
+	            userSession.setPassword(userOper.getPassword());
+	            userSession.setStatus(userOper.getStatus());
+	            userSession.setGender(user.getGender());
+	            userSession.setBirthdate(user.getBirthdate());
+	            userSession.setMobileno(user.getMobileno());
+	            userSession.setHtel(user.getHtel());
+	            
+	            List<String> roleids = new ArrayList<String>();
+	            for (UserRole userRole : userRoles) {
+					roleids.add(userRole.getRoleid());
+				}
+	            
+	            userSession.setRoleids(roleids);
+	            
+	            this.setSession("userSession",userSession);  
 	            return authcInfo;  
 	        }
 		}
