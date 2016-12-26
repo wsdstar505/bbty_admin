@@ -61,7 +61,7 @@
    <script src="<%=path%>/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
    
 
-   <script src="<%=path%>/select2/js/select2.full.min.js"></script>
+   <script src="<%=path%>/select2/js/select2.js"></script>
    <script src="<%=path%>/select2/js/i18n/zh-CN.js"></script>
      
    <script type="text/javascript">

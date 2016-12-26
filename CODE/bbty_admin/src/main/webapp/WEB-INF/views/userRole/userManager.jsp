@@ -108,7 +108,9 @@
 						<div class="form-group">
                            <label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
                            <div class="col-sm-6">
-            				<select id="roleids" style="width: 460px"></select>
+            				<select id="roleids" style="width: 460px" multiple="multiple" class="form-control">
+            				 <option value="3620194" selected="selected">请选择</option>
+            				</select>
                            </div>
                         </div>
 						<div class="form-group">
@@ -393,29 +395,65 @@
        
         
 		$("#roleids").select2({
+			id : function(rs) {  
+		        return rs.roleid;  
+		    },
+			allowClear: true,
 			ajax: {
-			    url: "<%=contextPath%>/role/getRoleJson",
+			    url: "<%=contextPath%>/role/getRoleList",
 			    dataType: 'json',
 			    delay: 250,
-			    data: function (params) {
-			      return {
-			        q: params.term,
-			      };
-			    },
-			    processResults: function (data) {
-			      /* return {
-			        results: data
-			      }; */
-			      console.log(data.data);
-			    },
-			    cache: true
+			    data: function (params) {  
+	                return {  
+	                    q: params.term, // search term  
+	                    page: params.page  
+	                };  
+	            },
+	            processResults: function (dataRtn, page) {  
+	                    return {  
+	                        results: dataRtn.data  
+	                    };  
+	                },  
+	                cache: true 
 			  },
-			  escapeMarkup: function (markup) { return markup; }, 
-			  minimumInputLength: 1
+			  escapeMarkup: function (markup) {   
+		            return markup;   
+		        }, 
+		      templateResult: formatRepo,   
+		      templateSelection: formatRepoSelection,
+		      selectOnClose: true,
+		      minimumResultsForSearch: Infinity,
+		      closeOnSelect: false,
+		      
 			});
-
+		
 		});
 
+    function formatRepo (repo) {  
+    	if (repo.loading) return repo.text;
+    	 var markup = "<div>"+repo.roleid+"</div>";
+    	 return markup;
+    }  
+      
+    function formatRepoSelection (repo) {
+    	$("#roleids").append("<option value='10001'>Jquery</option>");
+
+    	//alert(repo.id);
+       /*  repo.selected = true;   
+        repo.roleid = repo.id  
+        repo.rolename = repo.text  
+        if(repo.code == null || repo.code == ""){  
+            repo.text = '请选择角色'  
+            repo.rolename = repo.text  
+        }  
+          
+        console.debug(repo);  
+        return repo.roleid ;   */
+    }
+    
+    function can_analyse(){
+    	$("#roleids").empty().append('<option id="'+code+'" value="'+code+'">'+name+'</option>').trigger('change');  
+    }
 		//打开新增员工窗口
 		function toAddUser() {
 			$('#userAddModal').modal('show');
