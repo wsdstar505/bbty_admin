@@ -21,13 +21,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUserByUserId(User user) {
+	public User selectOneWithUserOper(User user) {
 		return userDao.selectOneWithUserOper(user);
 	}
 
 	@Override
 	public void saveUser(User user) {
 		userDao.insertSelective(user);
+	}
+
+	@Override
+	public void deleteUser(User user) {
+		userDao.deleteByPrimaryKey(user.getEmpid());
 	}
 
 }

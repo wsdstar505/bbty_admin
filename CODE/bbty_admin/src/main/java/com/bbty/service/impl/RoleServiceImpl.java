@@ -44,7 +44,7 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public void uptRoleByExampleSelective(Role role) {
+	public void uptRoleBySelective(Role role) {
 		roleDao.updateByPrimaryKeySelective(role);
 	}
 

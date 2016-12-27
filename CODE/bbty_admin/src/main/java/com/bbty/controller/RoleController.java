@@ -1,5 +1,6 @@
 package com.bbty.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbty.pojo.Role;
 import com.bbty.service.inf.RoleService;
+import com.bbty.session.RoleJson;
 
 @Controller
 @RequestMapping(value = "/role")
@@ -28,6 +30,22 @@ public class RoleController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Role> roles = roleService.getRoles();
 		map.put("data", roles);
+		return map;
+	}
+	
+	@RequestMapping(value = "/getRoleJson")
+	@ResponseBody
+	public Map<String, Object> getRoleJson() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<RoleJson> roleJsons = new ArrayList<RoleJson>();
+		List<Role> roles = roleService.getRoles();
+		for (Role role : roles) {
+			RoleJson json = new RoleJson();
+			json.setId(role.getRoleid());
+			json.setText(role.getRolename());
+			roleJsons.add(json);
+		}
+		map.put("roleJsons", roleJsons);
 		return map;
 	}
 
@@ -75,7 +93,7 @@ public class RoleController {
 		Role role = new Role(roleid, rolename,status,remark);
 
 		try {
-			roleService.uptRoleByExampleSelective(role);
+			roleService.uptRoleBySelective(role);
 			map.put("rtn", "success");
 		} catch (Exception e) {
 			map.put("rtn", "fail");
@@ -165,7 +183,7 @@ public class RoleController {
 		role.setStatus(status);
 		
 		try {
-			roleService.uptRoleByExampleSelective(role);
+			roleService.uptRoleBySelective(role);
 			if (role != null) {
 				map.put("rtn", "success");
 			}

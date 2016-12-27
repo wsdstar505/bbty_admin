@@ -18,4 +18,15 @@ public class UserOperServiceImpl implements UserOperService{
 		userOperDao.insertSelective(oper);
 	}
 
+	@Override
+	public void uptUserOperBySelective(UserOper oper) {
+		userOperDao.updateByPrimaryKeySelective(oper);
+	}
+
+	@Override
+	public void deleteUserOper(UserOper userOper) {
+		userOperDao.delete(userOper);
+	}
+
+
 }
