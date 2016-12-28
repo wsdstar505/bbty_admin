@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bbty.dao.RoleDao;
 import com.bbty.pojo.Role;
+import com.bbty.pojo.User;
 import com.bbty.service.inf.RoleService;
 
 @Service
@@ -46,6 +47,11 @@ public class RoleServiceImpl implements RoleService{
 	@Override
 	public void uptRoleBySelective(Role role) {
 		roleDao.updateByPrimaryKeySelective(role);
+	}
+
+	@Override
+	public List<Role> getRolesByUser(User user) {
+		return roleDao.selectRolesByUser(user);
 	}
 
 }

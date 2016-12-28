@@ -3,6 +3,7 @@ package com.bbty.service.inf;
 import java.util.List;
 
 import com.bbty.pojo.Role;
+import com.bbty.pojo.User;
 
 public interface RoleService {
 
@@ -17,5 +18,7 @@ public interface RoleService {
 	public void delRole(String[] roleids);
 	
 	public void uptRoleBySelective(Role role);
+	
+	public List<Role> getRolesByUser(User user);
 	
 }

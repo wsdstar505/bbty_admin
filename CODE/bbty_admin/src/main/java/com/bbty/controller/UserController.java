@@ -2,6 +2,7 @@ package com.bbty.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +20,11 @@ import com.bbty.pojo.Role;
 import com.bbty.pojo.User;
 import com.bbty.pojo.UserOper;
 import com.bbty.pojo.UserRole;
+import com.bbty.service.inf.RoleService;
 import com.bbty.service.inf.UserOperService;
 import com.bbty.service.inf.UserRoleService;
 import com.bbty.service.inf.UserService;
+import com.bbty.session.RoleJson;
 import com.bbty.session.UserSession;
 
 @Controller
@@ -34,6 +37,8 @@ public class UserController {
 	public UserOperService userOperService;
 	@Autowired
 	public UserRoleService userRoleService;
+	@Autowired
+	public RoleService roleService;
 
 	@RequestMapping(value = "/getUserList")
 	@ResponseBody
@@ -223,12 +228,27 @@ public class UserController {
 
 		try {
 			user = userService.selectOneWithUserOper(user);
+			
+			List<RoleJson> roleJsons = new ArrayList<RoleJson>();
+			
+			List<Role> roles = roleService.getRolesByUser(user);
+			
+			if(roles != null && roles.size() != 0){
+				for (Role role : roles) {
+					RoleJson json = new RoleJson();
+					json.setId(role.getRoleid());
+					json.setText(role.getRolename());
+					roleJsons.add(json);
+				}
+				map.put("roleJsons", roleJsons);
+			}
+			
 			if (user != null) {
 				map.put("rtn", "success");
-				map.put("user", user);
 			}
-
+			map.put("user", user);
 		} catch (Exception e) {
+			e.printStackTrace();
 			map.put("rtn", "fail");
 		}
 

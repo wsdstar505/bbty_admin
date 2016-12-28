@@ -181,19 +181,19 @@
 						<div class="form-group">
 							<label for="birthdate" class="col-sm-2 control-label">出生日期:</label>
 							<div class="col-sm-6 date form_date ">
-								<input type="text" class="form-control" id="birthdate" readonly name="birthdate">
+								<input type="text" class="form-control" id="uptBirthdate" readonly name="birthdate">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="mobileno" class="col-sm-2 control-label">手机号码:</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" name="mobileno">
+								<input type="text" class="form-control" name="mobileno" id="mobileno">
 							</div>
 						</div>
 						<div class="form-group">
                            <label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
                            <div class="col-sm-6">
-            				<select id="roleids" name="roleids" multiple="multiple" style="width: 460px">
+            				<select id="uptRoleids" name="roleids" multiple="multiple" style="width: 460px">
 							</select>
                            </div>
                         </div>
@@ -201,10 +201,10 @@
 							<label for="status" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
 							 <label class="radio-inline">
-                             	<input type="radio" name="status" id="statusOpen" value="1" checked>启用
+                             	<input type="radio" name="status" id="uptStatusOpen" value="1">启用
                              </label>
                              <label class="radio-inline">
-                             <input type="radio" name="status" id="statusStop" value="0">停用
+                             <input type="radio" name="status" id="uptStatusStop" value="0">停用
                              </label>
                              </div>
 						</div>
@@ -462,8 +462,21 @@
             $(this).toggleClass('selected');
         } );
         
-    	//初始化时间控件
+    	//初始化新增时的时间控件
         $('#birthdate').datetimepicker({
+            language:  'zh-CN',
+            format: 'yyyymmdd',
+            weekStart: 1,
+            todayBtn:  1,
+    		autoclose: 1,
+    		todayHighlight: 1,
+    		startView: 2,
+    		minView: 2,
+    		forceParse: 0
+        });
+    	
+      //初始化修改时的时间控件
+        $('#uptBirthdate').datetimepicker({
             language:  'zh-CN',
             format: 'yyyymmdd',
             weekStart: 1,
@@ -484,7 +497,7 @@
 			$('#userAddForm').resetForm();
         }); */
         
-    	//初始化select控件
+    	//初始化新增的select控件
         $("#roleids").select2({
         	 placeholder: "请选择角色",
         	 allowClear: true,
@@ -501,6 +514,29 @@
         		 },
         		 cache: true
         	 }
+        });
+        
+      //初始化修改的select控件
+        $("#uptRoleids").select2({
+        	 placeholder: "请选择角色",
+        	 allowClear: true,
+        	 closeOnSelect: false,
+        	 separator: ",",
+        	 ajax: {
+        		 url: "<%=contextPath%>/role/getRoleJson",
+        		 dataType: 'json',
+        		 delay: 250,
+        		 processResults: function (data, params) {
+        		      return {
+        		        results: data.roleJsons,
+        		      };
+        		 },
+        		 cache: true
+        	 },
+        	 initSelection: function (element, callback) {
+                 var data = {id:'11',text:'aa'};
+                 callback(data);
+             }
         });
 		
 		});
@@ -625,7 +661,6 @@
 						if (rtnStr == "success") {
 							
 							$("#remark").val(dataRtn.user.remark);
-							
 							$("#userid").val(dataRtn.user.userid);
 							$("#username").val(dataRtn.user.username);
 							if(dataRtn.user.gender=="1"){
@@ -633,9 +668,15 @@
 							}else if(dataRtn.user.gender=="0"){
 								$("#genderWoman").attr('checked','true');
 							}
-							
-							//$('#birthdate').datetimepicker({value:dataRtn.user.birthdate});
-							
+							if(dataRtn.user.status=="1"){
+								$("#uptStatusOpen").attr('checked','true');
+							}else if(dataRtn.user.status=="0"){
+								$("#uptStatusStop").attr('checked','true');
+							}
+							$('#uptBirthdate').val(dataRtn.user.birthdate);
+							$('#mobileno').val(dataRtn.user.mobileno);
+							//console.debug(dataRtn.roleJsons)
+							$("#uptRoleids").select2("val", {"id":"normal", "text": "普通员工"});
 							$('#userUptModal').modal('show');
 						} else {
 							dangerAlert();
