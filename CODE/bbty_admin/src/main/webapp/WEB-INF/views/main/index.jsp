@@ -56,7 +56,8 @@
 						<li><a href="#"><i class="fa fa-table fa-fw"></i>商品管理<span
 								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
-								<li><a href="#">计量单位</a></li>
+								<li><a href="javascript:void(0);" onclick="toTab('<%=contextPath %>/index/toMeterManager');">计量单位配置</a></li>
+								
 								<li><a href="#">商品分类</a></li>
 								<li><a href="#">商品维护</a></li>
 							</ul></li>

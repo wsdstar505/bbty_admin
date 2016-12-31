@@ -184,6 +184,78 @@ public class UserController {
 
 		return map;
 	}
+	
+	// 修改员工
+		@RequestMapping(value = "/uptUserAndOper")
+		@ResponseBody
+		public Map<String, Object> uptUserAndOper(HttpServletRequest request) {
+			Session session = SecurityUtils.getSubject().getSession();
+			UserSession userSession = (UserSession) session.getAttribute("userSession");
+
+			Map<String, Object> map = new HashMap<String, Object>();
+
+			String[] roleidArray = request.getParameterValues("roleids");
+			String userid = request.getParameter("userid");
+			String empid = request.getParameter("empid");
+			
+			String username = request.getParameter("username");
+
+			String gender = request.getParameter("gender");
+
+			String birthdate = request.getParameter("birthdate");
+
+			String mobileno = request.getParameter("mobileno");
+
+			String status = request.getParameter("status");
+
+			String remark = request.getParameter("remark");
+
+			Date date = new Date();
+			DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+			String dateStr = dateFormat.format(date);
+
+			User user = new User();
+			user.setEmpid(Long.parseLong(empid));
+			user.setUserid(userid);
+			user.setUsername(username);
+			user.setGender(gender);
+			user.setBirthdate(birthdate);
+			user.setMobileno(mobileno);
+			user.setRemark(remark);
+			user.setLastupttime(dateStr);
+			
+			UserOper oper = new UserOper();
+			oper.setUserid(userid);
+			oper.setStatus(status);
+			oper.setLastupttime(dateStr);
+			oper.setUptempid(userSession.getEmpid());
+			
+			try {
+				userService.uptUserBySelective(user);
+				userOperService.uptUserOperBySelective(oper);
+
+				User userAdd = userService.selectOneWithUserOper(user);
+				UserRole userRole = new UserRole();
+				userRole.setEmpid(userAdd.getEmpid());
+				userRoleService.deleteUserRole(userRole);
+				
+				if (roleidArray.length != 0) {
+					for (String roleid : roleidArray) {
+						UserRole ur = new UserRole();
+						ur.setEmpid(userAdd.getEmpid());
+						ur.setRoleid(roleid);
+						userRoleService.saveUserRole(ur);
+					}
+				}
+
+				map.put("rtn", "success");
+			} catch (Exception e) {
+				e.printStackTrace();
+				map.put("rtn", "fail");
+			}
+
+			return map;
+		}
 
 	// 删除用户
 	// 删除操作员

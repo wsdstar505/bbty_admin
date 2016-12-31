@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService{
 		userDao.deleteByPrimaryKey(user.getEmpid());
 	}
 
+	@Override
+	public void uptUserBySelective(User user) {
+		userDao.updateByPrimaryKeySelective(user);
+	}
+
 }

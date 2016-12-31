@@ -42,7 +42,6 @@
 						</div>
     		</div>
   		</div>
-  	
 	</div>
 	
 	<!-- 新增员工 -->
@@ -155,10 +154,12 @@
 				<div class="modal-body">
 					<form id="userUptForm" class="form-horizontal" role="form"
 						action="<%=contextPath%>/user/uptUserAndOper" method="post">
+						<input type="hidden" name="empid" id="empid">
 						<div class="form-group">
 							<label for="userid" class="col-sm-2 control-label">登录名:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="userid" id="userid" readonly="readonly">
+								
 							</div>
 						</div>
 						<div class="form-group">
@@ -171,10 +172,10 @@
 							<label for="gender" class="col-sm-2 control-label">性别:</label>
 							<div class="col-sm-10">
 							 <label class="radio-inline">
-                             	<input type="radio" name="gender" id="genderMan" value="1" checked>男
+                             	<input type="radio" name="gender" id="uptGenderMan" value="1">男
                              </label>
                              <label class="radio-inline">
-                             <input type="radio" name="gender" id="genderWoman" value="0">女
+                             <input type="radio" name="gender" id="uptGenderWoman" value="0">女
                              </label>
                              </div>
 						</div>
@@ -193,8 +194,7 @@
 						<div class="form-group">
                            <label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
                            <div class="col-sm-6">
-            				<select id="uptRoleids" name="roleids" multiple="multiple" style="width: 460px">
-							</select>
+            				<select id="uptRoleids" name="roleids" style="width: 460px"></select>
                            </div>
                         </div>
 						<div class="form-group">
@@ -216,9 +216,9 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary"
-								onclick="saveUserAndOper();">保存</button>
+								onclick="uptUserAndOper();">保存</button>
 							<button type="button" class="btn btn-default"
-								onclick="closeModal(1);">关闭</button>
+								onclick="closeModal(2);">关闭</button>
 						</div>
 					</form>
 				</div>
@@ -331,36 +331,69 @@
 	                            message: '不能和登录名相同'
 	                        }
 	                    }
+	                },
+	                roleids: {/*键名username和input name值对应*/
+	                    message: '拥有角色无效',
+	                    validators: {
+	                        notEmpty: {/*非空提示*/
+	                            message: '拥有角色不能为空'
+	                        }
+	                    }
 	                }
 	            }
 	        });
     	
-      	//修改角色表单校验
-    	$('#roleUptForm').bootstrapValidator({
-	            message: 'This value is not valid',
-	            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
-	                valid: 'glyphicon glyphicon-ok',
-	                invalid: 'glyphicon glyphicon-remove',
-	                validating: 'glyphicon glyphicon-refresh'
-	            },
-	            fields: {/*验证*/
-	            	roleid: {/*键名username和input name值对应*/
-	                    message: '角色id无效',
-	                    validators: {
-	                        notEmpty: {/*非空提示*/
-	                            message: '角色id不能为空'
-	                        }
-	                    }
-	                },
-	                rolename: {
-	                    message:'角色名称无效',
-	                    validators: {
-	                        notEmpty: {
-	                            message: '角色名称不能为空'
-	                        }
-	                    }
-	                }
-	            }
+      	//修改员工表单校验
+    	$('#userUptForm').bootstrapValidator({
+    	    message: 'This value is not valid',
+            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {/*验证*/
+            	userid: {/*键名username和input name值对应*/
+                    message: '登录名无效',
+                    validators: {
+                        notEmpty: {/*非空提示*/
+                            message: '登录名不能为空'
+                        }
+                    }
+                },
+                username: {
+                    message:'用户 姓名无效',
+                    validators: {
+                        notEmpty: {
+                            message: '用户 姓名不能为空'
+                        }
+                    }
+                },
+                mobileno: {
+                    message: '手机号码无效',
+                    validators: {
+                        notEmpty: {
+                            message: '手机号码不能为空'
+                        },
+                        stringLength: {
+                            min: 11,
+                            max: 11,
+                            message: '请输入11位手机号码'
+                        },
+                        regexp: {
+                            regexp: /^1[3|4|5|7|8][0-9]{9}$/,
+                            message: '请输入正确的手机号码'
+                        }
+                    }
+                },
+                roleids: {/*键名username和input name值对应*/
+                    message: '拥有角色无效',
+                    validators: {
+                        notEmpty: {/*非空提示*/
+                            message: '拥有角色不能为空'
+                        }
+                    }
+                }
+            }
 	        });
       	
     	//表格初始化
@@ -374,9 +407,6 @@
                 "url": "<%=contextPath%>/user/getUserList"
 				},
 				columns : [ {
-					"data" : "empid",
-					"title" : "员工编号"
-				},{
 					"data" : "userid",
 					"title" : "登录名"
 				}, {
@@ -388,9 +418,9 @@
 					render: function (data, type, row, meta) {
 						 if(row.gender =='1'){
 							 return '<span>男</span>';
-						 }else if (row.status =='0'){
+						 }else if (row.gender =='0'){
 							 return '<span>女</span>';
-						 }else if (row.status =='2'){
+						 }else if (row.gender =='2'){
 							 return '<span>保密</span>';
 						 }else{
 							 return '<span></span>';
@@ -417,7 +447,7 @@
 		         ],
 		         columnDefs: [ 
 		        	 {
-			             targets: 7,
+			             targets: 6,
 			             data: null,
 			             title : "操作",
 			             orderable: false,
@@ -425,13 +455,13 @@
 			            	 if(row.status =='1'){
 			            		 return '<button type="button" class="btn btn-default btn-circle" onclick="stopStatus('+"'" + row.userid+"'"+ ');"><i class="fa fa-times"></i></button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
+								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.userid+"'"+ ');">修改</button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
 								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.userid+"'"+ ');">删除</button>';
 							 }else if (row.status =='0'){
 								 return '<button type="button" class="btn btn-success btn-circle" onclick="openStatus('+"'" + row.userid+"'"+ ');"><i class="fa fa-check"></i></button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.roleid+"'"+ ');">修改</button>' 
+								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.userid+"'"+ ');">修改</button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
 								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.userid+"'"+ ');">删除</button>';
 							 }
@@ -516,37 +546,14 @@
         	 }
         });
         
-      //初始化修改的select控件
-        $("#uptRoleids").select2({
-        	 placeholder: "请选择角色",
-        	 allowClear: true,
-        	 closeOnSelect: false,
-        	 separator: ",",
-        	 ajax: {
-        		 url: "<%=contextPath%>/role/getRoleJson",
-        		 dataType: 'json',
-        		 delay: 250,
-        		 processResults: function (data, params) {
-        		      return {
-        		        results: data.roleJsons,
-        		      };
-        		 },
-        		 cache: true
-        	 },
-        	 initSelection: function (element, callback) {
-                 var data = {id:'11',text:'aa'};
-                 callback(data);
-             }
-        });
-		
 		});
 
 		//打开新增员工窗口
 		function toAddUser() {
 			$('#userAddModal').modal('show');
 		}
-
-		//关闭员工窗口
+		
+		//关闭员工窗口(新增、修改)
 		function closeModal(par) {
 			if (par == "1") {
 				//清空表单验证
@@ -556,6 +563,11 @@
 				$('#userAddForm').resetForm();
 				$("#userAddModal").modal('hide');
 			} else if (par == "2") {
+				//清空表单验证
+				$('#userUptForm').data('bootstrapValidator').resetForm();
+				$("#uptRoleids").empty();
+				//清空表单内容
+				$('#userUptForm').resetForm();
 				$("#userUptModal").modal('hide');
 			} else {
 				$("#confirmDelModal").modal('hide');
@@ -617,8 +629,8 @@
 				success : function(dataRtn) {
 					var rtnStr = dataRtn.rtn;
 					//清空表单验证
-					$('#userAddForm').data('bootstrapValidator')
-							.resetForm();
+					$('#userAddForm').data('bootstrapValidator').resetForm();
+					//清空角色select
 					$("#roleids").empty();
 					//清空表单内容
 					$('#userAddForm').resetForm();
@@ -661,22 +673,55 @@
 						if (rtnStr == "success") {
 							
 							$("#remark").val(dataRtn.user.remark);
+							$("#empid").val(dataRtn.user.empid);
 							$("#userid").val(dataRtn.user.userid);
 							$("#username").val(dataRtn.user.username);
-							if(dataRtn.user.gender=="1"){
-								$("#genderMan").attr('checked','true');
-							}else if(dataRtn.user.gender=="0"){
-								$("#genderWoman").attr('checked','true');
+							var gender = dataRtn.user.gender;
+							if(gender=="1"){
+								$("#uptGenderMan").attr('checked','true');
+							}
+							if(gender=="0"){
+								$("#uptGenderWoman").attr('checked','true');
 							}
 							if(dataRtn.user.status=="1"){
 								$("#uptStatusOpen").attr('checked','true');
-							}else if(dataRtn.user.status=="0"){
+							}
+							if(dataRtn.user.status=="0"){
 								$("#uptStatusStop").attr('checked','true');
 							}
 							$('#uptBirthdate').val(dataRtn.user.birthdate);
 							$('#mobileno').val(dataRtn.user.mobileno);
-							//console.debug(dataRtn.roleJsons)
-							$("#uptRoleids").select2("val", {"id":"normal", "text": "普通员工"});
+							
+							$("#uptRoleids").select2({
+	        	 				placeholder: "请选择角色",
+	        	 				allowClear: true,
+	        	 				closeOnSelect: false,
+	        	 				multiple:true,
+	        	 				ajax: {
+	        		 				url: "<%=contextPath%>/role/getRoleJson",
+	        		 				dataType: 'json',
+	        		 				delay: 250,
+	        		 				processResults: function (data, params) {
+	        		      				return {
+	        		        				results: data.roleJsons,
+	        		      				};
+	        		 				}
+	        	 				}
+	        				});
+							
+							var roleJsons = dataRtn.roleJsons;
+							var roleids = new Array();
+							for(var i=0;i<roleJsons.length;i++){
+								var ht = $("#uptRoleids").html();
+								if(ht == ""){
+									$("#uptRoleids").html('<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>');
+								}else{
+									ht=ht+'<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>';
+									$("#uptRoleids").html(ht);
+								}
+								roleids[i]=roleJsons[i].id;
+							}
+							$("#uptRoleids").val(roleids).trigger("change");
 							$('#userUptModal').modal('show');
 						} else {
 							dangerAlert();
@@ -686,12 +731,12 @@
 			}
 		}
     
-  //保存修改角色
-    function uptRole(){
+  //保存修改员工
+    function uptUserAndOper(){
     	
-    	var roleForm = $('#roleUptForm');
+    	var userForm = $('#userUptForm');
     	//验证表单
-    	var validator = $('#roleUptForm').data('bootstrapValidator');
+    	var validator = $('#userUptForm').data('bootstrapValidator');
         
     	if (validator) {
         // 修复记忆的组件不验证
@@ -703,37 +748,29 @@
         
         $.ajax({
             type : "post",
-            url : roleForm.attr("action"),
-            data : roleForm.serializeArray(),
+            url : userForm.attr("action"),
+            data : userForm.serializeArray(),
             dataType : "json",
             cache : false,
             success : function (dataRtn){
             	var rtnStr = dataRtn.rtn;
+            	//清空表单验证
+        		$('#userUptForm').data('bootstrapValidator').resetForm(); 
+        		//清空表单内容
+        		$('#userUptForm').resetForm();
+        		//清空角色select
+        		$("#uptRoleids").empty();
+        		//关闭窗口
+            	closeModal(2);
             	if(rtnStr == "success"){
-            		
-            		//清空表单验证
-            		$('#roleUptForm').data('bootstrapValidator').resetForm(); 
-            		//清空表单内容
-            		$('#roleUptForm').resetForm();
-            		//关闭窗口
-                	closeModal(2);
             		//成功提示
                 	successAlert();
-            		//列表刷新
-                	reloadTable();
-            		
             	}else{
-            		//清空表单验证
-            		$('#roleUptForm').data('bootstrapValidator').resetForm(); 
-            		
-            		//清空表单内容
-            		$('#roleUptForm').resetForm();
-            		
-            		//关闭窗口
-                	closeModal(2);
             		//错误提示
                 	dangerAlert();
             	}
+            	//列表刷新
+            	reloadTable();
             }
         });
 
@@ -786,31 +823,76 @@
 	        });
 		}
 		
-		function singleUpt(roleid){
-			var role = {roleid:roleid};
-    		$.ajax({
-    			type : "post",
-                url : "<%=contextPath%>/role/getRoleByRoleId",
-					data : role,
-					dataType : "json",
-					success : function(dataRtn) {
-						var rtnStr = dataRtn.rtn;
-						if (rtnStr == "success") {
-							$("#roleid").val(dataRtn.role.roleid);
-							$("#roleUptid").val(dataRtn.role.roleid);
-							$("#rolename").val(dataRtn.role.rolename);
-							$("#remark").val(dataRtn.role.remark);
-							if(dataRtn.role.status=="1"){
-								$("input:radio[value='1']").attr('checked','true');
-							}else if(dataRtn.role.status=="0"){
-								$("input:radio[value='0']").attr('checked','true');
-							}
-							$('#roleUptModal').modal('show');
-						} else {
-							dangerAlert();
+		function singleUpt(userid){
+			var user = {
+					userid : userid
+				};
+			$.ajax({
+				type : "post",
+				url : "<%=contextPath%>/user/getUserByUserId",
+				data : user,
+				dataType : "json",
+				success : function(dataRtn) {
+					var rtnStr = dataRtn.rtn;
+					if (rtnStr == "success") {
+						
+						$("#remark").val(dataRtn.user.remark);
+						$("#empid").val(dataRtn.user.empid);
+						$("#userid").val(dataRtn.user.userid);
+						$("#username").val(dataRtn.user.username);
+						var gender = dataRtn.user.gender;
+						if(gender=="1"){
+							$("#uptGenderMan").attr('checked','true');
 						}
+						if(gender=="0"){
+							$("#uptGenderWoman").attr('checked','true');
+						}
+						if(dataRtn.user.status=="1"){
+							$("#uptStatusOpen").attr('checked','true');
+						}
+						if(dataRtn.user.status=="0"){
+							$("#uptStatusStop").attr('checked','true');
+						}
+						$('#uptBirthdate').val(dataRtn.user.birthdate);
+						$('#mobileno').val(dataRtn.user.mobileno);
+						
+						$("#uptRoleids").select2({
+        	 				placeholder: "请选择角色",
+        	 				allowClear: true,
+        	 				closeOnSelect: false,
+        	 				multiple:true,
+        	 				ajax: {
+        		 				url: "<%=contextPath%>/role/getRoleJson",
+        		 				dataType: 'json',
+        		 				delay: 250,
+        		 				processResults: function (data, params) {
+        		      				return {
+        		        				results: data.roleJsons,
+        		      				};
+        		 				}
+        	 				}
+        				});
+						
+						var roleJsons = dataRtn.roleJsons;
+						var roleids = new Array();
+						for(var i=0;i<roleJsons.length;i++){
+							var ht = $("#uptRoleids").html();
+							if(ht == ""){
+								$("#uptRoleids").html('<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>');
+							}else{
+								ht=ht+'<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>';
+								$("#uptRoleids").html(ht);
+							}
+							roleids[i]=roleJsons[i].id;
+						}
+						$("#uptRoleids").val(roleids).trigger("change");
+						$('#userUptModal').modal('show');
+					} else {
+						dangerAlert();
 					}
-				});
+				}
+			});
+    		
 		}
 		
 		function singleDel(userid){

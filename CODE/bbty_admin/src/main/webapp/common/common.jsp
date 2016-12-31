@@ -32,7 +32,7 @@
 
 
     
-     <!-- jQuery -->
+     <!-- jquery -->
     <script src="<%=path%>/jquery/jquery.min.js"></script>
     
      <!-- jQuery form-->
@@ -60,7 +60,8 @@
    <script src="<%=path%>/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
    
 
-   <script src="<%=path%>/select2/js/select2.full.js"></script>
+   <%-- <script src="<%=path%>/select2/js/select2.full.js"></script> --%>
+    <script src="<%=path%>/select2/js/select2.js"></script>
    <script src="<%=path%>/select2/js/i18n/zh-CN.js"></script>
      
    <script type="text/javascript">

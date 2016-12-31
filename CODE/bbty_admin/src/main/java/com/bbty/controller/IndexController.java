@@ -24,4 +24,13 @@ public class IndexController {
 	public String toUserManager(){
 		return "/userRole/userManager";
 	}
+	
+	/**
+	 * 跳转到【计量单位配置管理】界面
+	 * @return
+	 */
+	@RequestMapping(value = "/toMeterManager")
+	public String toMeterManager(){
+		return "/good/meterManager";
+	}
 }
