@@ -29,8 +29,19 @@ public class IndexController {
 	 * 跳转到【计量单位配置管理】界面
 	 * @return
 	 */
-	@RequestMapping(value = "/toMeterManager")
+	@RequestMapping(value = "/toGoodMeterManager")
 	public String toMeterManager(){
-		return "/good/meterManager";
+		return "/good/goodMeterManager";
 	}
+	
+	/**
+	 * 跳转到【商品分类管理】界面
+	 * @return
+	 */
+	@RequestMapping(value = "/toGoodTypeManager")
+	public String toGoodTypeManager(){
+		return "/good/goodTypeManager";
+	}
+	
+	
 }

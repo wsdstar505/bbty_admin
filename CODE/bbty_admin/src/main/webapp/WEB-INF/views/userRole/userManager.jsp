@@ -634,13 +634,16 @@
 					$("#roleids").empty();
 					//清空表单内容
 					$('#userAddForm').resetForm();
-					//关闭窗口
-					closeModal(1);
+					
 					
 					if (rtnStr == "success") {
+						//关闭窗口
+						closeModal(1);
 						//成功提示
 						successAlert();
 					} else {
+						//关闭窗口
+						closeModal(1);
 						//成功提示
 						dangerAlert();
 					}
@@ -760,12 +763,15 @@
         		$('#userUptForm').resetForm();
         		//清空角色select
         		$("#uptRoleids").empty();
-        		//关闭窗口
-            	closeModal(2);
+        		
             	if(rtnStr == "success"){
+            		//关闭窗口
+                	closeModal(2);
             		//成功提示
                 	successAlert();
             	}else{
+            		//关闭窗口
+                	closeModal(2);
             		//错误提示
                 	dangerAlert();
             	}

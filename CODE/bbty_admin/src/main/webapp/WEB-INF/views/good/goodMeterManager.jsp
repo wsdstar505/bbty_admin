@@ -83,7 +83,7 @@
 		</div>
 	</div>
 
-	<!-- 修改计量 -->
+	<!-- 修改计量单位 -->
 	<div class="modal fade" id="meterUptModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -432,31 +432,29 @@
             cache : false,
             success : function (dataRtn){
             	var rtnStr = dataRtn.rtn;
+            	
+            	//清空表单验证
+        		$('#meterUptForm').data('bootstrapValidator').resetForm(); 
+        		//清空表单内容
+        		$('#meterUptForm').resetForm();
+        		
             	if(rtnStr == "success"){
             		
-            		//清空表单验证
-            		$('#meterUptForm').data('bootstrapValidator').resetForm(); 
-            		//清空表单内容
-            		$('#meterUptForm').resetForm();
             		//关闭窗口
                 	closeModal(2);
             		//成功提示
                 	successAlert();
-            		//列表刷新
-                	reloadTable();
             		
             	}else{
-            		//清空表单验证
-            		$('#meterUptForm').data('bootstrapValidator').resetForm(); 
-            		
-            		//清空表单内容
-            		$('#meterUptForm').resetForm();
             		
             		//关闭窗口
                 	closeModal(2);
             		//错误提示
                 	dangerAlert();
             	}
+            	
+            	//列表刷新
+            	reloadTable();
             }
         });
 
@@ -491,19 +489,21 @@
             cache : false,
             success : function (dataRtn){
             	var rtnStr = dataRtn.rtn;
+            	
             	if(rtnStr == "success"){
             		//关闭窗口
                 	closeModal(3);
             		//成功提示
                 	successAlert();
-            		//列表刷新
-                	reloadTable();
             	}else{
             		//关闭窗口
                 	closeModal(3);
             		//错误提示
                 	dangerAlert();
             	}
+            	
+            	//列表刷新
+            	reloadTable();
             }
         });
 	}

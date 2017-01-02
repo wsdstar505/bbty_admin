@@ -27,7 +27,7 @@
     
 	<link href="<%=path%>/select2/css/select2.min.css" rel="stylesheet">
     
-
+	<link href="<%=path%>/bootstrap-treeview/css/bootstrap-treeview.css" rel="stylesheet">
 
 
 
@@ -61,9 +61,11 @@
    
 
    <%-- <script src="<%=path%>/select2/js/select2.full.js"></script> --%>
-    <script src="<%=path%>/select2/js/select2.js"></script>
+   <script src="<%=path%>/select2/js/select2.js"></script>
    <script src="<%=path%>/select2/js/i18n/zh-CN.js"></script>
-     
+   
+   <script src="<%=path%>/bootstrap-treeview/js/bootstrap-treeview.js"></script>
+   
    <script type="text/javascript">
    
    </script>
