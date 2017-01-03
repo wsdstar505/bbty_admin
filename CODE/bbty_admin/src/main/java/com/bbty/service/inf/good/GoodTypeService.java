@@ -8,4 +8,6 @@ public interface GoodTypeService {
 
 	List<GoodType> getGoodTypeList(long parTypeId);
 
+	List<GoodType> getChildGoodTypesByTypeCode(String typeCode);
+
 }

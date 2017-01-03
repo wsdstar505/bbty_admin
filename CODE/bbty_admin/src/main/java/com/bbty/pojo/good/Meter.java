@@ -19,14 +19,14 @@ public class Meter implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="METER_ID")
+	@Column(name="METERID")
 	@SequenceGenerator(name="Any",sequenceName="SEQ_T_GOOD_METER")
 	private Long meterId;
 	
-	@Column(name="METER_CODE")
+	@Column(name="METERCODE")
 	private String meterCode;
 	
-	@Column(name="METER_NAME")
+	@Column(name="METERNAME")
 	private String meterName;
 
 	public Meter() {

@@ -19,17 +19,17 @@ public class GoodType implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name="TYPE_ID")
+	@Column(name="TYPEID")
 	@SequenceGenerator(name="Any",sequenceName="SEQ_T_GOOD_TYPE")
 	private Long typeId;
 	
-	@Column(name="TYPE_CODE")
+	@Column(name="TYPECODE")
 	private String typeCode;
 	
-	@Column(name="TYPE_NAME")
-	private String tyepName;
+	@Column(name="TYPENAME")
+	private String typeName;
 	
-	@Column(name="PAR_TYPE_ID")
+	@Column(name="PARTYPEID")
 	private Long parTypeId;
 	
 	@Column(name="STATUS")
@@ -45,18 +45,28 @@ public class GoodType implements Serializable{
 		super();
 	}
 
-	
-	public GoodType(Long typeId, String typeCode, String tyepName, Long parTypeId, String status, String remark,
+	public GoodType(Long typeId, String typeCode, String typeName, Long parTypeId, String status, String remark,
 			String isLeaf) {
 		super();
 		this.typeId = typeId;
 		this.typeCode = typeCode;
-		this.tyepName = tyepName;
+		this.typeName = typeName;
 		this.parTypeId = parTypeId;
 		this.status = status;
 		this.remark = remark;
 		this.isLeaf = isLeaf;
 	}
+
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
 
 	public String getIsLeaf() {
 		return isLeaf;
@@ -78,12 +88,7 @@ public class GoodType implements Serializable{
 	public void setTypeCode(String typeCode) {
 		this.typeCode = typeCode;
 	}
-	public String getTyepName() {
-		return tyepName;
-	}
-	public void setTyepName(String tyepName) {
-		this.tyepName = tyepName;
-	}
+	
 	public Long getParTypeId() {
 		return parTypeId;
 	}

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ public class GoodTypeController {
 		if (list.size() != 0) {
 			for (GoodType goodType : list) {
 				GoodTypeTree tree = new GoodTypeTree();
-				tree.setText(goodType.getTyepName());
+				tree.setText(goodType.getTypeName());
 				tree.setTags(goodType.getTypeCode());
 				List<GoodType> temp = goodTypeService.getGoodTypeList(goodType.getTypeId());
 				if(temp.size() !=0){
@@ -51,7 +53,7 @@ public class GoodTypeController {
 		if (list.size() != 0) {
 			for (GoodType gt : list) {
 				GoodTypeTree t = new GoodTypeTree();
-				t.setText(gt.getTyepName());
+				t.setText(gt.getTypeName());
 				t.setTags(gt.getTypeCode());
 				if(gt.getIsLeaf().equals("0")){
 					t.setNodes(getChildTree(list, gt));
@@ -61,5 +63,16 @@ public class GoodTypeController {
 			}
 		}
 		return tt;
+	}
+	
+	@RequestMapping(value = "/getChildGoodTypesByTypeCode")
+	@ResponseBody
+	public Map<String, Object> getChildGoodTypesByTypeCode(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String typeCode = request.getParameter("typeCode");
+		map.put("typeCode", typeCode);
+		List<GoodType> list = goodTypeService.getChildGoodTypesByTypeCode(typeCode);
+		return map;
 	}
 }

@@ -23,4 +23,14 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 		return list;
 	}
 
+	@Override
+	public List<GoodType> getChildGoodTypesByTypeCode(String typeCode) {
+		GoodType goodType = new GoodType();
+		goodType.setTypeCode(typeCode);
+		List<GoodType> res = goodTypeDao.selectChildsByTypeCode(goodType);
+		//List<GoodType> res = goodTypeDao.select(goodType);
+		return res;
+	}
+
+
 }
