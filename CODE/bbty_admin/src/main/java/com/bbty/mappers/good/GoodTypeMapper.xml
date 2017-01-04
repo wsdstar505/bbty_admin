@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbty.dao.good.GoodTypeDao">
+	
+	<select id="getChildGoodTypesByParTypeId" parameterType="com.bbty.pojo.good.GoodType" resultType="com.bbty.pojo.good.GoodType">
+		SELECT T.* FROM T_GOOD_TYPE T WHERE T.PARTYPEID=#{parTypeId}
+	</select>
+	
+</mapper>
