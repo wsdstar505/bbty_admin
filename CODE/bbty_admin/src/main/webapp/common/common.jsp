@@ -53,7 +53,6 @@
    <script src="<%=path%>/sb-admin-2/vendor/datatables/js/jquery.dataTables.min.js"></script>
    <script src="<%=path%>/sb-admin-2/vendor/datatables/js/dataTables.bootstrap.min.js"></script>
    
-   <%--  <script src="<%=path%>/sb-admin-2/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script> --%>
    <script src="<%=path%>/sb-admin-2/vendor/datatables-responsive/dataTables.responsive.js"></script>
    
    <script src="<%=path%>/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>

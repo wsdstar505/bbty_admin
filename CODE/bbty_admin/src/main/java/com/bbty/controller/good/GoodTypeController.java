@@ -34,7 +34,7 @@ public class GoodTypeController {
 			for (GoodType goodType : list) {
 				GoodTypeTree tree = new GoodTypeTree();
 				tree.setText(goodType.getTypeName());
-				tree.setTags(goodType.getTypeCode());
+				tree.setTags(String.valueOf(goodType.getTypeId()));
 				List<GoodType> temp = goodTypeService.getGoodTypeList(goodType.getTypeId());
 				if(temp.size() !=0){
 					tree.setNodes(getChildTree(temp, goodType));
@@ -54,7 +54,7 @@ public class GoodTypeController {
 			for (GoodType gt : list) {
 				GoodTypeTree t = new GoodTypeTree();
 				t.setText(gt.getTypeName());
-				t.setTags(gt.getTypeCode());
+				t.setTags(String.valueOf(gt.getTypeId()));
 				if(gt.getIsLeaf().equals("0")){
 					t.setNodes(getChildTree(list, gt));
 				}else if(gt.getIsLeaf().equals("1")){
@@ -69,10 +69,39 @@ public class GoodTypeController {
 	@ResponseBody
 	public Map<String, Object> getChildGoodTypesByTypeCode(HttpServletRequest request){
 		Map<String, Object> map = new HashMap<String, Object>();
-
+		String parTypeIdStr = request.getParameter("parTypeIdStr");
+		List<GoodType> list = goodTypeService.getChildGoodTypesByParTypeId(parTypeIdStr);
+		map.put("data", list);
+		return map;
+	}
+	
+	@RequestMapping(value = "/saveGoodType")
+	@ResponseBody
+	public Map<String,Object> saveGoodType(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		Long parTypeId = Long.valueOf(request.getParameter("parTypeIdAdd"));
 		String typeCode = request.getParameter("typeCode");
-		map.put("typeCode", typeCode);
-		List<GoodType> list = goodTypeService.getChildGoodTypesByTypeCode(typeCode);
+		String typeName = request.getParameter("typeName");
+		String status = request.getParameter("status");
+		String isLeaf = request.getParameter("isLeaf");
+		String remark = request.getParameter("remark");
+		
+		GoodType goodType = new GoodType();
+		goodType.setTypeName(typeName);
+		goodType.setTypeCode(typeCode);
+		goodType.setStatus(status);
+		goodType.setRemark(remark);
+		goodType.setParTypeId(parTypeId);
+		goodType.setIsLeaf(isLeaf);
+		
+		try {
+			goodTypeService.saveType(goodType);
+			map.put("rtn", "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("rtn", "fail");
+		}
+
 		return map;
 	}
 }

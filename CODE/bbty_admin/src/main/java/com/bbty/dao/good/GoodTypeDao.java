@@ -11,6 +11,6 @@ import tk.mybatis.mapper.common.Mapper;
 @MapperScan
 public interface GoodTypeDao extends Mapper<GoodType> {
 
-	List<GoodType> selectChildsByTypeCode(GoodType gt);
+	List<GoodType> getChildGoodTypesByParTypeId(GoodType gt);
 
 }
