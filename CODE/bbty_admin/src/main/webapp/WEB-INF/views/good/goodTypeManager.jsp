@@ -96,6 +96,23 @@
 		</div>
 	</div>
 	
+	
+	<div class="modal fade bs-example-modal-sm"  id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  		<div class="modal-dialog modal-sm">
+    		<div class="modal-content">
+    		<div class="modal-body">
+    			确定要删除选中的商品子类别吗？
+    		</div>
+    		<div class="modal-footer">
+							<button type="button" class="btn btn-primary"
+								onclick="deleteTypes();">确定</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						</div>
+    		</div>
+  		</div>
+  	
+	</div>
+	
 	<div class="row">
 
 		<div class="col-lg-4">
@@ -109,13 +126,13 @@
 
 		<div class="col-lg-8">
 			<div class="panel panel-default">
-				<div class="panel-heading">商品类别列表</div>
+				<div class="panel-heading">商品子类别列表</div>
 				<div class="panel-body" id="typeMenuDiv">
 					<button type="button" class="btn btn-primary"
 						onclick="toAddType();">新增</button>
 					<button type="button" class="btn btn-warning"
 						onclick="toUptType();">修改</button>
-					<button type="button" class="btn btn-danger" onclick="toDeleteMeters();">批量删除</button>
+					<button type="button" class="btn btn-danger" onclick="toDeleteTypes();">批量删除</button>
 				</div>
 				<input type="hidden" id="parTypeIdStr" />
 				<div class="panel-body" id="typeTableDiv">
@@ -201,6 +218,12 @@
 		    								}
 		    							}
 		    						});	
+	    						
+		    			      //行选中更改颜色
+		    			        $('#goodTypeTables tbody').on( 'click', 'tr', function () {
+		    			            $(this).toggleClass('selected');
+		    			        } );
+		    			      
 	    					}else{
 	    						$("#typeMenuDiv").hide();
 	    						$("#typeTableDiv").hide();
@@ -214,6 +237,7 @@
 	     			});
 	            }
 	        });
+			
 	
 		});
 		
@@ -403,6 +427,86 @@
 
 	    }
 	    
+	    //跳转到删除商品类别
+	    function toDeleteTypes(){
+	    	var goodTypeTables = $('#goodTypeTables').DataTable();
+			var length = goodTypeTables.rows('.selected').data().length;
+			if (length == 0) {
+				noRowAlert();
+			} else {
+				$("#confirmDelModal").modal('show');
+			}
+	    }
+	    
+	    //删除商品类别
+		function deleteTypes() {
+			var goodTypeTables = $('#goodTypeTables').DataTable();
+			var rows = goodTypeTables.rows('.selected').data();
+			var length = goodTypeTables.rows('.selected').data().length;
+			var rowIdArray = [];
+			for(var i =0; i<length; i++){
+				rowIdArray.push(rows[i].typeCode);
+			}
+			
+			$.ajax({
+	            type : "post",
+	            url : "<%=contextPath%>/goodType/delType",
+	            data : JSON.stringify(rowIdArray),
+	            contentType:"application/json",
+	            dataType : "json",
+	            cache : false,
+	            success : function (dataRtn){
+	            	var rtnStr = dataRtn.rtn;
+	            	
+	            	if(rtnStr == "success"){
+	            		//关闭窗口
+	                	closeModal(3);
+	            		//成功提示
+	                	successAlert();
+	            	}else{
+	            		//关闭窗口
+	                	closeModal(3);
+	            		//错误提示
+	                	dangerAlert();
+	            	}
+	            	
+	            	//刷新树结构
+	            	
+	            	//列表刷新
+	            	reloadTable();
+	            }
+	        });
+		}
+	    
+		//跳转到修改类别
+		function toUptType(){
+			var goodTypeTables = $('#goodTypeTables').DataTable();
+	    	var length = goodTypeTables.rows('.selected').data().length;
+	    	if(length >1 || length ==0){
+	    		oneRowAlert();
+	    	}else{
+	    		var row = goodTypeTables.rows('.selected').data();
+	    		var typeCode = row[0].typeCode;
+	    		var type = {typeCode:typeCode};
+	    		$.ajax({
+	    			type : "post",
+	                url : "<%=contextPath%>/goodType/getGoodTypeByTypeCode",
+						data : type,
+						dataType : "json",
+						success : function(dataRtn) {
+							var rtnStr = dataRtn.rtn;
+							if (rtnStr == "success") {
+								$("#meterId").val(dataRtn.meter.meterId);
+								$("#meterCode").val(dataRtn.meter.meterCode);
+								$("#meterName").val(dataRtn.meter.meterName);
+								$('#meterUptModal').modal('show');
+							} else {
+								dangerAlert();
+							}
+						}
+					});
+				}
+		}
 	    
 		
 		

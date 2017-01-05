@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbty.pojo.good.GoodType;
+import com.bbty.pojo.good.Meter;
 import com.bbty.service.inf.good.GoodTypeService;
 import com.bbty.session.GoodTypeTree;
 
@@ -104,4 +106,43 @@ public class GoodTypeController {
 
 		return map;
 	}
+	
+	
+	@RequestMapping(value = "/delType")
+	@ResponseBody
+	public Map<String, Object> delType(@RequestBody String[] typeCodes) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			goodTypeService.delType(typeCodes);
+			map.put("rtn", "success");
+		} catch (Exception e) {
+			map.put("rtn", "fail");
+		}
+		return map;
+	}
+	
+	@RequestMapping(value = "/getGoodTypeByTypeCode")
+	@ResponseBody
+	public Map<String, Object> getGoodTypeByTypeCode(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String typeCode = request.getParameter("typeCode");
+
+		GoodType goodType = new GoodType();
+		goodType.setTypeCode(typeCode);
+		
+		try {
+			goodType = goodTypeService.getGoodTypeByTypeCode(goodType);
+			if (goodType != null) {
+				map.put("rtn", "success");
+				map.put("goodType", goodType);
+			}
+
+		} catch (Exception e) {
+			map.put("rtn", "fail");
+		}
+
+		return map;
+	}
+	
 }

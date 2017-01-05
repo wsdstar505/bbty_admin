@@ -68,7 +68,7 @@ public class MeterController {
 
 		return map;
 	}
-	
+
 	// 新增计量单位
 	@RequestMapping(value = "/saveMeter")
 	@ResponseBody
@@ -93,7 +93,7 @@ public class MeterController {
 
 		return map;
 	}
-	
+
 	@RequestMapping(value = "/getMeterByMeterCode")
 	@ResponseBody
 	public Map<String, Object> getMeterByMeterCode(HttpServletRequest request) {
@@ -117,7 +117,7 @@ public class MeterController {
 
 		return map;
 	}
-	
+
 	// 修改计量单位
 	@RequestMapping(value = "/uptMeter")
 	@ResponseBody
@@ -129,7 +129,6 @@ public class MeterController {
 
 		String meterName = request.getParameter("meterName");
 
-		
 		Meter meter = new Meter();
 		meter.setMeterId(Long.parseLong(meterId));
 		meter.setMeterCode(meterCode);
@@ -145,18 +144,18 @@ public class MeterController {
 
 		return map;
 	}
-	
-		@RequestMapping(value = "/delMeter")
-		@ResponseBody
-		public Map<String, Object> delMeter(@RequestBody String[] meterCodes) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			try {
-				meterService.delMeter(meterCodes);
-				map.put("rtn", "success");
-			} catch (Exception e) {
-				map.put("rtn", "fail");
-			}
-			return map;
+
+	@RequestMapping(value = "/delMeter")
+	@ResponseBody
+	public Map<String, Object> delMeter(@RequestBody String[] meterCodes) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			meterService.delMeter(meterCodes);
+			map.put("rtn", "success");
+		} catch (Exception e) {
+			map.put("rtn", "fail");
 		}
+		return map;
+	}
 
 }

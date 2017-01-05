@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.bbty.dao.good.GoodTypeDao;
 import com.bbty.pojo.good.GoodType;
 import com.bbty.service.inf.good.GoodTypeService;
@@ -34,6 +33,43 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 	@Override
 	public void saveType(GoodType goodType) {
 		goodTypeDao.insertSelective(goodType);
+	}
+
+	@Override
+	public void delType(String[] typeCodes) {
+		for (String typeCode : typeCodes) {
+			GoodType goodType = new GoodType();
+			goodType.setTypeCode(typeCode);
+			goodType = goodTypeDao.selectOne(goodType);
+			
+			if("0".equals(goodType.getIsLeaf())){
+				this.deleteType(goodType);
+				goodTypeDao.deleteByPrimaryKey(goodType.getTypeId());
+			}else{
+				goodTypeDao.deleteByPrimaryKey(goodType.getTypeId());
+			}
+		}
+	}
+	
+	private void deleteType(GoodType goodType){
+		List<GoodType> gts = this.getChildGoodTypesByParTypeId(String.valueOf(goodType.getTypeId()));
+		if(gts != null && gts.size() !=0){
+			for (GoodType gt : gts) {
+				if("0".equals(gt.getIsLeaf())){
+					this.deleteType(gt);
+					goodTypeDao.deleteByPrimaryKey(gt.getTypeId());
+				}else{
+					goodTypeDao.deleteByPrimaryKey(gt.getTypeId());
+				}
+			}
+		}
+		
+	}
+
+	@Override
+	public GoodType getGoodTypeByTypeCode(GoodType goodType) {
+		
+		return null;
 	}
 
 
