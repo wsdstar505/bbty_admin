@@ -91,7 +91,72 @@
 						</div>
 					</form>
 				</div>
-
+			</div>
+		</div>
+	</div>
+	
+	<!-- 修改商品类型 -->
+	<div class="modal fade" id="typeUptModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" onclick="closeModal(2);">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">修改商品类型</h4>
+				</div>
+				<div class="modal-body">
+					<form id="typeUptForm" class="form-horizontal" role="form"
+						action="<%=contextPath%>/goodType/uptGoodType" method="post">
+						<input type="text" id="parTypeIdUpt" name="parTypeIdUpt"/>
+						<div class="form-group">
+							<label for="typeCode" class="col-sm-2 control-label">类型编码:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="typeCode" id="typeCode">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="typeName" class="col-sm-2 control-label">类型名称:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="typeName" id="typeName">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="status" class="col-sm-2 control-label">状态:</label>
+							<div class="col-sm-10">
+							 <label class="radio-inline">
+                             	<input type="radio" name="status" id="statusOpen" value="1">启用
+                             </label>
+                             <label class="radio-inline">
+                             <input type="radio" name="status" id="statusStop" value="0">停用
+                             </label>
+                             </div>
+						</div>
+						<div class="form-group">
+							<label for="isLeaf" class="col-sm-2 control-label">是否有子类别:</label>
+							<div class="col-sm-10">
+							 <label class="radio-inline">
+                             	<input type="radio" name="isLeaf" id="isLeaf" value="1">有
+                             </label>
+                             <label class="radio-inline">
+                             <input type="radio" name="isLeaf" id="noLeaf" value="0">无
+                             </label>
+                             </div>
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="col-sm-2 control-label">备注:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary"
+								onclick="uptType();">保存</button>
+							<button type="button" class="btn btn-default"
+								onclick="closeModal(2);">关闭</button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -284,10 +349,10 @@
 	  			$("#typeAddModal").modal('hide');
 	  		}else if(par =="2"){
 	  			//清空表单验证
-	    		$('#meterUptForm').data('bootstrapValidator').resetForm(); 
+	    		//$('#typeUptForm').data('bootstrapValidator').resetForm(); 
 	    		//清空表单内容
-	    		$('#meterUptForm').resetForm();
-	  			$("#meterUptModal").modal('hide');
+	    		$('#typeUptForm').resetForm();
+	  			$("#typeUptModal").modal('hide');
 	  		}else{
 	  			$("#confirmDelModal").modal('hide');
 	  		}
@@ -496,10 +561,30 @@
 						success : function(dataRtn) {
 							var rtnStr = dataRtn.rtn;
 							if (rtnStr == "success") {
-								$("#meterId").val(dataRtn.meter.meterId);
-								$("#meterCode").val(dataRtn.meter.meterCode);
-								$("#meterName").val(dataRtn.meter.meterName);
-								$('#meterUptModal').modal('show');
+								$("#typeCode").val(dataRtn.goodType.typeCode);
+								$("#typeName").val(dataRtn.goodType.typeName);
+								
+								var status = dataRtn.goodType.status;
+								if(status=="1"){
+									$("#statusOpen").attr('checked','true');
+								}
+								if(status=="0"){
+									$("#statusStop").attr('checked','true');
+								}
+								
+								var isLeaf = dataRtn.goodType.isLeaf;
+								if(isLeaf=="1"){
+									$("#isLeaf").attr('checked','true');
+								}
+								if(isLeaf=="0"){
+									$("#noLeaf").attr('checked','true');
+								}
+								
+								$("#remark").val(dataRtn.goodType.remark);
+								
+								$("#parTypeIdUpt").val(dataRtn.goodType.parTypeId);
+								
+								$('#typeUptModal').modal('show');
 							} else {
 								dangerAlert();
 							}

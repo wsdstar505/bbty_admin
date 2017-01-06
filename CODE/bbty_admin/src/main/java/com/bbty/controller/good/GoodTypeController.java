@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbty.pojo.good.GoodType;
-import com.bbty.pojo.good.Meter;
 import com.bbty.service.inf.good.GoodTypeService;
 import com.bbty.session.GoodTypeTree;
 
@@ -57,9 +56,9 @@ public class GoodTypeController {
 				GoodTypeTree t = new GoodTypeTree();
 				t.setText(gt.getTypeName());
 				t.setTags(String.valueOf(gt.getTypeId()));
-				if(gt.getIsLeaf().equals("0")){
+				if(gt.getIsLeaf().equals("1")){
 					t.setNodes(getChildTree(list, gt));
-				}else if(gt.getIsLeaf().equals("1")){
+				}else if(gt.getIsLeaf().equals("0")){
 				}
 				tt.add(t);
 			}

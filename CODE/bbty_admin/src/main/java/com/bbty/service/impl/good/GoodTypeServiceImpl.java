@@ -42,7 +42,7 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 			goodType.setTypeCode(typeCode);
 			goodType = goodTypeDao.selectOne(goodType);
 			
-			if("0".equals(goodType.getIsLeaf())){
+			if("1".equals(goodType.getIsLeaf())){
 				this.deleteType(goodType);
 				goodTypeDao.deleteByPrimaryKey(goodType.getTypeId());
 			}else{
@@ -55,7 +55,7 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 		List<GoodType> gts = this.getChildGoodTypesByParTypeId(String.valueOf(goodType.getTypeId()));
 		if(gts != null && gts.size() !=0){
 			for (GoodType gt : gts) {
-				if("0".equals(gt.getIsLeaf())){
+				if("1".equals(gt.getIsLeaf())){
 					this.deleteType(gt);
 					goodTypeDao.deleteByPrimaryKey(gt.getTypeId());
 				}else{
@@ -68,8 +68,7 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 
 	@Override
 	public GoodType getGoodTypeByTypeCode(GoodType goodType) {
-		
-		return null;
+		return goodTypeDao.selectOne(goodType);
 	}
 
 
