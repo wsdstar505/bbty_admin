@@ -107,9 +107,9 @@ public class GoodTypeController {
 	}
 	
 	
-	@RequestMapping(value = "/delType")
+	@RequestMapping(value = "/delGoodType")
 	@ResponseBody
-	public Map<String, Object> delType(@RequestBody String[] typeCodes) {
+	public Map<String, Object> delGoodType(@RequestBody String[] typeCodes) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			goodTypeService.delType(typeCodes);
@@ -141,6 +141,60 @@ public class GoodTypeController {
 			map.put("rtn", "fail");
 		}
 
+		return map;
+	}
+	
+	@RequestMapping(value = "/uptGoodType")
+	@ResponseBody
+	public Map<String, Object> uptGoodType(HttpServletRequest request){
+		Map<String, Object> map = new HashMap<String, Object>();
+		String typeId = request.getParameter("typeId");
+		String typeCode = request.getParameter("typeCode");
+		String typeName = request.getParameter("typeName");
+		String status = request.getParameter("status");
+		String isLeaf = request.getParameter("isLeaf");
+		String parTypeIdUpt = request.getParameter("parTypeIdUpt");
+		
+		String isSrcLeaf = request.getParameter("isSrcLeaf");
+		
+		GoodType goodType = new GoodType();
+		goodType.setTypeId(Long.valueOf(typeId));
+		goodType.setTypeCode(typeCode);
+		goodType.setTypeName(typeName);
+		goodType.setParTypeId(Long.valueOf(parTypeIdUpt));
+		goodType.setStatus(status);
+		goodType.setIsLeaf(isLeaf);
+		
+		try {
+			if(isSrcLeaf.equals(isLeaf)){
+				//是否有子节点-没有变化
+				goodTypeService.updateGoodType(goodType);
+			}else{
+				//是否有子节点-有变化
+				if("1".equals(isLeaf)){
+					//从无到有
+					goodTypeService.updateGoodType(goodType);
+				}else if("0".equals(isLeaf)){
+					//从有到无
+					//变更原先子节点到父节点下
+					//遍历子节点
+					List<GoodType> gts = goodTypeService.getChildGoodTypesByParTypeId(typeId);
+					
+					if(gts != null && gts.size() !=0){
+						for (GoodType gt : gts) {
+							gt.setParTypeId(Long.valueOf(parTypeIdUpt));
+							goodTypeService.updateGoodType(gt);
+						}
+					}
+					
+					goodTypeService.updateGoodType(goodType);
+				}
+			}
+			map.put("rtn", "success");
+
+		} catch (Exception e) {
+			map.put("rtn", "fail");
+		}
 		return map;
 	}
 	

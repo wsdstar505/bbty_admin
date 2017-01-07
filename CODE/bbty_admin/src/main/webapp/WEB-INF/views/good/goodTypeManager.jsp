@@ -108,7 +108,8 @@
 				<div class="modal-body">
 					<form id="typeUptForm" class="form-horizontal" role="form"
 						action="<%=contextPath%>/goodType/uptGoodType" method="post">
-						<input type="text" id="parTypeIdUpt" name="parTypeIdUpt"/>
+						<input type="hidden" id="typeId" name="typeId"/>
+						<input type="hidden" id="parTypeIdUpt" name="parTypeIdUpt"/>
 						<div class="form-group">
 							<label for="typeCode" class="col-sm-2 control-label">类型编码:</label>
 							<div class="col-sm-10">
@@ -135,6 +136,9 @@
 						<div class="form-group">
 							<label for="isLeaf" class="col-sm-2 control-label">是否有子类别:</label>
 							<div class="col-sm-10">
+							
+							<input type="hidden" name="isSrcLeaf" id="isSrcLeaf"/>
+							
 							 <label class="radio-inline">
                              	<input type="radio" name="isLeaf" id="isLeaf" value="1">有
                              </label>
@@ -166,7 +170,7 @@
   		<div class="modal-dialog modal-sm">
     		<div class="modal-content">
     		<div class="modal-body">
-    			确定要删除选中的商品子类别吗？
+    			确定要删除选中的商品子类别吗？若商品类别下还有子类别则一并删除子类别!
     		</div>
     		<div class="modal-footer">
 							<button type="button" class="btn btn-primary"
@@ -263,7 +267,14 @@
 		    								"title" : "类别名称"
 		    							},{
 		    								"data" : "status",
-		    								"title" : "状态"
+		    								"title" : "状态",
+		    								 render: function (data, type, row, meta) {
+		    									 if(row.status =='1'){
+		    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
+		    									 }else if (row.status =='0'){
+		    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
+		    									 }
+		    				                 }
 		    							}
 		    					         ],
 		    							language : {
@@ -408,83 +419,8 @@
 	                	dangerAlert();
 	            	}
 	            	
-	            	var goodTypeTree;
-	            	$.ajax({
-	    	            type : "post",
-	    	            url : "<%=contextPath%>/goodType/getGoodTypeTree",
-	    	            dataType : "json",
-	    	            cache : false,
-	    	            success : function (dataRtn){
-	    	            	goodTypeTree = dataRtn.treeList;
-	    	            	
-	    	        		$('#tree').treeview({
-	    	    				data : goodTypeTree,
-	    	    				emptyIcon : "glyphicon glyphicon-book",
-	    	    				onNodeSelected : function(event, data) {
-	    	    					
-	    	    					parTypeIdStr=data.tags;
-	    	    					
-	    	    					$("#parTypeIdStr").val(parTypeIdStr);
-	    	    					
-	    	    					var nodes = data.nodes;
-	    	    					
-	    	    					if(nodes != null){
-	    	    						$("#typeMenuDiv").show();
-	    	    						$("#typeTableDiv").show();
-	    	    						//表格初始化
-	    		    			        $('#goodTypeTables').DataTable({
-	    		    			        	destroy:true,	    			        	
-	    		    			        	pagingType:"full_numbers",//设置分页控件的模式
-	    		    			        	searching: false,//datatales的查询框,true:开启;false:关闭
-	    		    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
-	    		    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
-	    		    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
-	    		    			        	bDestory:true,
-	    		    			            ajax: {
-	    		    			                "url": "<%=contextPath%>/goodType/getChildGoodTypesByTypeCode?parTypeIdStr="+parTypeIdStr
-	    		    							},
-	    		    							columns : [ {
-	    		    								"data" : "typeCode",
-	    		    								"title" : "类别编码"
-	    		    							}, {
-	    		    								"data" : "typeName",
-	    		    								"title" : "类别名称"
-	    		    							},{
-	    		    								"data" : "status",
-	    		    								"title" : "状态"
-	    		    							}
-	    		    					         ],
-	    		    							language : {
-	    		    								loadingRecords : "加载中...",
-	    		    								processing : "查询中...",
-	    		    								search : "智能搜索:",
-	    		    								lengthMenu : "每页显示 _MENU_ 条记录",
-	    		    								zeroRecords : "没有找到记录",
-	    		    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
-	    		    								infoEmpty : "无记录",
-	    		    								infoFiltered : "(从 _MAX_ 条记录过滤)",
-	    		    								paginate : {
-	    		    									first : "首页",
-	    		    									last : "尾页",
-	    		    									next : "下页",
-	    		    									previous : "上页"
-	    		    								}
-	    		    							}
-	    		    						});	
-	    	    					}else{
-	    	    						$("#typeMenuDiv").hide();
-	    	    						$("#typeTableDiv").hide();
-	    	    					}
-	    	    				}
-	    	    			});
-	    	        		
-	    	        		//折叠树节点
-	    	        		 $('#tree').treeview('collapseAll', {
-	    	     				silent : true
-	    	     			});
-	    	            }
-	    	        });
-	        		
+	            	//树刷新
+	            	reloadTree();
 	            	//列表刷新
 	            	reloadTable();
 	            }
@@ -515,7 +451,7 @@
 			
 			$.ajax({
 	            type : "post",
-	            url : "<%=contextPath%>/goodType/delType",
+	            url : "<%=contextPath%>/goodType/delGoodType",
 	            data : JSON.stringify(rowIdArray),
 	            contentType:"application/json",
 	            dataType : "json",
@@ -536,7 +472,7 @@
 	            	}
 	            	
 	            	//刷新树结构
-	            	
+	            	reloadTree();
 	            	//列表刷新
 	            	reloadTable();
 	            }
@@ -561,6 +497,7 @@
 						success : function(dataRtn) {
 							var rtnStr = dataRtn.rtn;
 							if (rtnStr == "success") {
+								$("#typeId").val(dataRtn.goodType.typeId);
 								$("#typeCode").val(dataRtn.goodType.typeCode);
 								$("#typeName").val(dataRtn.goodType.typeName);
 								
@@ -573,6 +510,7 @@
 								}
 								
 								var isLeaf = dataRtn.goodType.isLeaf;
+								$("#isSrcLeaf").val(isLeaf);
 								if(isLeaf=="1"){
 									$("#isLeaf").attr('checked','true');
 								}
@@ -593,6 +531,146 @@
 				}
 		}
 	    
+		   //保存修改商品类别
+	    function uptType(){
+	    	
+	    	var typeForm = $('#typeUptForm');
+	    	//验证表单
+	    	/* var validator = $('#typeUptForm').data('bootstrapValidator');
+	        
+	    	if (validator) {
+	        // 修复记忆的组件不验证
+	            validator.validate();
+	            if (!validator.isValid()) {
+	                return false;
+	            }
+	        } */
+	        
+	        $.ajax({
+	            type : "post",
+	            url : typeForm.attr("action"),
+	            data : typeForm.serializeArray(),
+	            dataType : "json",
+	            cache : false,
+	            success : function (dataRtn){
+	            	var rtnStr = dataRtn.rtn;
+	            	
+	            	//清空表单验证
+	        		//$('#typeUptForm').data('bootstrapValidator').resetForm(); 
+	        		//清空表单内容
+	        		$('#typeUptForm').resetForm();
+	        		
+	            	if(rtnStr == "success"){
+	            		
+	            		//关闭窗口
+	                	closeModal(2);
+	            		//成功提示
+	                	successAlert();
+	            		
+	            	}else{
+	            		
+	            		//关闭窗口
+	                	closeModal(2);
+	            		//错误提示
+	                	dangerAlert();
+	            	}
+	            	
+	            	//树刷新
+	            	reloadTree();
+	            	//列表刷新
+	            	reloadTable();
+	            }
+	        });
+
+	    }
+		   
+		
+		function reloadTree(){
+			var goodTypeTree;
+			var parTypeIdStr;
+        	$.ajax({
+	            type : "post",
+	            url : "<%=contextPath%>/goodType/getGoodTypeTree",
+	            dataType : "json",
+	            cache : false,
+	            success : function (dataRtn){
+	            	goodTypeTree = dataRtn.treeList;
+	            	
+	        		$('#tree').treeview({
+	    				data : goodTypeTree,
+	    				emptyIcon : "glyphicon glyphicon-book",
+	    				onNodeSelected : function(event, data) {
+	    					
+	    					parTypeIdStr=data.tags;
+	    					
+	    					$("#parTypeIdStr").val(parTypeIdStr);
+	    					
+	    					var nodes = data.nodes;
+	    					
+	    					if(nodes != null){
+	    						$("#typeMenuDiv").show();
+	    						$("#typeTableDiv").show();
+	    						//表格初始化
+		    			        $('#goodTypeTables').DataTable({
+		    			        	destroy:true,	    			        	
+		    			        	pagingType:"full_numbers",//设置分页控件的模式
+		    			        	searching: false,//datatales的查询框,true:开启;false:关闭
+		    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
+		    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
+		    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
+		    			        	bDestory:true,
+		    			            ajax: {
+		    			                "url": "<%=contextPath%>/goodType/getChildGoodTypesByTypeCode?parTypeIdStr="+parTypeIdStr
+		    							},
+		    							columns : [ {
+		    								"data" : "typeCode",
+		    								"title" : "类别编码"
+		    							}, {
+		    								"data" : "typeName",
+		    								"title" : "类别名称"
+		    							},{
+		    								"data" : "status",
+		    								"title" : "状态",
+		    								 render: function (data, type, row, meta) {
+		    									 if(row.status =='1'){
+		    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
+		    									 }else if (row.status =='0'){
+		    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
+		    									 }
+		    				                 }
+		    							}
+		    					         ],
+		    							language : {
+		    								loadingRecords : "加载中...",
+		    								processing : "查询中...",
+		    								search : "智能搜索:",
+		    								lengthMenu : "每页显示 _MENU_ 条记录",
+		    								zeroRecords : "没有找到记录",
+		    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
+		    								infoEmpty : "无记录",
+		    								infoFiltered : "(从 _MAX_ 条记录过滤)",
+		    								paginate : {
+		    									first : "首页",
+		    									last : "尾页",
+		    									next : "下页",
+		    									previous : "上页"
+		    								}
+		    							}
+		    						});	
+	    					}else{
+	    						$("#typeMenuDiv").hide();
+	    						$("#typeTableDiv").hide();
+	    					}
+	    				}
+	    			});
+	        		
+	        		//折叠树节点
+	        		 $('#tree').treeview('collapseAll', {
+	     				silent : true
+	     			});
+	            }
+	        });
+		}
 		
 		
 		

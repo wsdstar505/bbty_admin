@@ -16,4 +16,6 @@ public interface GoodTypeService {
 
 	GoodType getGoodTypeByTypeCode(GoodType goodType);
 
+	void updateGoodType(GoodType goodType);
+
 }

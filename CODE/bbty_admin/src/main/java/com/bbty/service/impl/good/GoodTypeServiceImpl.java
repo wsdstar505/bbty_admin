@@ -71,5 +71,10 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 		return goodTypeDao.selectOne(goodType);
 	}
 
+	@Override
+	public void updateGoodType(GoodType goodType) {
+		goodTypeDao.updateByPrimaryKeySelective(goodType);
+	}
+
 
 }
