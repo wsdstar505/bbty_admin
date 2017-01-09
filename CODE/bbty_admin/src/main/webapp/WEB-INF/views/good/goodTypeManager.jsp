@@ -110,6 +110,7 @@
 						action="<%=contextPath%>/goodType/uptGoodType" method="post">
 						<input type="hidden" id="typeId" name="typeId"/>
 						<input type="hidden" id="parTypeIdUpt" name="parTypeIdUpt"/>
+						<input type="hidden" id="typeSrcCode" name="typeSrcCode"/>
 						<div class="form-group">
 							<label for="typeCode" class="col-sm-2 control-label">类型编码:</label>
 							<div class="col-sm-10">
@@ -143,7 +144,7 @@
                              	<input type="radio" name="isLeaf" id="isLeaf" value="1">有
                              </label>
                              <label class="radio-inline">
-                             <input type="radio" name="isLeaf" id="noLeaf" value="0">无
+                             	<input type="radio" name="isLeaf" id="noLeaf" value="0">无
                              </label>
                              </div>
 						</div>
@@ -266,6 +267,16 @@
 		    								"data" : "typeName",
 		    								"title" : "类别名称"
 		    							},{
+		    								"data" : "isLeaf",
+		    								"title" : "是否有子类别",
+		    								 render: function (data, type, row, meta) {
+		    									 if(row.isLeaf =='1'){
+		    										 return '<span>有</span>';
+		    									 }else if (row.isLeaf =='0'){
+		    										 return '<span>无</span>';
+		    									 }
+		    				                 }
+		    							},{
 		    								"data" : "status",
 		    								"title" : "状态",
 		    								 render: function (data, type, row, meta) {
@@ -313,6 +324,81 @@
 	     			});
 	            }
 	        });
+			
+			
+			
+			//新增商品类别表单校验
+	    	$('#typeAddForm').bootstrapValidator({
+		            message: 'This value is not valid',
+		            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
+		                valid: 'glyphicon glyphicon-ok',
+		                invalid: 'glyphicon glyphicon-remove',
+		                validating: 'glyphicon glyphicon-refresh'
+		            },
+		            fields: {/*验证*/
+		            	typeCode: {/*键名username和input name值对应*/
+		                    message: '类型编码无效',
+		                    validators: {
+		                        notEmpty: {/*非空提示*/
+		                            message: '类型编码不能为空'
+		                        },
+		                        remote: {
+		                        	url: '<%=contextPath%>/goodType/checkTypeCode',
+		                            message: '类型编码已存在',//提示消息
+		                            type: 'post'//请求方式
+		                        }
+		                    }
+		                },
+		                typeName: {
+		                    message:'类型名称无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '类型名称不能为空'
+		                        }
+		                    }
+		                }
+		            }
+		        });
+			
+			
+	    	//修改商品类别表单校验
+	    	$('#typeUptForm').bootstrapValidator({
+		            message: 'This value is not valid',
+		            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
+		                valid: 'glyphicon glyphicon-ok',
+		                invalid: 'glyphicon glyphicon-remove',
+		                validating: 'glyphicon glyphicon-refresh'
+		            },
+		            fields: {/*验证*/
+		            	typeCode: {/*键名username和input name值对应*/
+		                    message: '类型编码无效',
+		                    validators: {
+		                        notEmpty: {/*非空提示*/
+		                            message: '类型编码不能为空'
+		                        },
+		                        remote: {
+		                        	url: '<%=contextPath%>/goodType/checkTypeCode',
+		                            message: '类型编码已存在',//提示消息
+		                            type: 'post',//请求方式
+		                            data: function(validator) {
+			                               return {
+			                                   typeSrcCode: $("#typeSrcCode").val()
+			                               };
+			                            }
+		                        },
+		                        
+		                    }
+		                },
+		                typeName: {
+		                    message:'类型名称无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '类型名称不能为空'
+		                        }
+		                    }
+		                }
+		            }
+		        });
 			
 	
 		});
@@ -363,6 +449,12 @@
 	    		//$('#typeUptForm').data('bootstrapValidator').resetForm(); 
 	    		//清空表单内容
 	    		$('#typeUptForm').resetForm();
+	    		
+	    		$("#statusOpen").removeAttr("checked");
+        		$("#statusStop").removeAttr("checked");
+        		$("#isLeaf").removeAttr("checked");
+        		$("#noLeaf").removeAttr("checked");
+        		
 	  			$("#typeUptModal").modal('hide');
 	  		}else{
 	  			$("#confirmDelModal").modal('hide');
@@ -498,23 +590,22 @@
 							var rtnStr = dataRtn.rtn;
 							if (rtnStr == "success") {
 								$("#typeId").val(dataRtn.goodType.typeId);
+								$("#typeSrcCode").val(dataRtn.goodType.typeCode);
 								$("#typeCode").val(dataRtn.goodType.typeCode);
 								$("#typeName").val(dataRtn.goodType.typeName);
 								
 								var status = dataRtn.goodType.status;
 								if(status=="1"){
 									$("#statusOpen").attr('checked','true');
-								}
-								if(status=="0"){
+								}else if(status=="0"){
 									$("#statusStop").attr('checked','true');
 								}
 								
 								var isLeaf = dataRtn.goodType.isLeaf;
 								$("#isSrcLeaf").val(isLeaf);
-								if(isLeaf=="1"){
+								if("1"==isLeaf){
 									$("#isLeaf").attr('checked','true');
-								}
-								if(isLeaf=="0"){
+								}else if("0"==isLeaf){
 									$("#noLeaf").attr('checked','true');
 								}
 								
@@ -559,7 +650,10 @@
 	        		//$('#typeUptForm').data('bootstrapValidator').resetForm(); 
 	        		//清空表单内容
 	        		$('#typeUptForm').resetForm();
-	        		
+	        		$("#statusOpen").removeAttr("checked");
+	        		$("#statusStop").removeAttr("checked");
+	        		$("#isLeaf").removeAttr("checked");
+	        		$("#noLeaf").removeAttr("checked");
 	            	if(rtnStr == "success"){
 	            		
 	            		//关闭窗口
@@ -628,6 +722,16 @@
 		    							}, {
 		    								"data" : "typeName",
 		    								"title" : "类别名称"
+		    							},{
+		    								"data" : "isLeaf",
+		    								"title" : "是否有子类别",
+		    								 render: function (data, type, row, meta) {
+		    									 if(row.isLeaf =='1'){
+		    										 return '<span>有</span>';
+		    									 }else if (row.isLeaf =='0'){
+		    										 return '<span>无</span>';
+		    									 }
+		    				                 }
 		    							},{
 		    								"data" : "status",
 		    								"title" : "状态",

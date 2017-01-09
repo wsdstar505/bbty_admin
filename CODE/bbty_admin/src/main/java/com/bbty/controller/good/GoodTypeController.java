@@ -30,14 +30,14 @@ public class GoodTypeController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<GoodTypeTree> treeList = new ArrayList<GoodTypeTree>();
 		List<GoodType> list = goodTypeService.getGoodTypeList(0);
-		//判断是否有根节点
+		// 判断是否有根节点
 		if (list.size() != 0) {
 			for (GoodType goodType : list) {
 				GoodTypeTree tree = new GoodTypeTree();
 				tree.setText(goodType.getTypeName());
 				tree.setTags(String.valueOf(goodType.getTypeId()));
 				List<GoodType> temp = goodTypeService.getGoodTypeList(goodType.getTypeId());
-				if(temp.size() !=0){
+				if (temp.size() != 0) {
 					tree.setNodes(getChildTree(temp, goodType));
 				}
 				treeList.add(tree);
@@ -56,29 +56,29 @@ public class GoodTypeController {
 				GoodTypeTree t = new GoodTypeTree();
 				t.setText(gt.getTypeName());
 				t.setTags(String.valueOf(gt.getTypeId()));
-				if(gt.getIsLeaf().equals("1")){
+				if (gt.getIsLeaf().equals("1")) {
 					t.setNodes(getChildTree(list, gt));
-				}else if(gt.getIsLeaf().equals("0")){
+				} else if (gt.getIsLeaf().equals("0")) {
 				}
 				tt.add(t);
 			}
 		}
 		return tt;
 	}
-	
+
 	@RequestMapping(value = "/getChildGoodTypesByTypeCode")
 	@ResponseBody
-	public Map<String, Object> getChildGoodTypesByTypeCode(HttpServletRequest request){
+	public Map<String, Object> getChildGoodTypesByTypeCode(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String parTypeIdStr = request.getParameter("parTypeIdStr");
 		List<GoodType> list = goodTypeService.getChildGoodTypesByParTypeId(parTypeIdStr);
 		map.put("data", list);
 		return map;
 	}
-	
+
 	@RequestMapping(value = "/saveGoodType")
 	@ResponseBody
-	public Map<String,Object> saveGoodType(HttpServletRequest request){
+	public Map<String, Object> saveGoodType(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Long parTypeId = Long.valueOf(request.getParameter("parTypeIdAdd"));
 		String typeCode = request.getParameter("typeCode");
@@ -86,7 +86,7 @@ public class GoodTypeController {
 		String status = request.getParameter("status");
 		String isLeaf = request.getParameter("isLeaf");
 		String remark = request.getParameter("remark");
-		
+
 		GoodType goodType = new GoodType();
 		goodType.setTypeName(typeName);
 		goodType.setTypeCode(typeCode);
@@ -94,7 +94,7 @@ public class GoodTypeController {
 		goodType.setRemark(remark);
 		goodType.setParTypeId(parTypeId);
 		goodType.setIsLeaf(isLeaf);
-		
+
 		try {
 			goodTypeService.saveType(goodType);
 			map.put("rtn", "success");
@@ -105,8 +105,7 @@ public class GoodTypeController {
 
 		return map;
 	}
-	
-	
+
 	@RequestMapping(value = "/delGoodType")
 	@ResponseBody
 	public Map<String, Object> delGoodType(@RequestBody String[] typeCodes) {
@@ -119,17 +118,17 @@ public class GoodTypeController {
 		}
 		return map;
 	}
-	
+
 	@RequestMapping(value = "/getGoodTypeByTypeCode")
 	@ResponseBody
-	public Map<String, Object> getGoodTypeByTypeCode(HttpServletRequest request){
+	public Map<String, Object> getGoodTypeByTypeCode(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+
 		String typeCode = request.getParameter("typeCode");
 
 		GoodType goodType = new GoodType();
 		goodType.setTypeCode(typeCode);
-		
+
 		try {
 			goodType = goodTypeService.getGoodTypeByTypeCode(goodType);
 			if (goodType != null) {
@@ -143,10 +142,10 @@ public class GoodTypeController {
 
 		return map;
 	}
-	
+
 	@RequestMapping(value = "/uptGoodType")
 	@ResponseBody
-	public Map<String, Object> uptGoodType(HttpServletRequest request){
+	public Map<String, Object> uptGoodType(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		String typeId = request.getParameter("typeId");
 		String typeCode = request.getParameter("typeCode");
@@ -154,9 +153,9 @@ public class GoodTypeController {
 		String status = request.getParameter("status");
 		String isLeaf = request.getParameter("isLeaf");
 		String parTypeIdUpt = request.getParameter("parTypeIdUpt");
-		
+
 		String isSrcLeaf = request.getParameter("isSrcLeaf");
-		
+
 		GoodType goodType = new GoodType();
 		goodType.setTypeId(Long.valueOf(typeId));
 		goodType.setTypeCode(typeCode);
@@ -164,29 +163,29 @@ public class GoodTypeController {
 		goodType.setParTypeId(Long.valueOf(parTypeIdUpt));
 		goodType.setStatus(status);
 		goodType.setIsLeaf(isLeaf);
-		
+
 		try {
-			if(isSrcLeaf.equals(isLeaf)){
-				//是否有子节点-没有变化
+			if (isSrcLeaf.equals(isLeaf)) {
+				// 是否有子节点-没有变化
 				goodTypeService.updateGoodType(goodType);
-			}else{
-				//是否有子节点-有变化
-				if("1".equals(isLeaf)){
-					//从无到有
+			} else {
+				// 是否有子节点-有变化
+				if ("1".equals(isLeaf)) {
+					// 从无到有
 					goodTypeService.updateGoodType(goodType);
-				}else if("0".equals(isLeaf)){
-					//从有到无
-					//变更原先子节点到父节点下
-					//遍历子节点
+				} else if ("0".equals(isLeaf)) {
+					// 从有到无
+					// 变更原先子节点到父节点下
+					// 遍历子节点
 					List<GoodType> gts = goodTypeService.getChildGoodTypesByParTypeId(typeId);
-					
-					if(gts != null && gts.size() !=0){
+
+					if (gts != null && gts.size() != 0) {
 						for (GoodType gt : gts) {
 							gt.setParTypeId(Long.valueOf(parTypeIdUpt));
 							goodTypeService.updateGoodType(gt);
 						}
 					}
-					
+
 					goodTypeService.updateGoodType(goodType);
 				}
 			}
@@ -197,5 +196,41 @@ public class GoodTypeController {
 		}
 		return map;
 	}
-	
+
+	@RequestMapping(value = "/checkTypeCode")
+	@ResponseBody
+	public Map<String, Object> checkTypeCode(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String typeCode = request.getParameter("typeCode");
+		String typeSrcCode = request.getParameter("typeSrcCode");
+
+		if (typeCode != null && typeSrcCode != null) {
+			if (typeCode.equals(typeSrcCode)) {
+				// 表示合法，验证通过
+				map.put("valid", "true");
+			} else {
+				GoodType goodType = new GoodType();
+				goodType.setTypeCode(typeCode);
+
+				try {
+					goodType = this.goodTypeService.getGoodTypeByTypeCode(goodType);
+					if (goodType != null) {
+						// 表示不合法，验证不通过
+						map.put("valid", "false");
+					} else {
+						// 表示合法，验证通过
+						map.put("valid", "true");
+					}
+
+				} catch (Exception e) {
+					// 出现异常，验证不通过
+					map.put("valid", "false");
+				}
+			}
+		}
+
+		return map;
+	}
+
 }
