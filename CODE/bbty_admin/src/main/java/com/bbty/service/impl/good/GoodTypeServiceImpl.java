@@ -36,10 +36,10 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 	}
 
 	@Override
-	public void delType(String[] typeCodes) {
-		for (String typeCode : typeCodes) {
+	public void delType(String[] typeIds) {
+		for (String typeId : typeIds) {
 			GoodType goodType = new GoodType();
-			goodType.setTypeCode(typeCode);
+			goodType.setTypeId(Long.valueOf(typeId));
 			goodType = goodTypeDao.selectOne(goodType);
 			
 			if("1".equals(goodType.getIsLeaf())){
@@ -67,7 +67,7 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 	}
 
 	@Override
-	public GoodType getGoodTypeByTypeCode(GoodType goodType) {
+	public GoodType getGoodType(GoodType goodType) {
 		return goodTypeDao.selectOne(goodType);
 	}
 

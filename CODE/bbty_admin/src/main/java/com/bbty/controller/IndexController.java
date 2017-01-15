@@ -43,5 +43,14 @@ public class IndexController {
 		return "/good/goodTypeManager";
 	}
 	
+	/**
+	 * 跳转到【商品信息维护】界面
+	 * @return
+	 */
+	@RequestMapping(value = "/toGoodInfoManager")
+	public String toGoodInfoManager(){
+		return "/good/goodInfoManager";
+	}
+	
 	
 }

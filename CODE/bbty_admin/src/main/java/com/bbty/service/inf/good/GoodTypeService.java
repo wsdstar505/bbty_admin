@@ -14,7 +14,7 @@ public interface GoodTypeService {
 
 	void delType(String[] typeCodes);
 
-	GoodType getGoodTypeByTypeCode(GoodType goodType);
+	GoodType getGoodType(GoodType goodType);
 
 	void updateGoodType(GoodType goodType);
 

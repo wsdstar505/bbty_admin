@@ -199,10 +199,10 @@
 				<div class="panel-heading">商品子类别列表</div>
 				<div class="panel-body" id="typeMenuDiv">
 					<button type="button" class="btn btn-primary"
-						onclick="toAddType();">新增</button>
+						onclick="toAddType();">新增类别</button>
 					<button type="button" class="btn btn-warning"
-						onclick="toUptType();">修改</button>
-					<button type="button" class="btn btn-danger" onclick="toDeleteTypes();">批量删除</button>
+						onclick="toUptType();">修改类别</button>
+					<button type="button" class="btn btn-danger" onclick="toDeleteTypes();">批量删除类别</button>
 				</div>
 				<input type="hidden" id="parTypeIdStr" />
 				<div class="panel-body" id="typeTableDiv">
@@ -260,7 +260,14 @@
 		    			            ajax: {
 		    			                "url": "<%=contextPath%>/goodType/getChildGoodTypesByTypeCode?parTypeIdStr="+parTypeIdStr
 		    							},
-		    							columns : [ {
+		    							columns : [ 
+		    							{
+			    								"data":"typeId",
+			    								render:function(data,type,full,meta){
+			    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
+			    								},
+			    								"sortable":false
+			    						},{
 		    								"data" : "typeCode",
 		    								"title" : "类别编码"
 		    							}, {
@@ -307,9 +314,9 @@
 		    						});	
 	    						
 		    			      //行选中更改颜色
-		    			        $('#goodTypeTables tbody').on( 'click', 'tr', function () {
+		    			       /*  $('#goodTypeTables tbody').on( 'click', 'tr', function () {
 		    			            $(this).toggleClass('selected');
-		    			        } );
+		    			        } ); */
 		    			      
 	    					}else{
 	    						$("#typeMenuDiv").hide();
@@ -343,7 +350,7 @@
 		                            message: '类型编码不能为空'
 		                        },
 		                        remote: {
-		                        	url: '<%=contextPath%>/goodType/checkTypeCode',
+		                        	url: '<%=contextPath%>/goodType/checkAddTypeCode',
 		                            message: '类型编码已存在',//提示消息
 		                            type: 'post'//请求方式
 		                        }
@@ -440,13 +447,13 @@
 	    function closeModal(par){
 	  		if(par =="1"){
 	  			//清空表单验证
-	    		//$('#typeAddForm').data('bootstrapValidator').resetForm(); 
+	    		$('#typeAddForm').data('bootstrapValidator').resetForm(); 
 	    		//清空表单内容
 	    		$('#typeAddForm').resetForm();
 	  			$("#typeAddModal").modal('hide');
 	  		}else if(par =="2"){
 	  			//清空表单验证
-	    		//$('#typeUptForm').data('bootstrapValidator').resetForm(); 
+	    		$('#typeUptForm').data('bootstrapValidator').resetForm(); 
 	    		//清空表单内容
 	    		$('#typeUptForm').resetForm();
 	    		
@@ -473,7 +480,7 @@
 	    	 $("#parTypeIdAdd").val(parTypeIdStr);
 	    	 var typeAddForm = $('#typeAddForm');
 	    	//验证表单
-	    	/*var validator = $('#meterAddForm').data('bootstrapValidator');
+	    	var validator = $('#typeAddForm').data('bootstrapValidator');
 	        
 	    	if (validator) {
 	        // 修复记忆的组件不验证
@@ -481,7 +488,7 @@
 	            if (!validator.isValid()) {
 	                return false;
 	            }
-	        } */
+	        }
 	        
 	        $.ajax({
 	            type : "post",
@@ -492,11 +499,9 @@
 	            success : function (dataRtn){
 	            	var rtnStr = dataRtn.rtn;
 	            	//清空表单验证
-	        		//$('#typeAddForm').data('bootstrapValidator').resetForm(); 
+	        		$('#typeAddForm').data('bootstrapValidator').resetForm(); 
 	        		//清空表单内容
 	        		$('#typeAddForm').resetForm();
-	        		
-	        		
 	        		
 	            	if(rtnStr == "success"){
 	            		//关闭窗口
@@ -522,24 +527,37 @@
 	    
 	    //跳转到删除商品类别
 	    function toDeleteTypes(){
-	    	var goodTypeTables = $('#goodTypeTables').DataTable();
+	    	/* var goodTypeTables = $('#goodTypeTables').DataTable();
 			var length = goodTypeTables.rows('.selected').data().length;
 			if (length == 0) {
 				noRowAlert();
 			} else {
+				$("#confirmDelModal").modal('show');
+			} */
+			
+	    	if($(".checkchild:checked").length == 0){
+				noRowAlert();
+			}else{
 				$("#confirmDelModal").modal('show');
 			}
 	    }
 	    
 	    //删除商品类别
 		function deleteTypes() {
-			var goodTypeTables = $('#goodTypeTables').DataTable();
+			/* var goodTypeTables = $('#goodTypeTables').DataTable();
 			var rows = goodTypeTables.rows('.selected').data();
 			var length = goodTypeTables.rows('.selected').data().length;
 			var rowIdArray = [];
 			for(var i =0; i<length; i++){
 				rowIdArray.push(rows[i].typeCode);
-			}
+			} */
+			
+			var rowIdArray = [];
+			var length = $(".checkchild:checked").length;
+			$(".checkchild:checked").each(function(){
+				rowIdArray.push($(this).val());
+			});
+			
 			
 			$.ajax({
 	            type : "post",
@@ -573,17 +591,22 @@
 	    
 		//跳转到修改类别
 		function toUptType(){
-			var goodTypeTables = $('#goodTypeTables').DataTable();
+			/* var goodTypeTables = $('#goodTypeTables').DataTable();
 	    	var length = goodTypeTables.rows('.selected').data().length;
 	    	if(length >1 || length ==0){
-	    		oneRowAlert();
+	    		oneRowAlert(); */
+	    	if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+	    			oneRowAlert();
 	    	}else{
-	    		var row = goodTypeTables.rows('.selected').data();
+	    		/* var row = goodTypeTables.rows('.selected').data();
 	    		var typeCode = row[0].typeCode;
-	    		var type = {typeCode:typeCode};
+	    		var type = {typeCode:typeCode}; */
+	    		
+	    		var typeId = $(".checkchild:checked").val();
+	    		var type = {typeId:typeId};
 	    		$.ajax({
 	    			type : "post",
-	                url : "<%=contextPath%>/goodType/getGoodTypeByTypeCode",
+	                url : "<%=contextPath%>/goodType/getGoodType",
 						data : type,
 						dataType : "json",
 						success : function(dataRtn) {
@@ -627,7 +650,7 @@
 	    	
 	    	var typeForm = $('#typeUptForm');
 	    	//验证表单
-	    	/* var validator = $('#typeUptForm').data('bootstrapValidator');
+	    	 var validator = $('#typeUptForm').data('bootstrapValidator');
 	        
 	    	if (validator) {
 	        // 修复记忆的组件不验证
@@ -635,7 +658,7 @@
 	            if (!validator.isValid()) {
 	                return false;
 	            }
-	        } */
+	        }
 	        
 	        $.ajax({
 	            type : "post",
@@ -647,7 +670,7 @@
 	            	var rtnStr = dataRtn.rtn;
 	            	
 	            	//清空表单验证
-	        		//$('#typeUptForm').data('bootstrapValidator').resetForm(); 
+	        		$('#typeUptForm').data('bootstrapValidator').resetForm(); 
 	        		//清空表单内容
 	        		$('#typeUptForm').resetForm();
 	        		$("#statusOpen").removeAttr("checked");

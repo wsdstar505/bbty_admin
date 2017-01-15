@@ -108,10 +108,10 @@ public class GoodTypeController {
 
 	@RequestMapping(value = "/delGoodType")
 	@ResponseBody
-	public Map<String, Object> delGoodType(@RequestBody String[] typeCodes) {
+	public Map<String, Object> delGoodType(@RequestBody String[] typeIds) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			goodTypeService.delType(typeCodes);
+			goodTypeService.delType(typeIds);
 			map.put("rtn", "success");
 		} catch (Exception e) {
 			map.put("rtn", "fail");
@@ -119,18 +119,18 @@ public class GoodTypeController {
 		return map;
 	}
 
-	@RequestMapping(value = "/getGoodTypeByTypeCode")
+	@RequestMapping(value = "/getGoodType")
 	@ResponseBody
-	public Map<String, Object> getGoodTypeByTypeCode(HttpServletRequest request) {
+	public Map<String, Object> getGoodType(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		String typeCode = request.getParameter("typeCode");
+		String typeId = request.getParameter("typeId");
 
 		GoodType goodType = new GoodType();
-		goodType.setTypeCode(typeCode);
+		goodType.setTypeId(Long.valueOf(typeId));;
 
 		try {
-			goodType = goodTypeService.getGoodTypeByTypeCode(goodType);
+			goodType = goodTypeService.getGoodType(goodType);
 			if (goodType != null) {
 				map.put("rtn", "success");
 				map.put("goodType", goodType);
@@ -214,7 +214,7 @@ public class GoodTypeController {
 				goodType.setTypeCode(typeCode);
 
 				try {
-					goodType = this.goodTypeService.getGoodTypeByTypeCode(goodType);
+					goodType = this.goodTypeService.getGoodType(goodType);
 					if (goodType != null) {
 						// 表示不合法，验证不通过
 						map.put("valid", "false");
@@ -229,6 +229,37 @@ public class GoodTypeController {
 				}
 			}
 		}
+
+		return map;
+	}
+	
+	@RequestMapping(value = "/checkAddTypeCode")
+	@ResponseBody
+	public Map<String, Object> checkAddTypeCode(HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		String typeCode = request.getParameter("typeCode");
+
+		if (typeCode != null) {
+			
+				GoodType goodType = new GoodType();
+				goodType.setTypeCode(typeCode);
+
+				try {
+					goodType = this.goodTypeService.getGoodType(goodType);
+					if (goodType != null) {
+						// 表示不合法，验证不通过
+						map.put("valid", "false");
+					} else {
+						// 表示合法，验证通过
+						map.put("valid", "true");
+					}
+
+				} catch (Exception e) {
+					// 出现异常，验证不通过
+					map.put("valid", "false");
+				}
+			}
 
 		return map;
 	}
