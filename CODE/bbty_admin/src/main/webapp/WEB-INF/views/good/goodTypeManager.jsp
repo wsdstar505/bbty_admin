@@ -18,16 +18,101 @@
 <body>
 
 	<!-- 成功提示框 -->
-	<div class="alert alert-success" id="successAlert">操作成功！</div>
+	<div class="modal fade bs-example-modal-sm" id="successAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-success btn-circle">
+						<i class="fa fa-check"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作成功！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 失败提示框 -->
-	<div class="alert alert-danger" id="dangerAlert">操作失败，出现异常！</div>
+	<div class="modal fade bs-example-modal-sm" id="dangerAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-danger btn-circle">
+						<i class="fa fa-times"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作失败，出现异常！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="oneRowAlert">请选择一条记录！</div>
+	<!-- 没选择一条警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="oneRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择一条记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="noRowAlert">请选择记录！</div>
+	<!-- 未选择警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="noRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 删除商品类型确认提示框 -->
+	<div class="modal fade bs-example-modal-lg" id="confirmDelModal"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;确定要删除选中的商品子类别吗？若商品类别下还有子类别则一并删除子类别!
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger"
+						onclick="deleteTypes();">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<!-- 新增商品类型 -->
 	<div class="modal fade" id="typeAddModal" tabindex="-1" role="dialog">
@@ -114,13 +199,13 @@
 						<div class="form-group">
 							<label for="typeCode" class="col-sm-2 control-label">类型编码:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="typeCode" id="typeCode">
+								<input type="text" class="form-control" name="typeUptCode" id="typeCode" readonly="readonly">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="typeName" class="col-sm-2 control-label">类型名称:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="typeName" id="typeName">
+								<input type="text" class="form-control" name="typeUptName" id="typeName">
 							</div>
 						</div>
 						<div class="form-group">
@@ -166,23 +251,6 @@
 		</div>
 	</div>
 	
-	
-	<div class="modal fade bs-example-modal-sm"  id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  		<div class="modal-dialog modal-sm">
-    		<div class="modal-content">
-    		<div class="modal-body">
-    			确定要删除选中的商品子类别吗？若商品类别下还有子类别则一并删除子类别!
-    		</div>
-    		<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="deleteTypes();">确定</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						</div>
-    		</div>
-  		</div>
-  	
-	</div>
-	
 	<div class="row">
 
 		<div class="col-lg-4">
@@ -216,14 +284,6 @@
 		var goodTypeTree;
 		var parTypeIdStr;
 		$(function() {
-			//隐藏成功提示框
-	    	$("#successAlert").hide();
-	    	//隐藏失败提示框
-	    	$("#dangerAlert").hide();
-	    	//隐藏警告提示框
-	    	$("#oneRowAlert").hide();
-	    	$("#noRowAlert").hide();
-	    	
 			$("#typeMenuDiv").hide();
 			
 			$.ajax({
@@ -242,86 +302,81 @@
 	    					parTypeIdStr=data.tags;
 	    					
 	    					$("#parTypeIdStr").val(parTypeIdStr);
+
+	    						var nodes = data.nodes;
+	    						if(nodes != null || parTypeIdStr == "1"){
+		    						$("#typeMenuDiv").show();
+		    						$("#typeTableDiv").show();
+		    						//表格初始化
+			    			        $('#goodTypeTables').DataTable({
+			    			        	destroy:true,	    			        	
+			    			        	pagingType:"full_numbers",//设置分页控件的模式
+			    			        	searching: false,//datatales的查询框,true:开启;false:关闭
+			    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
+			    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
+			    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
+			    			        	bDestory:true,
+			    			            ajax: {
+			    			                "url": "<%=contextPath%>/goodType/getChildGoodTypesByTypeCode?parTypeIdStr="+parTypeIdStr
+			    							},
+			    							columns : [ 
+			    							{
+				    								"data":"typeId",
+				    								render:function(data,type,full,meta){
+				    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
+				    								},
+				    								"sortable":false
+				    						},{
+			    								"data" : "typeCode",
+			    								"title" : "类别编码"
+			    							}, {
+			    								"data" : "typeName",
+			    								"title" : "类别名称"
+			    							},{
+			    								"data" : "isLeaf",
+			    								"title" : "是否有子类别",
+			    								 render: function (data, type, row, meta) {
+			    									 if(row.isLeaf =='1'){
+			    										 return '<span>有</span>';
+			    									 }else if (row.isLeaf =='0'){
+			    										 return '<span>无</span>';
+			    									 }
+			    				                 }
+			    							},{
+			    								"data" : "status",
+			    								"title" : "状态",
+			    								 render: function (data, type, row, meta) {
+			    									 if(row.status =='1'){
+			    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
+			    									 }else if (row.status =='0'){
+			    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
+			    									 }
+			    				                 }
+			    							}
+			    					         ],
+			    							language : {
+			    								loadingRecords : "加载中...",
+			    								processing : "查询中...",
+			    								search : "智能搜索:",
+			    								lengthMenu : "每页显示 _MENU_ 条记录",
+			    								zeroRecords : "没有找到记录",
+			    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
+			    								infoEmpty : "无记录",
+			    								infoFiltered : "(从 _MAX_ 条记录过滤)",
+			    								paginate : {
+			    									first : "首页",
+			    									last : "尾页",
+			    									next : "下页",
+			    									previous : "上页"
+			    								}
+			    							}
+			    						});	
+		    						
+		    					}else{
+		    						$("#typeMenuDiv").hide();
+		    						$("#typeTableDiv").hide();
+		    					}
 	    					
-	    					var nodes = data.nodes;
-	    					
-	    					if(nodes != null){
-	    						$("#typeMenuDiv").show();
-	    						$("#typeTableDiv").show();
-	    						//表格初始化
-		    			        $('#goodTypeTables').DataTable({
-		    			        	destroy:true,	    			        	
-		    			        	pagingType:"full_numbers",//设置分页控件的模式
-		    			        	searching: false,//datatales的查询框,true:开启;false:关闭
-		    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
-		    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
-		    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
-		    			        	bDestory:true,
-		    			            ajax: {
-		    			                "url": "<%=contextPath%>/goodType/getChildGoodTypesByTypeCode?parTypeIdStr="+parTypeIdStr
-		    							},
-		    							columns : [ 
-		    							{
-			    								"data":"typeId",
-			    								render:function(data,type,full,meta){
-			    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
-			    								},
-			    								"sortable":false
-			    						},{
-		    								"data" : "typeCode",
-		    								"title" : "类别编码"
-		    							}, {
-		    								"data" : "typeName",
-		    								"title" : "类别名称"
-		    							},{
-		    								"data" : "isLeaf",
-		    								"title" : "是否有子类别",
-		    								 render: function (data, type, row, meta) {
-		    									 if(row.isLeaf =='1'){
-		    										 return '<span>有</span>';
-		    									 }else if (row.isLeaf =='0'){
-		    										 return '<span>无</span>';
-		    									 }
-		    				                 }
-		    							},{
-		    								"data" : "status",
-		    								"title" : "状态",
-		    								 render: function (data, type, row, meta) {
-		    									 if(row.status =='1'){
-		    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
-		    									 }else if (row.status =='0'){
-		    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
-		    									 }
-		    				                 }
-		    							}
-		    					         ],
-		    							language : {
-		    								loadingRecords : "加载中...",
-		    								processing : "查询中...",
-		    								search : "智能搜索:",
-		    								lengthMenu : "每页显示 _MENU_ 条记录",
-		    								zeroRecords : "没有找到记录",
-		    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
-		    								infoEmpty : "无记录",
-		    								infoFiltered : "(从 _MAX_ 条记录过滤)",
-		    								paginate : {
-		    									first : "首页",
-		    									last : "尾页",
-		    									next : "下页",
-		    									previous : "上页"
-		    								}
-		    							}
-		    						});	
-	    						
-		    			      //行选中更改颜色
-		    			       /*  $('#goodTypeTables tbody').on( 'click', 'tr', function () {
-		    			            $(this).toggleClass('selected');
-		    			        } ); */
-		    			      
-	    					}else{
-	    						$("#typeMenuDiv").hide();
-	    						$("#typeTableDiv").hide();
-	    					}
 	    				}
 	    			});
 	        		
@@ -377,26 +432,15 @@
 		                validating: 'glyphicon glyphicon-refresh'
 		            },
 		            fields: {/*验证*/
-		            	typeCode: {/*键名username和input name值对应*/
+		            	typeUptCode: {/*键名username和input name值对应*/
 		                    message: '类型编码无效',
 		                    validators: {
 		                        notEmpty: {/*非空提示*/
 		                            message: '类型编码不能为空'
-		                        },
-		                        remote: {
-		                        	url: '<%=contextPath%>/goodType/checkTypeCode',
-		                            message: '类型编码已存在',//提示消息
-		                            type: 'post',//请求方式
-		                            data: function(validator) {
-			                               return {
-			                                   typeSrcCode: $("#typeSrcCode").val()
-			                               };
-			                            }
-		                        },
-		                        
+		                        }
 		                    }
 		                },
-		                typeName: {
+		                typeUptName: {
 		                    message:'类型名称无效',
 		                    validators: {
 		                        notEmpty: {
@@ -405,144 +449,133 @@
 		                    }
 		                }
 		            }
-		        });
-			
-	
+	    	});
+
 		});
 		
-		function successAlert(){
-	    	$("#successAlert").show();
-	    	//3秒后关闭提示
-	    	setTimeout('$("#successAlert").hide()',3000);
-	    }
-	    
-	    function dangerAlert(){
-	    	//失败提示
-	    	$("#dangerAlert").show();
-			
-	    	//3秒后关闭提示
-	    	setTimeout('$("#dangerAlert").hide()',3000);
-	    }
-	    
-	    function oneRowAlert(){
-	    	$("#oneRowAlert").show();
-			
-	    	//3秒后关闭提示
-	    	setTimeout('$("#oneRowAlert").hide()',3000);
-	    }
-	    
-	    function noRowAlert(){
-			$("#noRowAlert").show();
-			
-	    	//3秒后关闭提示
-	    	setTimeout('$("#noRowAlert").hide()',3000);
-	    }
-	    
-	    function reloadTable(){
-	    	var goodTypeTables = $('#goodTypeTables').DataTable();
-	    	goodTypeTables.ajax.reload();
-	    }
-	    
-	    //关闭商品类型窗口
-	    function closeModal(par){
-	  		if(par =="1"){
-	  			//清空表单验证
-	    		$('#typeAddForm').data('bootstrapValidator').resetForm(); 
-	    		//清空表单内容
-	    		$('#typeAddForm').resetForm();
-	  			$("#typeAddModal").modal('hide');
-	  		}else if(par =="2"){
-	  			//清空表单验证
-	    		$('#typeUptForm').data('bootstrapValidator').resetForm(); 
-	    		//清空表单内容
-	    		$('#typeUptForm').resetForm();
-	    		
-	    		$("#statusOpen").removeAttr("checked");
-        		$("#statusStop").removeAttr("checked");
-        		$("#isLeaf").removeAttr("checked");
-        		$("#noLeaf").removeAttr("checked");
-        		
-	  			$("#typeUptModal").modal('hide');
-	  		}else{
-	  			$("#confirmDelModal").modal('hide');
-	  		}
-	    	
-	    }
-	    
-	    //跳转到新增商品类型
-		function toAddType(){
+		 
+		function successAlert() {
+			$("#successAlert").modal('show');
+			//setTimeout('$("#successAlert").hide()',3000);
+		}
+
+		function dangerAlert() {
+			$("#dangerAlert").modal('show');
+		}
+
+		function oneRowAlert() {
+			$("#oneRowAlert").modal('show');
+		}
+
+		function noRowAlert() {
+			$("#noRowAlert").modal('show');
+		}
+
+		function reloadTable() {
+			var goodTypeTables = $('#goodTypeTables').DataTable();
+			goodTypeTables.ajax.reload();
+		}
+
+		//关闭商品类型窗口
+		function closeModal(par) {
+			if (par == "1") {
+				//清空表单验证
+				$('#typeAddForm').data('bootstrapValidator').resetForm();
+				//清空表单内容
+				$('#typeAddForm').resetForm();
+				$("#typeAddModal").modal('hide');
+			} else if (par == "2") {
+				//清空表单验证
+				$('#typeUptForm').data('bootstrapValidator').resetForm();
+				//清空表单内容
+				$('#typeUptForm').resetForm();
+
+				$("#statusOpen").removeAttr("checked");
+				$("#statusStop").removeAttr("checked");
+				$("#isLeaf").removeAttr("checked");
+				$("#noLeaf").removeAttr("checked");
+
+				$("#typeUptModal").modal('hide');
+			} else {
+				$("#confirmDelModal").modal('hide');
+			}
+
+		}
+
+		//跳转到新增商品类型
+		function toAddType() {
 			$('#typeAddModal').modal('show');
 		}
-	    
-	    //保存新增商品类型
-	    function saveType(){
-	    	 var parTypeIdStr = $("#parTypeIdStr").val();
-	    	 $("#parTypeIdAdd").val(parTypeIdStr);
-	    	 var typeAddForm = $('#typeAddForm');
-	    	//验证表单
-	    	var validator = $('#typeAddForm').data('bootstrapValidator');
-	        
-	    	if (validator) {
-	        // 修复记忆的组件不验证
-	            validator.validate();
-	            if (!validator.isValid()) {
-	                return false;
-	            }
-	        }
-	        
-	        $.ajax({
-	            type : "post",
-	            url : typeAddForm.attr("action"),
-	            data : typeAddForm.serializeArray(),
-	            dataType : "json",
-	            cache : false,
-	            success : function (dataRtn){
-	            	var rtnStr = dataRtn.rtn;
-	            	//清空表单验证
-	        		$('#typeAddForm').data('bootstrapValidator').resetForm(); 
-	        		//清空表单内容
-	        		$('#typeAddForm').resetForm();
-	        		
-	            	if(rtnStr == "success"){
-	            		//关闭窗口
-	                	closeModal(1);
-	            		//成功提示
-	                	successAlert();
-	            		
-	            	}else{
-	            		//关闭窗口
-	                	closeModal(1);
-	            		//成功提示
-	                	dangerAlert();
-	            	}
-	            	
-	            	//树刷新
-	            	reloadTree();
-	            	//列表刷新
-	            	reloadTable();
-	            }
-	        });
 
-	    }
-	    
-	    //跳转到删除商品类别
-	    function toDeleteTypes(){
-	    	/* var goodTypeTables = $('#goodTypeTables').DataTable();
+		//保存新增商品类型
+		function saveType() {
+			var parTypeIdStr = $("#parTypeIdStr").val();
+			$("#parTypeIdAdd").val(parTypeIdStr);
+			var typeAddForm = $('#typeAddForm');
+			//验证表单
+			var validator = $('#typeAddForm').data('bootstrapValidator');
+
+			if (validator) {
+				// 修复记忆的组件不验证
+				validator.validate();
+				if (!validator.isValid()) {
+					return false;
+				}
+			}
+
+			$.ajax({
+				type : "post",
+				url : typeAddForm.attr("action"),
+				data : typeAddForm.serializeArray(),
+				dataType : "json",
+				cache : false,
+				success : function(dataRtn) {
+					var rtnStr = dataRtn.rtn;
+					//清空表单验证
+					$('#typeAddForm').data('bootstrapValidator').resetForm();
+					//清空表单内容
+					$('#typeAddForm').resetForm();
+
+					if (rtnStr == "success") {
+						//关闭窗口
+						closeModal(1);
+						//成功提示
+						successAlert();
+
+					} else {
+						//关闭窗口
+						closeModal(1);
+						//成功提示
+						dangerAlert();
+					}
+
+					//树刷新
+					reloadTree();
+					//列表刷新
+					reloadTable();
+				}
+			});
+
+		}
+
+		//跳转到删除商品类别
+		function toDeleteTypes() {
+			/* var goodTypeTables = $('#goodTypeTables').DataTable();
 			var length = goodTypeTables.rows('.selected').data().length;
 			if (length == 0) {
 				noRowAlert();
 			} else {
 				$("#confirmDelModal").modal('show');
 			} */
-			
-	    	if($(".checkchild:checked").length == 0){
+
+			if ($(".checkchild:checked").length == 0) {
 				noRowAlert();
-			}else{
+			} else {
 				$("#confirmDelModal").modal('show');
 			}
-	    }
-	    
-	    //删除商品类别
+		}
+
+		//删除商品类别
 		function deleteTypes() {
 			/* var goodTypeTables = $('#goodTypeTables').DataTable();
 			var rows = goodTypeTables.rows('.selected').data();
@@ -551,17 +584,16 @@
 			for(var i =0; i<length; i++){
 				rowIdArray.push(rows[i].typeCode);
 			} */
-			
+
 			var rowIdArray = [];
 			var length = $(".checkchild:checked").length;
-			$(".checkchild:checked").each(function(){
+			$(".checkchild:checked").each(function() {
 				rowIdArray.push($(this).val());
 			});
-			
-			
+
 			$.ajax({
-	            type : "post",
-	            url : "<%=contextPath%>/goodType/delGoodType",
+				type : "post",
+				url : "<%=contextPath%>/goodType/delGoodType",
 	            data : JSON.stringify(rowIdArray),
 	            contentType:"application/json",
 	            dataType : "json",
@@ -647,23 +679,22 @@
 	    
 		   //保存修改商品类别
 	    function uptType(){
-	    	
-	    	var typeForm = $('#typeUptForm');
-	    	//验证表单
-	    	 var validator = $('#typeUptForm').data('bootstrapValidator');
-	        
-	    	if (validator) {
-	        // 修复记忆的组件不验证
-	            validator.validate();
-	            if (!validator.isValid()) {
-	                return false;
-	            }
-	        }
-	        
+	    	var typeUptForm = $('#typeUptForm');
+			//验证表单
+			var validator = $('#typeUptForm').data('bootstrapValidator');
+
+			if (validator) {
+				// 修复记忆的组件不验证
+				validator.validate();
+				if (!validator.isValid()) {
+					return false;
+				
+				}
+			}
 	        $.ajax({
 	            type : "post",
-	            url : typeForm.attr("action"),
-	            data : typeForm.serializeArray(),
+	            url : typeUptForm.attr("action"),
+	            data : typeUptForm.serializeArray(),
 	            dataType : "json",
 	            cache : false,
 	            success : function (dataRtn){
@@ -703,8 +734,8 @@
 		   
 		
 		function reloadTree(){
-			var goodTypeTree;
-			var parTypeIdStr;
+			//var goodTypeTree;
+			//var parTypeIdStr;
         	$.ajax({
 	            type : "post",
 	            url : "<%=contextPath%>/goodType/getGoodTypeTree",
@@ -717,77 +748,84 @@
 	    				data : goodTypeTree,
 	    				emptyIcon : "glyphicon glyphicon-book",
 	    				onNodeSelected : function(event, data) {
-	    					
-	    					parTypeIdStr=data.tags;
+							parTypeIdStr=data.tags;
 	    					
 	    					$("#parTypeIdStr").val(parTypeIdStr);
+
+	    						var nodes = data.nodes;
+	    						if(nodes != null || parTypeIdStr == "1"){
+		    						$("#typeMenuDiv").show();
+		    						$("#typeTableDiv").show();
+		    						//表格初始化
+			    			        $('#goodTypeTables').DataTable({
+			    			        	destroy:true,	    			        	
+			    			        	pagingType:"full_numbers",//设置分页控件的模式
+			    			        	searching: false,//datatales的查询框,true:开启;false:关闭
+			    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
+			    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
+			    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
+			    			        	bDestory:true,
+			    			            ajax: {
+			    			                "url": "<%=contextPath%>/goodType/getChildGoodTypesByTypeCode?parTypeIdStr="+parTypeIdStr
+			    							},
+			    							columns : [ 
+			    							{
+				    								"data":"typeId",
+				    								render:function(data,type,full,meta){
+				    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
+				    								},
+				    								"sortable":false
+				    						},{
+			    								"data" : "typeCode",
+			    								"title" : "类别编码"
+			    							}, {
+			    								"data" : "typeName",
+			    								"title" : "类别名称"
+			    							},{
+			    								"data" : "isLeaf",
+			    								"title" : "是否有子类别",
+			    								 render: function (data, type, row, meta) {
+			    									 if(row.isLeaf =='1'){
+			    										 return '<span>有</span>';
+			    									 }else if (row.isLeaf =='0'){
+			    										 return '<span>无</span>';
+			    									 }
+			    				                 }
+			    							},{
+			    								"data" : "status",
+			    								"title" : "状态",
+			    								 render: function (data, type, row, meta) {
+			    									 if(row.status =='1'){
+			    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
+			    									 }else if (row.status =='0'){
+			    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
+			    									 }
+			    				                 }
+			    							}
+			    					         ],
+			    							language : {
+			    								loadingRecords : "加载中...",
+			    								processing : "查询中...",
+			    								search : "智能搜索:",
+			    								lengthMenu : "每页显示 _MENU_ 条记录",
+			    								zeroRecords : "没有找到记录",
+			    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
+			    								infoEmpty : "无记录",
+			    								infoFiltered : "(从 _MAX_ 条记录过滤)",
+			    								paginate : {
+			    									first : "首页",
+			    									last : "尾页",
+			    									next : "下页",
+			    									previous : "上页"
+			    								}
+			    							}
+			    						});	
+		    						
+		    					}else{
+		    						$("#typeMenuDiv").hide();
+		    						$("#typeTableDiv").hide();
+		    					}
 	    					
-	    					var nodes = data.nodes;
-	    					
-	    					if(nodes != null){
-	    						$("#typeMenuDiv").show();
-	    						$("#typeTableDiv").show();
-	    						//表格初始化
-		    			        $('#goodTypeTables').DataTable({
-		    			        	destroy:true,	    			        	
-		    			        	pagingType:"full_numbers",//设置分页控件的模式
-		    			        	searching: false,//datatales的查询框,true:开启;false:关闭
-		    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
-		    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
-		    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
-		    			        	bDestory:true,
-		    			            ajax: {
-		    			                "url": "<%=contextPath%>/goodType/getChildGoodTypesByTypeCode?parTypeIdStr="+parTypeIdStr
-		    							},
-		    							columns : [ {
-		    								"data" : "typeCode",
-		    								"title" : "类别编码"
-		    							}, {
-		    								"data" : "typeName",
-		    								"title" : "类别名称"
-		    							},{
-		    								"data" : "isLeaf",
-		    								"title" : "是否有子类别",
-		    								 render: function (data, type, row, meta) {
-		    									 if(row.isLeaf =='1'){
-		    										 return '<span>有</span>';
-		    									 }else if (row.isLeaf =='0'){
-		    										 return '<span>无</span>';
-		    									 }
-		    				                 }
-		    							},{
-		    								"data" : "status",
-		    								"title" : "状态",
-		    								 render: function (data, type, row, meta) {
-		    									 if(row.status =='1'){
-		    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
-		    									 }else if (row.status =='0'){
-		    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
-		    									 }
-		    				                 }
-		    							}
-		    					         ],
-		    							language : {
-		    								loadingRecords : "加载中...",
-		    								processing : "查询中...",
-		    								search : "智能搜索:",
-		    								lengthMenu : "每页显示 _MENU_ 条记录",
-		    								zeroRecords : "没有找到记录",
-		    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
-		    								infoEmpty : "无记录",
-		    								infoFiltered : "(从 _MAX_ 条记录过滤)",
-		    								paginate : {
-		    									first : "首页",
-		    									last : "尾页",
-		    									next : "下页",
-		    									previous : "上页"
-		    								}
-		    							}
-		    						});	
-	    					}else{
-	    						$("#typeMenuDiv").hide();
-	    						$("#typeTableDiv").hide();
-	    					}
 	    				}
 	    			});
 	        		
@@ -798,9 +836,6 @@
 	            }
 	        });
 		}
-		
-		
-		
 	</script>
 
 </body>

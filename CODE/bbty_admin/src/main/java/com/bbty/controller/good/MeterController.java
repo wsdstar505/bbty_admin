@@ -52,7 +52,7 @@ public class MeterController {
 		Meter meter = new Meter();
 		meter.setMeterCode(meterCode);
 		try {
-			meter = meterService.getMeterByMeterCode(meter);
+			meter = meterService.getMeter(meter);
 			if (meter != null) {
 				// 表示不合法，验证不通过
 				map.put("valid", "false");
@@ -94,18 +94,18 @@ public class MeterController {
 		return map;
 	}
 
-	@RequestMapping(value = "/getMeterByMeterCode")
+	@RequestMapping(value = "/getMeter")
 	@ResponseBody
-	public Map<String, Object> getMeterByMeterCode(HttpServletRequest request) {
+	public Map<String, Object> getMeter(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		String meterCode = request.getParameter("meterCode");
+		String meterId = request.getParameter("meterId");
 
 		Meter meter = new Meter();
-		meter.setMeterCode(meterCode);
+		meter.setMeterId(Long.valueOf(meterId));
 
 		try {
-			meter = meterService.getMeterByMeterCode(meter);
+			meter = meterService.getMeter(meter);
 			if (meter != null) {
 				map.put("rtn", "success");
 				map.put("meter", meter);
@@ -147,10 +147,10 @@ public class MeterController {
 
 	@RequestMapping(value = "/delMeter")
 	@ResponseBody
-	public Map<String, Object> delMeter(@RequestBody String[] meterCodes) {
+	public Map<String, Object> delMeter(@RequestBody String[] meterIds) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			meterService.delMeter(meterCodes);
+			meterService.delMeter(meterIds);
 			map.put("rtn", "success");
 		} catch (Exception e) {
 			map.put("rtn", "fail");

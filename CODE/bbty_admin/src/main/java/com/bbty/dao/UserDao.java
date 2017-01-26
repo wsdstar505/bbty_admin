@@ -14,4 +14,6 @@ public interface UserDao extends Mapper<User>{
 	public List<User> selectAllWithUserOper();
 
 	public User selectOneWithUserOper(User user);
+
+	public User selectOneWithUserOperByUserId(User user);
 }

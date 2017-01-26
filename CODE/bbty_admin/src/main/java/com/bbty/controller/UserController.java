@@ -262,12 +262,12 @@ public class UserController {
 	// 删除用户与角色关系
 	@RequestMapping(value = "/delUserAndOperAndRole")
 	@ResponseBody
-	public Map<String, Object> delUserAndOperAndRole(@RequestBody String[] userids) {
+	public Map<String, Object> delUserAndOperAndRole(@RequestBody String[] empids) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			for (String userid : userids) {
+			for (String empid : empids) {
 				User user = new User();
-				user.setUserid(userid);
+				user.setEmpid(Long.valueOf(empid));
 				user = userService.selectOneWithUserOper(user);
 
 				UserRole userRole = new UserRole();
@@ -288,15 +288,15 @@ public class UserController {
 		return map;
 	}
 	
-	@RequestMapping(value = "/getUserByUserId")
+	@RequestMapping(value = "/getUser")
 	@ResponseBody
 	public Map<String, Object> getUserByUserId(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		String userid = request.getParameter("userid");
+		String empid = request.getParameter("empid");
 
 		User user = new User();
-		user.setUserid(userid);
+		user.setEmpid(Long.valueOf(empid));
 
 		try {
 			user = userService.selectOneWithUserOper(user);

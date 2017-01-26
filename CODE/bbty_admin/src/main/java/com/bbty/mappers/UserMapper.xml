@@ -10,8 +10,16 @@
 	<select id="selectOneWithUserOper" parameterType="com.bbty.pojo.User"
 		resultType="com.bbty.pojo.User">
 		SELECT U.*,UO.STATUS FROM T_USER U,T_USER_OPER UO WHERE U.USERID=UO.USERID
+		<if test="empid != null">
+			AND U.EMPID=#{empid}
+		</if>	
+	</select>
+	
+	<select id="selectOneWithUserOperByUserId" parameterType="com.bbty.pojo.User"
+		resultType="com.bbty.pojo.User">
+		SELECT U.*,UO.STATUS FROM T_USER U,T_USER_OPER UO WHERE U.USERID=UO.USERID
 		<if test="userid != null">
-			AND UO.USERID=#{userid}
+			AND U.USERID=#{userid}
 		</if>	
 	</select>
 

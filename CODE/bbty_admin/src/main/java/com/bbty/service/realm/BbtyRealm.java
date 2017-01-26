@@ -102,7 +102,7 @@ public class BbtyRealm extends AuthorizingRealm {
         
         User user = new User();
 		user.setUserid(token.getUsername());
-		user = this.userDao.selectOneWithUserOper(user);
+		user = this.userDao.selectOneWithUserOperByUserId(user);
 		
 		List<UserRole> userRoles = this.userRoleDao.selectAllByUser(user);
 		

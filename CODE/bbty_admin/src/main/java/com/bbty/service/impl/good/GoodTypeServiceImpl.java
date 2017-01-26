@@ -18,6 +18,7 @@ public class GoodTypeServiceImpl implements GoodTypeService{
 	public List<GoodType> getGoodTypeList(long parTypeId) {
 		GoodType goodType = new GoodType();
 		goodType.setParTypeId(parTypeId);
+		goodType.setStatus("1");
 		List<GoodType> list = goodTypeDao.select(goodType);
 		return list;
 	}

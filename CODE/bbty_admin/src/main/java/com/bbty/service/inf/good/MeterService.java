@@ -10,10 +10,10 @@ public interface MeterService {
 
 	void saveMeter(Meter meter);
 
-	Meter getMeterByMeterCode(Meter meter);
+	Meter getMeter(Meter meter);
 
 	void uptMeterBySelective(Meter meter);
 
-	void delMeter(String[] meterCodes);
+	void delMeter(String[] meterIds);
 
 }

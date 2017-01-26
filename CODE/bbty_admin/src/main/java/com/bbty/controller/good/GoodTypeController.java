@@ -202,7 +202,7 @@ public class GoodTypeController {
 	public Map<String, Object> checkTypeCode(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 
-		String typeCode = request.getParameter("typeCode");
+		String typeCode = request.getParameter("typeUptCode");
 		String typeSrcCode = request.getParameter("typeSrcCode");
 
 		if (typeCode != null && typeSrcCode != null) {

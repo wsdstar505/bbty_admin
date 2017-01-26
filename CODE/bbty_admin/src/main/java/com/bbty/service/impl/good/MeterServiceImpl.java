@@ -26,7 +26,7 @@ public class MeterServiceImpl implements MeterService{
 	}
 
 	@Override
-	public Meter getMeterByMeterCode(Meter meter) {
+	public Meter getMeter(Meter meter) {
 		return meterDao.selectOne(meter);
 	}
 
@@ -36,11 +36,10 @@ public class MeterServiceImpl implements MeterService{
 	}
 
 	@Override
-	public void delMeter(String[] meterCodes) {
-		for (String meterCode : meterCodes) {
+	public void delMeter(String[] meterIds) {
+		for (String meterId : meterIds) {
 			Meter meter = new Meter();
-			meter.setMeterCode(meterCode);
-			meter = meterDao.selectOne(meter);
+			meter.setMeterId(Long.valueOf(meterId));
 			meterDao.deleteByPrimaryKey(meter.getMeterId());
 		}
 	}

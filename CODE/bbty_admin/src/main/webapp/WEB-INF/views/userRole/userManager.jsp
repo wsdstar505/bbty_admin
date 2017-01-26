@@ -18,38 +18,108 @@
 <body>
 
 	<!-- 成功提示框 -->
-	<div class="alert alert-success" id="successAlert">操作成功！</div>
+	<div class="modal fade bs-example-modal-sm" id="successAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-success btn-circle">
+						<i class="fa fa-check"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作成功！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 失败提示框 -->
-	<div class="alert alert-danger" id="dangerAlert">操作失败，出现异常！</div>
-
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="oneRowAlert">请选择一条记录！</div>
-	
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="noRowAlert">请选择记录！</div>
-
-	<div class="modal fade bs-example-modal-sm"  id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  		<div class="modal-dialog modal-sm">
-    		<div class="modal-content">
-    		<div class="modal-body">
-    			确定要删除选中的员工吗？
-    		</div>
-    		<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="deleteUsers();">确定</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						</div>
-    		</div>
-  		</div>
+	<div class="modal fade bs-example-modal-sm" id="dangerAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-danger btn-circle">
+						<i class="fa fa-times"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作失败，出现异常！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
+	<!-- 没选择一条警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="oneRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择一条记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 未选择警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="noRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bs-example-modal-sm" id="confirmDelModal"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;确定要删除选中的员工吗？
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger"
+						onclick="deleteUsers();">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- 新增员工 -->
 	<div class="modal fade" id="userAddModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" onclick="closeModal(1);">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal(1);">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
 					<h4 class="modal-title">新增员工</h4>
@@ -84,18 +154,18 @@
 						<div class="form-group">
 							<label for="gender" class="col-sm-2 control-label">性别:</label>
 							<div class="col-sm-10">
-							 <label class="radio-inline">
-                             	<input type="radio" name="gender" id="genderOpen" value="1" checked>男
-                             </label>
-                             <label class="radio-inline">
-                             <input type="radio" name="gender" id="genderStop" value="0">女
-                             </label>
-                             </div>
+								<label class="radio-inline"> <input type="radio"
+									name="gender" id="genderOpen" value="1" checked>男
+								</label> <label class="radio-inline"> <input type="radio"
+									name="gender" id="genderStop" value="0">女
+								</label>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="birthdate" class="col-sm-2 control-label">出生日期:</label>
 							<div class="col-sm-6 date form_date ">
-								<input type="text" class="form-control" id="birthdate" readonly name="birthdate">
+								<input type="text" class="form-control" id="birthdate" readonly
+									name="birthdate">
 							</div>
 						</div>
 						<div class="form-group">
@@ -105,22 +175,22 @@
 							</div>
 						</div>
 						<div class="form-group">
-                           <label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
-                           <div class="col-sm-6">
-            				<select id="roleids" name="roleids" multiple="multiple" style="width: 460px">
-							</select>
-                           </div>
-                        </div>
+							<label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
+							<div class="col-sm-6">
+								<select id="roleids" name="roleids" multiple="multiple"
+									style="width: 460px">
+								</select>
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="status" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
-							 <label class="radio-inline">
-                             	<input type="radio" name="status" id="statusOpen" value="1" checked>启用
-                             </label>
-                             <label class="radio-inline">
-                             <input type="radio" name="status" id="statusStop" value="0">停用
-                             </label>
-                             </div>
+								<label class="radio-inline"> <input type="radio"
+									name="status" id="statusOpen" value="1" checked>启用
+								</label> <label class="radio-inline"> <input type="radio"
+									name="status" id="statusStop" value="0">停用
+								</label>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="remark" class="col-sm-2 control-label">备注:</label>
@@ -136,7 +206,6 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -146,7 +215,8 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" onclick="closeModal(2);">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal(2);">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
 					<h4 class="modal-title">修改员工</h4>
@@ -158,60 +228,63 @@
 						<div class="form-group">
 							<label for="userid" class="col-sm-2 control-label">登录名:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="userid" id="userid" readonly="readonly">
-								
+								<input type="text" class="form-control" name="userid"
+									id="userid" readonly="readonly">
+
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="username" class="col-sm-2 control-label">姓名:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="username" id="username">
+								<input type="text" class="form-control" name="username"
+									id="username">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="gender" class="col-sm-2 control-label">性别:</label>
 							<div class="col-sm-10">
-							 <label class="radio-inline">
-                             	<input type="radio" name="gender" id="uptGenderMan" value="1">男
-                             </label>
-                             <label class="radio-inline">
-                             <input type="radio" name="gender" id="uptGenderWoman" value="0">女
-                             </label>
-                             </div>
+								<label class="radio-inline"> <input type="radio"
+									name="gender" id="uptGenderMan" value="1">男
+								</label> <label class="radio-inline"> <input type="radio"
+									name="gender" id="uptGenderWoman" value="0">女
+								</label>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="birthdate" class="col-sm-2 control-label">出生日期:</label>
 							<div class="col-sm-6 date form_date ">
-								<input type="text" class="form-control" id="uptBirthdate" readonly name="birthdate">
+								<input type="text" class="form-control" id="uptBirthdate"
+									readonly name="birthdate">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="mobileno" class="col-sm-2 control-label">手机号码:</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" name="mobileno" id="mobileno">
+								<input type="text" class="form-control" name="mobileno"
+									id="mobileno">
 							</div>
 						</div>
 						<div class="form-group">
-                           <label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
-                           <div class="col-sm-6">
-            				<select id="uptRoleids" name="roleids" style="width: 460px"></select>
-                           </div>
-                        </div>
+							<label for="usertype" class="col-sm-2 control-label">拥有角色:</label>
+							<div class="col-sm-6">
+								<select id="uptRoleids" name="roleids" style="width: 460px"></select>
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="status" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
-							 <label class="radio-inline">
-                             	<input type="radio" name="status" id="uptStatusOpen" value="1">启用
-                             </label>
-                             <label class="radio-inline">
-                             <input type="radio" name="status" id="uptStatusStop" value="0">停用
-                             </label>
-                             </div>
+								<label class="radio-inline"> <input type="radio"
+									name="status" id="uptStatusOpen" value="1">启用
+								</label> <label class="radio-inline"> <input type="radio"
+									name="status" id="uptStatusStop" value="0">停用
+								</label>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="remark" class="col-sm-2 control-label">备注:</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
+								<textarea class="form-control" rows="3" name="remark"
+									id="remark"></textarea>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -222,10 +295,10 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
+	
 	<!-- 员工管理列表 -->
 	<div class="row">
 		<div class="col-lg-12">
@@ -236,7 +309,8 @@
 						onclick="toAddUser();">新增</button>
 					<button type="button" class="btn btn-warning"
 						onclick="toUptUser();">修改</button>
-					<button type="button" class="btn btn-danger" onclick="toDeleteUsers();">批量删除</button>
+					<button type="button" class="btn btn-danger"
+						onclick="toDeleteUsers();">批量删除</button>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
@@ -249,13 +323,6 @@
 
 	<script type="text/javascript">
     $(function() {
-    	//隐藏成功提示框
-    	$("#successAlert").hide();
-    	//隐藏失败提示框
-    	$("#dangerAlert").hide();
-    	//隐藏警告提示框
-    	$("#oneRowAlert").hide();
-    	$("#noRowAlert").hide();
     	
     	//新增员工表单校验
     	$('#userAddForm').bootstrapValidator({
@@ -406,7 +473,15 @@
             ajax: {
                 "url": "<%=contextPath%>/user/getUserList"
 				},
-				columns : [ {
+				columns : [ 
+				{
+					"data":"empid",
+					render:function(data,type,full,meta){
+						return '<input type="checkbox" class="checkchild" value="'+data+'" onclick="checkChange('+data+');"/>';
+					},
+					"sortable":false
+				},	
+				{
 					"data" : "userid",
 					"title" : "登录名"
 				}, {
@@ -447,23 +522,23 @@
 		         ],
 		         columnDefs: [ 
 		        	 {
-			             targets: 6,
+			             targets: 7,
 			             data: null,
 			             title : "操作",
 			             orderable: false,
 			             render: function (data, type, row, meta) {
 			            	 if(row.status =='1'){
-			            		 return '<button type="button" class="btn btn-default btn-circle" onclick="stopStatus('+"'" + row.userid+"'"+ ');"><i class="fa fa-times"></i></button>' 
+			            		 return '<button type="button" class="btn btn-default btn-circle" onclick="stopStatus('+"'" + row.empid+"'"+ ');"><i class="fa fa-times"></i></button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.userid+"'"+ ');">修改</button>' 
+								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.empid+"'"+ ');">修改</button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.userid+"'"+ ');">删除</button>';
+								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.empid+"'"+ ');">删除</button>';
 							 }else if (row.status =='0'){
-								 return '<button type="button" class="btn btn-success btn-circle" onclick="openStatus('+"'" + row.userid+"'"+ ');"><i class="fa fa-check"></i></button>' 
+								 return '<button type="button" class="btn btn-success btn-circle" onclick="openStatus('+"'" + row.empid+"'"+ ');"><i class="fa fa-check"></i></button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.userid+"'"+ ');">修改</button>' 
+								 '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.empid+"'"+ ');">修改</button>' 
 								 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.userid+"'"+ ');">删除</button>';
+								 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.empid+"'"+ ');">删除</button>';
 							 }
 		                    }
 			         }		         
@@ -488,9 +563,9 @@
 			});
     	
        //行选中更改颜色
-        $('#userTables tbody').on( 'click', 'tr', function () {
+       /*  $('#userTables tbody').on( 'click', 'tr', function () {
             $(this).toggleClass('selected');
-        } );
+        } ); */
         
     	//初始化新增时的时间控件
         $('#birthdate').datetimepicker({
@@ -575,30 +650,22 @@
 
 		}
 
-		function successAlert() {
-			$("#successAlert").show();
-			//3秒后关闭提示
-			setTimeout('$("#successAlert").hide()', 3000);
-		}
-
-		function dangerAlert() {
-			//失败提示
-			$("#dangerAlert").show();
-			//3秒后关闭提示
-			setTimeout('$("#dangerAlert").hide()', 3000);
-		}
-
-		function oneRowAlert() {
-			$("#oneRowAlert").show();
-			//3秒后关闭提示
-			setTimeout('$("#oneRowAlert").hide()', 3000);
-		}
-
-		function noRowAlert() {
-			$("#noRowAlert").show();
-			//3秒后关闭提示
-			setTimeout('$("#noRowAlert").hide()', 3000);
-		}
+		function successAlert(){
+	    	$("#successAlert").modal('show');
+	    	//setTimeout('$("#successAlert").hide()',3000);
+	    }
+	    
+	    function dangerAlert(){
+	    	$("#dangerAlert").modal('show');
+	    }
+	    
+	    function oneRowAlert(){
+	    	$("#oneRowAlert").modal('show');
+	    }
+	    
+	    function noRowAlert(){
+			$("#noRowAlert").modal('show');
+	    }
 
 		function reloadTable() {
 			var userTables = $('#userTables').DataTable();
@@ -656,19 +723,28 @@
 
 		//打开修改员工窗口
 		function toUptUser() {
-			var userTables = $('#userTables').DataTable();
+			/* var userTables = $('#userTables').DataTable();
 			var length = userTables.rows('.selected').data().length;
 			if (length > 1 || length == 0) {
 				oneRowAlert();
-			} else {
-				var row = userTables.rows('.selected').data();
+			} else { */
+				
+			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+					oneRowAlert();
+				}else{	
+		
+				/* var row = userTables.rows('.selected').data();
 				var userid = row[0].userid;
 				var user = {
 					userid : userid
-				};
+				}; */
+				
+				var empid = $(".checkchild:checked").val();
+	    		var user = {empid:empid};
+	    		
 				$.ajax({
 					type : "post",
-					url : "<%=contextPath%>/user/getUserByUserId",
+					url : "<%=contextPath%>/user/getUser",
 					data : user,
 					dataType : "json",
 					success : function(dataRtn) {
@@ -784,24 +860,36 @@
     
   		//跳转到批量删除员工确认框
 		function toDeleteUsers() {
-			var userTables = $('#userTables').DataTable();
+		/* 	var userTables = $('#userTables').DataTable();
 			var length = userTables.rows('.selected').data().length;
 			if (length == 0) {
 				noRowAlert();
 			} else {
+				$("#confirmDelModal").modal('show');
+			} */
+			
+			if($(".checkchild:checked").length == 0){
+				noRowAlert();
+			}else{
 				$("#confirmDelModal").modal('show');
 			}
 		}
 
   		//批量删除员工
 		function deleteUsers() {
-			var userTables = $('#userTables').DataTable();
+/* 			var userTables = $('#userTables').DataTable();
 			var rows = userTables.rows('.selected').data();
 			var length = userTables.rows('.selected').data().length;
 			var rowIdArray = [];
 			for(var i =0; i<length; i++){
 				rowIdArray.push(rows[i].userid);
-			}
+			} */
+			
+			var rowIdArray = [];
+			var length = $(".checkchild:checked").length;
+			$(".checkchild:checked").each(function(){
+				rowIdArray.push($(this).val());
+			});
 			
 			$.ajax({
 	            type : "post",
@@ -829,124 +917,187 @@
 	        });
 		}
 		
-		function singleUpt(userid){
-			var user = {
-					userid : userid
-				};
-			$.ajax({
-				type : "post",
-				url : "<%=contextPath%>/user/getUserByUserId",
-				data : user,
-				dataType : "json",
-				success : function(dataRtn) {
-					var rtnStr = dataRtn.rtn;
-					if (rtnStr == "success") {
-						
-						$("#remark").val(dataRtn.user.remark);
-						$("#empid").val(dataRtn.user.empid);
-						$("#userid").val(dataRtn.user.userid);
-						$("#username").val(dataRtn.user.username);
-						var gender = dataRtn.user.gender;
-						if(gender=="1"){
-							$("#uptGenderMan").attr('checked','true');
-						}
-						if(gender=="0"){
-							$("#uptGenderWoman").attr('checked','true');
-						}
-						if(dataRtn.user.status=="1"){
-							$("#uptStatusOpen").attr('checked','true');
-						}
-						if(dataRtn.user.status=="0"){
-							$("#uptStatusStop").attr('checked','true');
-						}
-						$('#uptBirthdate').val(dataRtn.user.birthdate);
-						$('#mobileno').val(dataRtn.user.mobileno);
-						
-						$("#uptRoleids").select2({
-        	 				placeholder: "请选择角色",
-        	 				allowClear: true,
-        	 				closeOnSelect: false,
-        	 				multiple:true,
-        	 				ajax: {
-        		 				url: "<%=contextPath%>/role/getRoleJson",
-        		 				dataType: 'json',
-        		 				delay: 250,
-        		 				processResults: function (data, params) {
-        		      				return {
-        		        				results: data.roleJsons,
-        		      				};
-        		 				}
-        	 				}
-        				});
-						
-						var roleJsons = dataRtn.roleJsons;
-						var roleids = new Array();
-						for(var i=0;i<roleJsons.length;i++){
-							var ht = $("#uptRoleids").html();
-							if(ht == ""){
-								$("#uptRoleids").html('<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>');
-							}else{
-								ht=ht+'<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>';
-								$("#uptRoleids").html(ht);
-							}
-							roleids[i]=roleJsons[i].id;
-						}
-						$("#uptRoleids").val(roleids).trigger("change");
-						$('#userUptModal').modal('show');
-					} else {
-						dangerAlert();
-					}
+		function singleUpt(empid){
+			
+			$(".checkchild").each(function(){
+				if(empid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
 				}
 			});
+			
+			var user = {
+					empid : empid
+				};
+			
+			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+				oneRowAlert();
+			}else{
+				$.ajax({
+					type : "post",
+					url : "<%=contextPath%>/user/getUser",
+					data : user,
+					dataType : "json",
+					success : function(dataRtn) {
+						var rtnStr = dataRtn.rtn;
+						if (rtnStr == "success") {
+							
+							$("#remark").val(dataRtn.user.remark);
+							$("#empid").val(dataRtn.user.empid);
+							$("#userid").val(dataRtn.user.userid);
+							$("#username").val(dataRtn.user.username);
+							var gender = dataRtn.user.gender;
+							if(gender=="1"){
+								$("#uptGenderMan").attr('checked','true');
+							}
+							if(gender=="0"){
+								$("#uptGenderWoman").attr('checked','true');
+							}
+							if(dataRtn.user.status=="1"){
+								$("#uptStatusOpen").attr('checked','true');
+							}
+							if(dataRtn.user.status=="0"){
+								$("#uptStatusStop").attr('checked','true');
+							}
+							$('#uptBirthdate').val(dataRtn.user.birthdate);
+							$('#mobileno').val(dataRtn.user.mobileno);
+							
+							$("#uptRoleids").select2({
+	        	 				placeholder: "请选择角色",
+	        	 				allowClear: true,
+	        	 				closeOnSelect: false,
+	        	 				multiple:true,
+	        	 				ajax: {
+	        		 				url: "<%=contextPath%>/role/getRoleJson",
+	        		 				dataType: 'json',
+	        		 				delay: 250,
+	        		 				processResults: function (data, params) {
+	        		      				return {
+	        		        				results: data.roleJsons,
+	        		      				};
+	        		 				}
+	        	 				}
+	        				});
+							
+							var roleJsons = dataRtn.roleJsons;
+							var roleids = new Array();
+							for(var i=0;i<roleJsons.length;i++){
+								var ht = $("#uptRoleids").html();
+								if(ht == ""){
+									$("#uptRoleids").html('<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>');
+								}else{
+									ht=ht+'<option value='+roleJsons[i].id+'>'+roleJsons[i].text+'</option>';
+									$("#uptRoleids").html(ht);
+								}
+								roleids[i]=roleJsons[i].id;
+							}
+							$("#uptRoleids").val(roleids).trigger("change");
+							$('#userUptModal').modal('show');
+						} else {
+							dangerAlert();
+						}
+					}
+				});
+			}
+			
+			
     		
 		}
 		
-		function singleDel(userid){
-			$("#confirmDelModal").modal('show');
+		function singleDel(empid){
+			$(".checkchild").each(function(){
+				if(empid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
+				}
+			});
+			 if($(".checkchild:checked").length == 0){
+				noRowAlert();
+			}else{
+				$("#confirmDelModal").modal('show');
+			}
 		}
 		
 		//员工状态-更新为已停用
 		function stopStatus(userid){
+			
+			$(".checkchild").each(function(){
+				if(userid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
+				}
+			});
+			
 			var user = {userid:userid,status:"0"};
-    		$.ajax({
-    			type : "post",
-                url : "<%=contextPath%>/user/changeUserStatus",
-					data : user,
-					dataType : "json",
-					success : function(dataRtn) {
-						var rtnStr = dataRtn.rtn;
-						if (rtnStr == "success") {
-							//成功提示
-		                	successAlert();
-		            		//列表刷新
-		                	reloadTable();
-						} else {
-							dangerAlert();
+			
+			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+				oneRowAlert();
+			}else{
+				$.ajax({
+	    			type : "post",
+	                url : "<%=contextPath%>/user/changeUserStatus",
+						data : user,
+						dataType : "json",
+						success : function(dataRtn) {
+							var rtnStr = dataRtn.rtn;
+							if (rtnStr == "success") {
+								//成功提示
+			                	successAlert();
+			            		//列表刷新
+			                	reloadTable();
+							} else {
+								dangerAlert();
+							}
 						}
-					}
-				});
+					});	
+			}
 		}
 		
 		//员工状态-更新为已启用
 		function openStatus(userid){
+			
+			$(".checkchild").each(function(){
+				if(userid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
+				}
+			});
+			
 			var user = {userid:userid,status:"1"};
-    		$.ajax({
-    			type : "post",
-    			  url : "<%=contextPath%>/user/changeUserStatus",
-					data : user,
-					dataType : "json",
-					success : function(dataRtn) {
-						var rtnStr = dataRtn.rtn;
-						if (rtnStr == "success") {
-							//成功提示
-		                	successAlert();
-		            		//列表刷新
-		                	reloadTable();
-						} else {
-							dangerAlert();
+			
+			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+				oneRowAlert();
+			}else{
+				$.ajax({
+	    			type : "post",
+	    			  url : "<%=contextPath%>/user/changeUserStatus",
+						data : user,
+						dataType : "json",
+						success : function(dataRtn) {
+							var rtnStr = dataRtn.rtn;
+							if (rtnStr == "success") {
+								//成功提示
+			                	successAlert();
+			            		//列表刷新
+			                	reloadTable();
+							} else {
+								dangerAlert();
+							}
 						}
-					}
-				});
+					});
+			}
 		}
 	</script>
 </body>

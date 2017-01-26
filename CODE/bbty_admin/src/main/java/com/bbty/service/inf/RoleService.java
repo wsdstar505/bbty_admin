@@ -11,7 +11,7 @@ public interface RoleService {
 	
 	public void saveRole(Role role);
 
-	public Role getRoleByRoleId(Role role);
+	public Role getRole(Role role);
 
 	public void uptRole(Role role);
 	

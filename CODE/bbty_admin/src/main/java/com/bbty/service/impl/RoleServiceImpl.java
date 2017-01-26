@@ -27,7 +27,7 @@ public class RoleServiceImpl implements RoleService{
 	}
 
 	@Override
-	public Role getRoleByRoleId(Role role) {
+	public Role getRole(Role role) {
 		return roleDao.selectOne(role);
 	}
 

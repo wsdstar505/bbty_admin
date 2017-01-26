@@ -128,7 +128,7 @@ public class RoleController {
 		role.setRoleid(roleid);
 
 		try {
-			role = roleService.getRoleByRoleId(role);
+			role = roleService.getRole(role);
 			if (role != null) {
 				// 表示不合法，验证不通过
 				map.put("valid", "false");
@@ -145,7 +145,7 @@ public class RoleController {
 		return map;
 	}
 
-	@RequestMapping(value = "/getRoleByRoleId")
+	@RequestMapping(value = "/getRole")
 	@ResponseBody
 	public Map<String, Object> getRoleByRoleId(HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -157,7 +157,7 @@ public class RoleController {
 		role.setRoleid(roleid);
 
 		try {
-			role = roleService.getRoleByRoleId(role);
+			role = roleService.getRole(role);
 			if (role != null) {
 				map.put("rtn", "success");
 				map.put("role", role);

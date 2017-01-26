@@ -18,33 +18,101 @@
 <body>
 
 	<!-- 成功提示框 -->
-	<div class="alert alert-success" id="successAlert">操作成功！</div>
+	<div class="modal fade bs-example-modal-sm" id="successAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-success btn-circle">
+						<i class="fa fa-check"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作成功！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 失败提示框 -->
-	<div class="alert alert-danger" id="dangerAlert">操作失败，出现异常！</div>
-
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="oneRowAlert">请选择一条记录！</div>
-	
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="noRowAlert">请选择记录！</div>
-
-	<div class="modal fade bs-example-modal-sm"  id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  		<div class="modal-dialog modal-sm">
-    		<div class="modal-content">
-    		<div class="modal-body">
-    			确定要删除选中的角色吗？
-    		</div>
-    		<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="deleteRoles();">确定</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						</div>
-    		</div>
-  		</div>
-  	
+	<div class="modal fade bs-example-modal-sm" id="dangerAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-danger btn-circle">
+						<i class="fa fa-times"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作失败，出现异常！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	
+
+	<!-- 没选择一条警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="oneRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择一条记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 未选择警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="noRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade bs-example-modal-sm" id="confirmDelModal"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;确定要删除选中的角色吗？
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger"
+						onclick="deleteRoles();">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- 新增角色 -->
 	<div class="modal fade" id="roleAddModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
@@ -73,13 +141,12 @@
 						<div class="form-group">
 							<label for="lastname" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
-							 <label class="radio-inline">
-                             	<input type="radio" name="status" id="statusOpen" value="1" checked>启用
-                             </label>
-                             <label class="radio-inline">
-                             <input type="radio" name="status" id="statusStop" value="0">停用
-                             </label>
-                             </div>
+								<label class="radio-inline"> <input type="radio"
+									name="status" id="statusOpen" value="1" checked>启用
+								</label> <label class="radio-inline"> <input type="radio"
+									name="status" id="statusStop" value="0">停用
+								</label>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="lastname" class="col-sm-2 control-label">备注:</label>
@@ -95,7 +162,6 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -116,8 +182,9 @@
 						<div class="form-group">
 							<label for="firstname" class="col-sm-2 control-label">角色ID:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="roleUptid" id="roleUptid" disabled="disabled">
-								<input type="hidden" name="roleid" id="roleid">
+								<input type="text" class="form-control" name="roleUptid"
+									id="roleUptid" disabled="disabled"> <input
+									type="hidden" name="roleid" id="roleid">
 							</div>
 						</div>
 						<div class="form-group">
@@ -130,18 +197,18 @@
 						<div class="form-group">
 							<label for="lastname" class="col-sm-2 control-label">状态:</label>
 							<div class="col-sm-10">
-							 <label class="radio-inline">
-                             	<input type="radio" name="status" id="statusOpen" value="1">启用
-                             </label>
-                             <label class="radio-inline">
-                             <input type="radio" name="status" id="statusStop" value="0">停用
-                             </label>
-                             </div>
+								<label class="radio-inline"> <input type="radio"
+									name="status" id="statusOpen" value="1">启用
+								</label> <label class="radio-inline"> <input type="radio"
+									name="status" id="statusStop" value="0">停用
+								</label>
+							</div>
 						</div>
 						<div class="form-group">
 							<label for="lastname" class="col-sm-2 control-label">备注:</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" rows="3" name="remark" id="remark"></textarea>
+								<textarea class="form-control" rows="3" name="remark"
+									id="remark"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -154,7 +221,6 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -169,7 +235,8 @@
 						onclick="toAddRole();">新增</button>
 					<button type="button" class="btn btn-warning"
 						onclick="toUptRole();">修改</button>
-					<button type="button" class="btn btn-danger" onclick="toDeleteRoles();">批量删除</button>
+					<button type="button" class="btn btn-danger"
+						onclick="toDeleteRoles();">批量删除</button>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
@@ -182,13 +249,6 @@
 
 	<script type="text/javascript">
     $(function() {
-    	//隐藏成功提示框
-    	$("#successAlert").hide();
-    	//隐藏失败提示框
-    	$("#dangerAlert").hide();
-    	//隐藏警告提示框
-    	$("#oneRowAlert").hide();
-    	$("#noRowAlert").hide();
     	
     	//新增角色表单校验
     	$('#roleAddForm').bootstrapValidator({
@@ -261,7 +321,15 @@
             ajax: {
                 "url": "<%=contextPath%>/role/getRoleList"
 				},
-				columns : [ {
+				columns : [ 
+				{
+					"data":"roleid",
+					render:function(data,type,full,meta){
+						return '<input type="checkbox" class="checkchild" value="'+data+'" onclick="checkChange('+data+');"/>';
+					},
+					"sortable":false
+				},	
+				{
 					"data" : "roleid",
 					"title" : "角色ID"
 				}, {
@@ -284,7 +352,7 @@
 					
 		         ],
 		         columnDefs: [ {
-		             targets: 4,
+		             targets: 5,
 		             data: null,
 		             title : "操作",
 		             orderable: false,
@@ -327,9 +395,9 @@
 			});
     	
     	//行选中更改颜色
-        $('#roleTables tbody').on( 'click', 'tr', function () {
+/*         $('#roleTables tbody').on( 'click', 'tr', function () {
             $(this).toggleClass('selected');
-        } );
+        } ); */
         
 		});
     
@@ -358,32 +426,34 @@
     	
     }
     
+  	
+    function checkChange(roleid){
+    	$(".checkchild").each(function(){
+    		if(meterId == $(this).val()){
+    			if ($(this).attr('checked')) {
+    				$(this).removeAttr("checked");
+                } else {
+                	$(this).attr('checked',true);
+                }
+    		}
+		});
+    }
+    
     function successAlert(){
-    	$("#successAlert").show();
-    	//3秒后关闭提示
-    	setTimeout('$("#successAlert").hide()',3000);
+    	$("#successAlert").modal('show');
+    	//setTimeout('$("#successAlert").hide()',3000);
     }
     
     function dangerAlert(){
-    	//失败提示
-    	$("#dangerAlert").show();
-		
-    	//3秒后关闭提示
-    	setTimeout('$("#dangerAlert").hide()',3000);
+    	$("#dangerAlert").modal('show');
     }
     
     function oneRowAlert(){
-    	$("#oneRowAlert").show();
-		
-    	//3秒后关闭提示
-    	setTimeout('$("#oneRowAlert").hide()',3000);
+    	$("#oneRowAlert").modal('show');
     }
     
     function noRowAlert(){
-		$("#noRowAlert").show();
-		
-    	//3秒后关闭提示
-    	setTimeout('$("#noRowAlert").hide()',3000);
+		$("#noRowAlert").modal('show');
     }
     
     function reloadTable(){
@@ -446,17 +516,24 @@
     
     //打开修改角色窗口
     function toUptRole(){
-    	var roleTables = $('#roleTables').DataTable();
+  /*   	var roleTables = $('#roleTables').DataTable();
     	var length = roleTables.rows('.selected').data().length;
     	if(length >1 || length ==0){
     		oneRowAlert();
-    	}else{
-    		var row = roleTables.rows('.selected').data();
+    	} */
+    	
+    	if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+			oneRowAlert();
+		}else{
+    /* 	else{ */
+    		/* var row = roleTables.rows('.selected').data();
     		var roleid = row[0].roleid;
+    		var role = {roleid:roleid}; */
+    		var roleid = $(".checkchild:checked").val();
     		var role = {roleid:roleid};
     		$.ajax({
     			type : "post",
-                url : "<%=contextPath%>/role/getRoleByRoleId",
+                url : "<%=contextPath%>/role/getRole",
 					data : role,
 					dataType : "json",
 					success : function(dataRtn) {
@@ -535,24 +612,35 @@
   
   		//批量删除角色
 		function toDeleteRoles() {
-			var roleTables = $('#roleTables').DataTable();
+	/* 		var roleTables = $('#roleTables').DataTable();
 			var length = roleTables.rows('.selected').data().length;
 			if (length == 0) {
 				noRowAlert();
 			} else {
 				$("#confirmDelModal").modal('show');
+			} */
+			
+			if($(".checkchild:checked").length == 0){
+				noRowAlert();
+			}else{
+				$("#confirmDelModal").modal('show');
 			}
 		}
 
 		function deleteRoles() {
-			var roleTables = $('#roleTables').DataTable();
+			/* var roleTables = $('#roleTables').DataTable();
 			var rows = roleTables.rows('.selected').data();
 			var length = roleTables.rows('.selected').data().length;
 			var rowIdArray = [];
 			for(var i =0; i<length; i++){
 				rowIdArray.push(rows[i].roleid);
-			}
+			} */
 			
+			var rowIdArray = [];
+			var length = $(".checkchild:checked").length;
+			$(".checkchild:checked").each(function(){
+				rowIdArray.push($(this).val());
+			});
 			$.ajax({
 	            type : "post",
 	            url : "<%=contextPath%>/role/delRole",
@@ -580,76 +668,139 @@
 		}
 		
 		function singleUpt(roleid){
+			$(".checkchild").each(function(){
+				if(roleid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
+				}
+			});
+			
 			var role = {roleid:roleid};
-    		$.ajax({
-    			type : "post",
-                url : "<%=contextPath%>/role/getRoleByRoleId",
-					data : role,
-					dataType : "json",
-					success : function(dataRtn) {
-						var rtnStr = dataRtn.rtn;
-						if (rtnStr == "success") {
-							$("#roleid").val(dataRtn.role.roleid);
-							$("#roleUptid").val(dataRtn.role.roleid);
-							$("#rolename").val(dataRtn.role.rolename);
-							$("#remark").val(dataRtn.role.remark);
-							if(dataRtn.role.status=="1"){
-								$("input:radio[value='1']").attr('checked','true');
-							}else if(dataRtn.role.status=="0"){
-								$("input:radio[value='0']").attr('checked','true');
+			
+			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+				oneRowAlert();
+			}else{
+				$.ajax({
+	    			type : "post",
+	                url : "<%=contextPath%>/role/getRole",
+						data : role,
+						dataType : "json",
+						success : function(dataRtn) {
+							var rtnStr = dataRtn.rtn;
+							if (rtnStr == "success") {
+								$("#roleid").val(dataRtn.role.roleid);
+								$("#roleUptid").val(dataRtn.role.roleid);
+								$("#rolename").val(dataRtn.role.rolename);
+								$("#remark").val(dataRtn.role.remark);
+								if(dataRtn.role.status=="1"){
+									$("input:radio[value='1']").attr('checked','true');
+								}else if(dataRtn.role.status=="0"){
+									$("input:radio[value='0']").attr('checked','true');
+								}
+								$('#roleUptModal').modal('show');
+							} else {
+								dangerAlert();
 							}
-							$('#roleUptModal').modal('show');
-						} else {
-							dangerAlert();
 						}
-					}
-				});
+					});	
+				
+			}
+			
+    		
 		}
 		
 		function singleDel(roleid){
-			$("#confirmDelModal").modal('show');
+			
+			$(".checkchild").each(function(){
+				if(roleid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
+				}
+			});
+			 if($(".checkchild:checked").length == 0){
+				noRowAlert();
+			}else{
+				$("#confirmDelModal").modal('show');
+			}
 		}
 		
 		function stopStatus(roleid){
+			
+			$(".checkchild").each(function(){
+				if(roleid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
+				}
+			});
+			
 			var role = {roleid:roleid,status:"0"};
-    		$.ajax({
-    			type : "post",
-                url : "<%=contextPath%>/role/changeRoleStatus",
-					data : role,
-					dataType : "json",
-					success : function(dataRtn) {
-						var rtnStr = dataRtn.rtn;
-						if (rtnStr == "success") {
-							//成功提示
-		                	successAlert();
-		            		//列表刷新
-		                	reloadTable();
-						} else {
-							dangerAlert();
+			
+			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+				oneRowAlert();
+			}else{
+				$.ajax({
+	    			type : "post",
+	                url : "<%=contextPath%>/role/changeRoleStatus",
+						data : role,
+						dataType : "json",
+						success : function(dataRtn) {
+							var rtnStr = dataRtn.rtn;
+							if (rtnStr == "success") {
+								//成功提示
+			                	successAlert();
+			            		//列表刷新
+			                	reloadTable();
+							} else {
+								dangerAlert();
+							}
 						}
-					}
-				});
+					});	
+			}
 		}
 		
 		function openStatus(roleid){
+			$(".checkchild").each(function(){
+				if(roleid == $(this).val()){
+					 if (true == $(this).attr("checked")) {
+						 this.checked=false;
+	                } else {
+	                    this.checked=true;
+	                }
+				}
+			});
+			
 			var role = {roleid:roleid,status:"1"};
-    		$.ajax({
-    			type : "post",
-                url : "<%=contextPath%>/role/changeRoleStatus",
-					data : role,
-					dataType : "json",
-					success : function(dataRtn) {
-						var rtnStr = dataRtn.rtn;
-						if (rtnStr == "success") {
-							//成功提示
-		                	successAlert();
-		            		//列表刷新
-		                	reloadTable();
-						} else {
-							dangerAlert();
+			
+			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+				oneRowAlert();
+			}else{
+				$.ajax({
+	    			type : "post",
+	                url : "<%=contextPath%>/role/changeRoleStatus",
+						data : role,
+						dataType : "json",
+						success : function(dataRtn) {
+							var rtnStr = dataRtn.rtn;
+							if (rtnStr == "success") {
+								//成功提示
+			                	successAlert();
+			            		//列表刷新
+			                	reloadTable();
+							} else {
+								dangerAlert();
+							}
 						}
-					}
-				});
+					});	
+			}
 		}
 	</script>
 </body>

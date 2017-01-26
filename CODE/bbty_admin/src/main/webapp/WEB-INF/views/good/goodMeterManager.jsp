@@ -18,39 +18,109 @@
 <body>
 
 	<!-- 成功提示框 -->
-	<div class="alert alert-success" id="successAlert">操作成功！</div>
+	<div class="modal fade bs-example-modal-sm" id="successAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-success btn-circle">
+						<i class="fa fa-check"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作成功！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 失败提示框 -->
-	<div class="alert alert-danger" id="dangerAlert">操作失败，出现异常！</div>
+	<div class="modal fade bs-example-modal-sm" id="dangerAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-danger btn-circle">
+						<i class="fa fa-times"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作失败，出现异常！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="oneRowAlert">请选择一条记录！</div>
-	
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="noRowAlert">请选择记录！</div>
-
-	<div class="modal fade bs-example-modal-sm"  id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  		<div class="modal-dialog modal-sm">
-    		<div class="modal-content">
-    		<div class="modal-body">
-    			确定要删除选中的计量单位吗？
-    		</div>
-    		<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="deleteMeters();">确定</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						</div>
-    		</div>
-  		</div>
-  	
+	<!-- 没选择一条警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="oneRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择一条记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
 	</div>
 	
+	<!-- 未选择警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="noRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 删除计量单位确认提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="confirmDelModal"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;确定要删除选中的计量单位吗？
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger"
+						onclick="deleteMeters();">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- 新增计量单位 -->
 	<div class="modal fade" id="meterAddModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" onclick="closeModal(1);">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal(1);">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
 					<h4 class="modal-title">新增计量单位</h4>
@@ -78,7 +148,6 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -88,7 +157,8 @@
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" onclick="closeModal(2);">
+					<button type="button" class="close" data-dismiss="modal"
+						onclick="closeModal(2);">
 						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 					</button>
 					<h4 class="modal-title">修改计量单位</h4>
@@ -96,17 +166,19 @@
 				<div class="modal-body">
 					<form id="meterUptForm" class="form-horizontal" role="form"
 						action="<%=contextPath%>/meter/uptMeter" method="post">
-						<input type="hidden" name="meterId" id="meterId" >
+						<input type="hidden" name="meterId" id="meterId">
 						<div class="form-group">
 							<label for="meterCode" class="col-sm-2 control-label">计量编码:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="meterCode" id="meterCode" readonly="readonly">
+								<input type="text" class="form-control" name="meterCode"
+									id="meterCode" readonly="readonly">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="meterName" class="col-sm-2 control-label">计量名称:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="meterName" id="meterName">
+								<input type="text" class="form-control" name="meterName"
+									id="meterName">
 							</div>
 						</div>
 						<div class="form-group">
@@ -119,7 +191,6 @@
 						</div>
 					</form>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -134,7 +205,8 @@
 						onclick="toAddMeter();">新增</button>
 					<button type="button" class="btn btn-warning"
 						onclick="toUptMeter();">修改</button>
-					<button type="button" class="btn btn-danger" onclick="toDeleteMeters();">批量删除</button>
+					<button type="button" class="btn btn-danger"
+						onclick="toDeleteMeters();">批量删除</button>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-bordered table-hover"
@@ -147,13 +219,6 @@
 
 	<script type="text/javascript">
     $(function() {
-    	//隐藏成功提示框
-    	$("#successAlert").hide();
-    	//隐藏失败提示框
-    	$("#dangerAlert").hide();
-    	//隐藏警告提示框
-    	$("#oneRowAlert").hide();
-    	$("#noRowAlert").hide();
     	
     	//新增计量表单校验
     	$('#meterAddForm').bootstrapValidator({
@@ -226,26 +291,34 @@
             ajax: {
                 "url": "<%=contextPath%>/meter/getMeterList"
 				},
-				columns : [ {
+				columns : [ 
+				{
+					"data":"meterId",
+					render:function(data,type,full,meta){
+						return '<input type="checkbox" class="checkchild" value="'+data+'" onclick="checkChange('+data+');"/>';
+					},
+					"sortable":false
+				},
+				{
 					"data" : "meterCode",
 					"title" : "计量单位编码"
-				}, {
+				}, 
+				{
 					"data" : "meterName",
 					"title" : "计量单位名称"
 				}
 		         ],
 		         columnDefs: [ {
-		             targets: 2,
+		             targets: 3,
 		             data: null,
 		             title : "操作",
 		             orderable: false,
 		             render: function (data, type, row, meta) {
-		            		 return '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.meterCode+"'"+ ');">修改</button>' 
-							 +'&nbsp'+'&nbsp'+'&nbsp'+ 
-							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.meterCode+"'"+ ');">删除</button>';
+		            		 return  '<button type="button" class="btn btn-warning" onclick="singleUpt('+"'" + row.meterId+"'"+ ');">修改</button>' 
+							 +'&nbsp'+'&nbsp'+'&nbsp'+
+							 '<button type="button" class="btn btn-danger" onclick="singleDel('+"'" + row.meterId+"'"+ ');">删除</button>';
 	                    }
 		         }
-		         
 		         ],
 				language : {
 					loadingRecords : "加载中...",
@@ -267,38 +340,39 @@
 			});
     	
     	//行选中更改颜色
-        $('#meterTables tbody').on( 'click', 'tr', function () {
+/*         $('#meterTables tbody').on( 'click', 'tr', function () {
             $(this).toggleClass('selected');
-        } );
+        } ); */
         
 		});
     
+    function checkChange(meterId){
+    	$(".checkchild").each(function(){
+    		if(meterId == $(this).val()){
+    			if ($(this).attr('checked')) {
+    				$(this).removeAttr("checked");
+                } else {
+                	$(this).attr('checked',true);
+                }
+    		}
+		});
+    }
+    
     function successAlert(){
-    	$("#successAlert").show();
-    	//3秒后关闭提示
-    	setTimeout('$("#successAlert").hide()',3000);
+    	$("#successAlert").modal('show');
+    	//setTimeout('$("#successAlert").hide()',3000);
     }
     
     function dangerAlert(){
-    	//失败提示
-    	$("#dangerAlert").show();
-		
-    	//3秒后关闭提示
-    	setTimeout('$("#dangerAlert").hide()',3000);
+    	$("#dangerAlert").modal('show');
     }
     
     function oneRowAlert(){
-    	$("#oneRowAlert").show();
-		
-    	//3秒后关闭提示
-    	setTimeout('$("#oneRowAlert").hide()',3000);
+    	$("#oneRowAlert").modal('show');
     }
     
     function noRowAlert(){
-		$("#noRowAlert").show();
-		
-    	//3秒后关闭提示
-    	setTimeout('$("#noRowAlert").hide()',3000);
+		$("#noRowAlert").modal('show');
     }
     
     function reloadTable(){
@@ -328,7 +402,6 @@
   		}else{
   			$("#confirmDelModal").modal('hide');
   		}
-    	
     }
   
     //保存新增计量单位
@@ -381,17 +454,23 @@
     
     //打开修改计量窗口
     function toUptMeter(){
-    	var meterTables = $('#meterTables').DataTable();
+    /* 	var meterTables = $('#meterTables').DataTable();
     	var length = meterTables.rows('.selected').data().length;
     	if(length >1 || length ==0){
     		oneRowAlert();
-    	}else{
-    		var row = meterTables.rows('.selected').data();
+    	} */
+    	if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+			oneRowAlert();
+		}else{
+    		/* var row = meterTables.rows('.selected').data();
     		var meterCode = row[0].meterCode;
-    		var meter = {meterCode:meterCode};
+    		var meter = {meterCode:meterCode}; */
+    		
+    		var meterId = $(".checkchild:checked").val();
+    		var meter = {meterId:meterId};
     		$.ajax({
     			type : "post",
-                url : "<%=contextPath%>/meter/getMeterByMeterCode",
+                url : "<%=contextPath%>/meter/getMeter",
 					data : meter,
 					dataType : "json",
 					success : function(dataRtn) {
@@ -462,23 +541,35 @@
     
   //批量删除计量单位
 	function toDeleteMeters() {
-		var meterTables = $('#meterTables').DataTable();
+/* 		var meterTables = $('#meterTables').DataTable();
 		var length = meterTables.rows('.selected').data().length;
 		if (length == 0) {
 			noRowAlert();
 		} else {
 			$("#confirmDelModal").modal('show');
+		} */
+		
+		if($(".checkchild:checked").length == 0){
+			noRowAlert();
+		}else{
+			$("#confirmDelModal").modal('show');
 		}
 	}
   
 	function deleteMeters() {
-		var meterTables = $('#meterTables').DataTable();
+/* 		var meterTables = $('#meterTables').DataTable();
 		var rows = meterTables.rows('.selected').data();
 		var length = meterTables.rows('.selected').data().length;
 		var rowIdArray = [];
 		for(var i =0; i<length; i++){
 			rowIdArray.push(rows[i].meterCode);
-		}
+		} */
+		
+		var rowIdArray = [];
+		var length = $(".checkchild:checked").length;
+		$(".checkchild:checked").each(function(){
+			rowIdArray.push($(this).val());
+		});
 		
 		$.ajax({
             type : "post",
@@ -508,30 +599,60 @@
         });
 	}
     
-	function singleDel(meterCode){
-		$("#confirmDelModal").modal('show');
+	function singleDel(meterId){
+		$(".checkchild").each(function(){
+			if(meterId == $(this).val()){
+				 if (true == $(this).attr("checked")) {
+					 this.checked=false;
+                } else {
+                    this.checked=true;
+                }
+			}
+		});
+		 if($(".checkchild:checked").length == 0){
+			noRowAlert();
+		}else{
+			$("#confirmDelModal").modal('show');
+		}
 	}
 	
-	function singleUpt(meterCode){
-		var meter = {meterCode:meterCode};
-		$.ajax({
-			type : "post",
-            url : "<%=contextPath%>/meter/getMeterByMeterCode",
-				data : meter,
-				dataType : "json",
-				success : function(dataRtn) {
-					var rtnStr = dataRtn.rtn;
-					if (rtnStr == "success") {
-						$("#meterId").val(dataRtn.meter.meterId);
-						$("#meterCode").val(dataRtn.meter.meterCode);
-						$("#meterName").val(dataRtn.meter.meterName);
-						$('#meterUptModal').modal('show');
-					} else {
-						dangerAlert();
+	function singleUpt(meterId){
+		$(".checkchild").each(function(){
+			if(meterId == $(this).val()){
+				 if (true == $(this).attr("checked")) {
+					 this.checked=false;
+                } else {
+                    this.checked=true;
+                }
+			}
+		});
+		
+		var meter = {meterId:meterId};
+		
+		if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
+			oneRowAlert();
+		}else{
+			$.ajax({
+				type : "post",
+				  url : "<%=contextPath%>/meter/getMeter",
+					data : meter,
+					dataType : "json",
+					success : function(dataRtn) {
+						var rtnStr = dataRtn.rtn;
+						if (rtnStr == "success") {
+							$("#meterId").val(dataRtn.meter.meterId);
+							$("#meterCode").val(dataRtn.meter.meterCode);
+							$("#meterName").val(dataRtn.meter.meterName);
+							$('#meterUptModal').modal('show');
+						} else {
+							dangerAlert();
+						}
 					}
-				}
-			});
+				});
+		}
+		
 	}
+
 	</script>
 </body>
 </html>
