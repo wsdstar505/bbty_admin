@@ -129,13 +129,13 @@
 					<form id="meterAddForm" class="form-horizontal" role="form"
 						action="<%=contextPath%>/meter/saveMeter" method="post">
 						<div class="form-group">
-							<label for="meterCode" class="col-sm-2 control-label">计量编码:</label>
+							<label for="meterCode" class="col-sm-2 control-label">计量编码:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="meterCode">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="meterName" class="col-sm-2 control-label">计量名称:</label>
+							<label for="meterName" class="col-sm-2 control-label">计量名称:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="meterName">
 							</div>
@@ -168,14 +168,14 @@
 						action="<%=contextPath%>/meter/uptMeter" method="post">
 						<input type="hidden" name="meterId" id="meterId">
 						<div class="form-group">
-							<label for="meterCode" class="col-sm-2 control-label">计量编码:</label>
+							<label for="meterCode" class="col-sm-2 control-label">计量编码:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="meterCode"
 									id="meterCode" readonly="readonly">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="meterName" class="col-sm-2 control-label">计量名称:</label>
+							<label for="meterName" class="col-sm-2 control-label">计量名称:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="meterName"
 									id="meterName">

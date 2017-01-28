@@ -1,5 +1,6 @@
 package com.bbty.controller.good;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bbty.pojo.good.Meter;
 import com.bbty.service.inf.good.MeterService;
+import com.bbty.session.SelectJson;
 
 /**
  * 计量单位配置控制器
@@ -155,6 +157,22 @@ public class MeterController {
 		} catch (Exception e) {
 			map.put("rtn", "fail");
 		}
+		return map;
+	}
+	
+	@RequestMapping(value = "/getMeterJson")
+	@ResponseBody
+	public Map<String, Object> getMeterJson() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<SelectJson> selectJsons = new ArrayList<SelectJson>();
+		List<Meter> meters = meterService.getMeterList();
+		for (Meter meter : meters) {
+			SelectJson json = new SelectJson();
+			json.setId(String.valueOf(meter.getMeterId()));
+			json.setText(meter.getMeterName());
+			selectJsons.add(json);
+		}
+		map.put("selectJsons", selectJsons);
 		return map;
 	}
 

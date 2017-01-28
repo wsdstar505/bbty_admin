@@ -1,5 +1,6 @@
 package com.bbty.controller.good;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.bbty.pojo.good.GoodInfo;
+import com.bbty.pojo.good.GoodType;
 import com.bbty.service.inf.good.GoodInfoService;
+import com.bbty.service.inf.good.GoodTypeService;
+import com.bbty.session.GoodTypeTree;
 
 @Controller
 @RequestMapping(value = "/goodInfo")
@@ -19,6 +23,9 @@ public class GoodInfoController {
 
 	@Autowired
 	public GoodInfoService goodInfoService;
+	
+	@Autowired
+	public GoodTypeService goodTypeService;
 
 	@RequestMapping(value = "/getInfosByGoodType")
 	@ResponseBody
@@ -214,4 +221,67 @@ public class GoodInfoController {
 
 		return map;
 	}
+	
+	@RequestMapping(value = "/getGoodInfoTree")
+	@ResponseBody
+	public Map<String, Object> getGoodInfoTree() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<GoodTypeTree> treeList = new ArrayList<GoodTypeTree>();
+		List<GoodType> list = goodTypeService.getGoodTypeList(0);
+		// 判断是否有根节点
+		if (list.size() != 0) {
+			for (GoodType goodType : list) {
+				GoodTypeTree tree = new GoodTypeTree();
+				tree.setText(goodType.getTypeName());
+				tree.setTags(String.valueOf(goodType.getTypeId()));
+				List<GoodType> temp = goodTypeService.getGoodTypeList(goodType.getTypeId());
+				if (temp.size() != 0) {
+					tree.setNodes(getChildTree(temp, goodType));
+				}
+				treeList.add(tree);
+			}
+		}
+		map.put("treeList", treeList);
+		return map;
+	}
+	
+	private List<GoodTypeTree> getChildTree(List<GoodType> treeList, GoodType goodType) {
+		// 子节点列表
+		List<GoodType> list = goodTypeService.getGoodTypeList(goodType.getTypeId());
+		List<GoodTypeTree> tt = new ArrayList<GoodTypeTree>();
+		if (list.size() != 0) {
+			for (GoodType gt : list) {
+				GoodTypeTree t = new GoodTypeTree();
+				t.setText(gt.getTypeName());
+				t.setTags(String.valueOf(gt.getTypeId()));
+				//goodType
+				t.setType("1");
+				if (gt.getIsLeaf().equals("1")) {
+					//有子类别
+					t.setNodes(getChildTree(list, gt));
+				} else if (gt.getIsLeaf().equals("0")) {
+					//无子类别
+					//查询
+					List<GoodTypeTree> temp = new ArrayList<GoodTypeTree>();
+					List<GoodInfo> gis = goodInfoService.getInfosByTypeId(String.valueOf(gt.getTypeId()));
+					if(gis != null && gis.size() !=0){
+						t.setIsLeaf("1");
+						for (GoodInfo goodInfo : gis) {
+							GoodTypeTree gtt = new GoodTypeTree();
+							gtt.setText(goodInfo.getInfoName());
+							gtt.setTags(String.valueOf(goodInfo.getInfoId()));
+							gtt.setType("0");
+							gtt.setIsLeaf("0");
+							temp.add(gtt);
+						}
+						t.setNodes(temp);
+					}
+					
+				}
+				tt.add(t);
+			}
+		}
+		return tt;
+	}
+	
 }

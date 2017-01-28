@@ -18,18 +18,103 @@
 <body>
 
 	<!-- 成功提示框 -->
-	<div class="alert alert-success" id="successAlert">操作成功！</div>
+	<div class="modal fade bs-example-modal-sm" id="successAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-success btn-circle">
+						<i class="fa fa-check"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作成功！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- 失败提示框 -->
-	<div class="alert alert-danger" id="dangerAlert">操作失败，出现异常！</div>
+	<div class="modal fade bs-example-modal-sm" id="dangerAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-danger btn-circle">
+						<i class="fa fa-times"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;操作失败，出现异常！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="oneRowAlert">请选择一条记录！</div>
+	<!-- 没选择一条警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="oneRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择一条记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
-	<!-- 警告提示框 -->
-	<div class="alert alert-warning" id="noRowAlert">请选择记录！</div>
+	<!-- 未选择警告提示框 -->
+	<div class="modal fade bs-example-modal-sm" id="noRowAlert"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;请选择记录！
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
-		<!-- 新增商品信息 -->
+	<!-- 删除商品信息确认提示框 -->
+	<div class="modal fade bs-example-modal-lg" id="confirmDelModal"
+		tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-body">
+					<button type="button" class="btn btn-warning btn-circle">
+						<i class="fa fa-exclamation"></i>
+					</button>
+					&nbsp;&nbsp;&nbsp;确定要删除选中的商品信息吗？若商品信息下还有库存则一并删除库存!
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger"
+						onclick="deleteInfos();">确定</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 新增商品信息 -->
 	<div class="modal fade" id="infoAddModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -44,13 +129,13 @@
 						action="<%=contextPath%>/goodInfo/saveGoodInfo" method="post">
 						<input type="hidden" id="parTypeIdAdd" name="parTypeIdAdd"/>
 						<div class="form-group">
-							<label for="infoCode" class="col-sm-2 control-label">商品编号:</label>
+							<label for="infoCode" class="col-sm-2 control-label">商品编号:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="infoCode">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="infoName" class="col-sm-2 control-label">商品名称:</label>
+							<label for="infoName" class="col-sm-2 control-label">商品名称:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="infoName">
 							</div>
@@ -137,13 +222,13 @@
 						<input type="hidden" id="typeId" name="typeId"/>
 						<input type="hidden" id="infoSrcCode" name="infoSrcCode"/>
 						<div class="form-group">
-							<label for="infoCode" class="col-sm-2 control-label">商品编号:</label>
+							<label for="infoCode" class="col-sm-2 control-label">商品编号:<font color='red'>*</font></label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="infoCode" id="infoCode">
+								<input type="text" class="form-control" name="infoCode" id="infoCode" readonly="readonly">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="infoName" class="col-sm-2 control-label">商品名称:</label>
+							<label for="infoName" class="col-sm-2 control-label">商品名称:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="infoName" id="infoName">
 							</div>
@@ -214,25 +299,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade bs-example-modal-sm"  id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  		<div class="modal-dialog modal-sm">
-    		<div class="modal-content">
-    		<div class="modal-body">
-    			确定要删除选中的商品信息吗？若商品信息下还有库存则一并删除库存!
-    		</div>
-    		<div class="modal-footer">
-							<button type="button" class="btn btn-primary"
-								onclick="deleteInfos();">确定</button>
-							<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						</div>
-    		</div>
-  		</div>
-	</div>
+	
 	
 	<div class="row">
 		<div class="col-lg-4">
 			<div class="panel panel-default">
-				<div class="panel-heading">商品类别</div>
+				<div class="panel-heading">商品信息</div>
 				<div class="panel-body">
 					<div id="tree"></div>
 				</div>
@@ -261,19 +333,11 @@
 		var goodTypeTree;
 		var parTypeIdStr;
 		$(function() {
-			//隐藏成功提示框
-	    	$("#successAlert").hide();
-	    	//隐藏失败提示框
-	    	$("#dangerAlert").hide();
-	    	//隐藏警告提示框
-	    	$("#oneRowAlert").hide();
-	    	$("#noRowAlert").hide();
-	    	
 			$("#infoMenuDiv").hide();
 			
 			$.ajax({
 	            type : "post",
-	            url : "<%=contextPath%>/goodType/getGoodTypeTree",
+	            url : "<%=contextPath%>/goodInfo/getGoodInfoTree",
 	            dataType : "json",
 	            cache : false,
 	            success : function (dataRtn){
@@ -285,83 +349,89 @@
 	    				onNodeSelected : function(event, data) {
 	    					
 	    					parTypeIdStr=data.tags;
+	    					var type = data.type;
 	    					
-	    					if(parTypeIdStr != "1"){
+	    					if(parTypeIdStr != "1" && type =="1"){
 	    						$("#parTypeIdStr").val(parTypeIdStr);
 		    					
 		    					var nodes = data.nodes;
+		    					var isLeaf = data.isLeaf;
 		    					
-		    						$("#infoMenuDiv").show();
-		    						$("#infoTableDiv").show();
+		    						if(nodes != null && isLeaf=="1"){
+		    							$("#infoMenuDiv").show();
+			    						$("#infoTableDiv").show();
+			    						
+			    						
+			    						//表格初始化
+				    			        $('#goodInfoTables').DataTable({
+				    			        	destroy:true,	    			        	
+				    			        	pagingType:"full_numbers",//设置分页控件的模式
+				    			        	searching: false,//datatales的查询框,true:开启;false:关闭
+				    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
+				    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
+				    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
+				    			            ajax: {
+				    			                "url": "<%=contextPath%>/goodInfo/getInfosByGoodType?parTypeIdStr="+parTypeIdStr
+				    							},
+				    							columns : [ 
+				    							{
+				    								"data":"infoId",
+				    								render:function(data,type,full,meta){
+				    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
+				    								},
+				    								"sortable":false
+				    							},	
+				    							{
+				    								"data" : "infoCode",
+				    								"title" : "商品编号"
+				    							}, {
+				    								"data" : "infoName",
+				    								"title" : "商品名称"
+				    							},{
+				    								"data" : "marker",
+				    								"title" : "制造商"
+				    							},{
+				    								"data" : "contact",
+				    								"title" : "联系方式"
+				    							},{
+				    								"data" : "status",
+				    								"title" : "状态",
+				    								 render: function (data, type, row, meta) {
+				    									 if(row.status =='1'){
+				    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
+				    									 }else if (row.status =='0'){
+				    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
+				    									 }
+				    				                 }
+				    							}
+				    					         ],
+				    							language : {
+				    								loadingRecords : "加载中...",
+				    								processing : "查询中...",
+				    								search : "智能搜索:",
+				    								lengthMenu : "每页显示 _MENU_ 条记录",
+				    								zeroRecords : "没有找到记录",
+				    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
+				    								infoEmpty : "无记录",
+				    								infoFiltered : "(从 _MAX_ 条记录过滤)",
+				    								paginate : {
+				    									first : "首页",
+				    									last : "尾页",
+				    									next : "下页",
+				    									previous : "上页"
+				    								}
+				    							}
+				    						});	
+		    						}else{
+		    							$("#infoMenuDiv").hide();
+			    						$("#infoTableDiv").hide();
+		    						}
+		    					
 		    						
-		    						
-		    						//表格初始化
-			    			        $('#goodInfoTables').DataTable({
-			    			        	destroy:true,	    			        	
-			    			        	pagingType:"full_numbers",//设置分页控件的模式
-			    			        	searching: false,//datatales的查询框,true:开启;false:关闭
-			    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
-			    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
-			    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
-			    			            ajax: {
-			    			                "url": "<%=contextPath%>/goodInfo/getInfosByGoodType?parTypeIdStr="+parTypeIdStr
-			    							},
-			    							columns : [ 
-			    							{
-			    								"data":"infoId",
-			    								render:function(data,type,full,meta){
-			    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
-			    								},
-			    								"sortable":false
-			    							},	
-			    							{
-			    								"data" : "infoCode",
-			    								"title" : "商品编号"
-			    							}, {
-			    								"data" : "infoName",
-			    								"title" : "商品名称"
-			    							},{
-			    								"data" : "marker",
-			    								"title" : "制造商"
-			    							},{
-			    								"data" : "contact",
-			    								"title" : "联系方式"
-			    							},{
-			    								"data" : "status",
-			    								"title" : "状态",
-			    								 render: function (data, type, row, meta) {
-			    									 if(row.status =='1'){
-			    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
-			    									 }else if (row.status =='0'){
-			    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
-			    									 }
-			    				                 }
-			    							}
-			    					         ],
-			    							language : {
-			    								loadingRecords : "加载中...",
-			    								processing : "查询中...",
-			    								search : "智能搜索:",
-			    								lengthMenu : "每页显示 _MENU_ 条记录",
-			    								zeroRecords : "没有找到记录",
-			    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
-			    								infoEmpty : "无记录",
-			    								infoFiltered : "(从 _MAX_ 条记录过滤)",
-			    								paginate : {
-			    									first : "首页",
-			    									last : "尾页",
-			    									next : "下页",
-			    									previous : "上页"
-			    								}
-			    							}
-			    						});	
 	    					}else{
 	    						$("#infoMenuDiv").hide();
 	    						$("#infoTableDiv").hide();
 	    					}
-	    					
-		    			      
-	    					
 	    				}
 	    			});
 	        		
@@ -421,17 +491,7 @@
 		                    validators: {
 		                        notEmpty: {/*非空提示*/
 		                            message: '商品编号不能为空'
-		                        },
-		                        remote: {
-		                        	url: '<%=contextPath%>/goodInfo/checkInfoCode',
-		                            message: '商品编号已存在',//提示消息
-		                            type: 'post',//请求方式
-		                            data: function(validator) {
-			                               return {
-			                                   infoSrcCode: $("#infoSrcCode").val()
-			                               };
-			                            }
-		                        },
+		                        }	                        
 		                        
 		                    }
 		                },
@@ -451,33 +511,22 @@
 	
 		});
 		
-		function successAlert(){
-	    	$("#successAlert").show();
-	    	//3秒后关闭提示
-	    	setTimeout('$("#successAlert").hide()',3000);
-	    }
-	    
-	    function dangerAlert(){
-	    	//失败提示
-	    	$("#dangerAlert").show();
-			
-	    	//3秒后关闭提示
-	    	setTimeout('$("#dangerAlert").hide()',3000);
-	    }
-	    
-	    function oneRowAlert(){
-	    	$("#oneRowAlert").show();
-			
-	    	//3秒后关闭提示
-	    	setTimeout('$("#oneRowAlert").hide()',3000);
-	    }
-	    
-	    function noRowAlert(){
-			$("#noRowAlert").show();
-			
-	    	//3秒后关闭提示
-	    	setTimeout('$("#noRowAlert").hide()',3000);
-	    }
+		 function successAlert(){
+		    	$("#successAlert").modal('show');
+		    	//setTimeout('$("#successAlert").hide()',3000);
+		    }
+		    
+		    function dangerAlert(){
+		    	$("#dangerAlert").modal('show');
+		    }
+		    
+		    function oneRowAlert(){
+		    	$("#oneRowAlert").modal('show');
+		    }
+		    
+		    function noRowAlert(){
+				$("#noRowAlert").modal('show');
+		    }
 	    
 	    function reloadTable(){
 	    	var goodInfoTables = $('#goodInfoTables').DataTable();
@@ -554,6 +603,8 @@
 	                	dangerAlert();
 	            	}
 	            	
+	            	reloadTree();
+	            	
 	            	//列表刷新
 	            	reloadTable();
 	            }
@@ -610,6 +661,8 @@
 	            		//错误提示
 	                	dangerAlert();
 	            	}
+	            	
+	            	reloadTree();
 	            	
 	            	//列表刷新
 	            	reloadTable();
@@ -711,12 +764,123 @@
 	                	dangerAlert();
 	            	}
 	            	
+	            	reloadTree();
+	            	
 	            	//列表刷新
 	            	reloadTable();
 	            }
 	        });
 
 	    }
+		   
+		function reloadTree(){
+			$.ajax({
+	            type : "post",
+	            url : "<%=contextPath%>/goodInfo/getGoodInfoTree",
+	            dataType : "json",
+	            cache : false,
+	            success : function (dataRtn){
+	            	goodTypeTree = dataRtn.treeList;
+	            	
+	        		$('#tree').treeview({
+	    				data : goodTypeTree,
+	    				emptyIcon : "glyphicon glyphicon-book",
+	    				onNodeSelected : function(event, data) {
+	    					
+	    					parTypeIdStr=data.tags;
+	    					var type = data.type;
+	    					
+	    					if(parTypeIdStr != "1" && type =="1"){
+	    						$("#parTypeIdStr").val(parTypeIdStr);
+		    					
+		    					var nodes = data.nodes;
+		    					var isLeaf = data.isLeaf;
+		    					
+		    						if(nodes != null && isLeaf=="1"){
+		    							$("#infoMenuDiv").show();
+			    						$("#infoTableDiv").show();
+			    						
+			    						
+			    						//表格初始化
+				    			        $('#goodInfoTables').DataTable({
+				    			        	destroy:true,	    			        	
+				    			        	pagingType:"full_numbers",//设置分页控件的模式
+				    			        	searching: false,//datatales的查询框,true:开启;false:关闭
+				    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
+				    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
+				    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
+				    			            ajax: {
+				    			                "url": "<%=contextPath%>/goodInfo/getInfosByGoodType?parTypeIdStr="+parTypeIdStr
+				    							},
+				    							columns : [ 
+				    							{
+				    								"data":"infoId",
+				    								render:function(data,type,full,meta){
+				    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
+				    								},
+				    								"sortable":false
+				    							},	
+				    							{
+				    								"data" : "infoCode",
+				    								"title" : "商品编号"
+				    							}, {
+				    								"data" : "infoName",
+				    								"title" : "商品名称"
+				    							},{
+				    								"data" : "marker",
+				    								"title" : "制造商"
+				    							},{
+				    								"data" : "contact",
+				    								"title" : "联系方式"
+				    							},{
+				    								"data" : "status",
+				    								"title" : "状态",
+				    								 render: function (data, type, row, meta) {
+				    									 if(row.status =='1'){
+				    										 return '<span style="background-color:#5cb85c;color:#fff">已启用</span>';
+				    									 }else if (row.status =='0'){
+				    										 return '<span style="background-color:#888888;color:#fff">已停用</span>';
+				    									 }
+				    				                 }
+				    							}
+				    					         ],
+				    							language : {
+				    								loadingRecords : "加载中...",
+				    								processing : "查询中...",
+				    								search : "智能搜索:",
+				    								lengthMenu : "每页显示 _MENU_ 条记录",
+				    								zeroRecords : "没有找到记录",
+				    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
+				    								infoEmpty : "无记录",
+				    								infoFiltered : "(从 _MAX_ 条记录过滤)",
+				    								paginate : {
+				    									first : "首页",
+				    									last : "尾页",
+				    									next : "下页",
+				    									previous : "上页"
+				    								}
+				    							}
+				    						});	
+		    						}else{
+		    							$("#infoMenuDiv").hide();
+			    						$("#infoTableDiv").hide();
+		    						}
+		    					
+		    						
+	    					}else{
+	    						$("#infoMenuDiv").hide();
+	    						$("#infoTableDiv").hide();
+	    					}
+	    				}
+	    			});
+	        		
+	        		//折叠树节点
+	        		 $('#tree').treeview('collapseAll', {
+	     				silent : true
+	     			});
+	            }
+	        });
+		}
 		
 	</script>
 

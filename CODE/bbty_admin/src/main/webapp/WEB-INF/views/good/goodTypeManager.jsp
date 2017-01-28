@@ -129,13 +129,13 @@
 						action="<%=contextPath%>/goodType/saveGoodType" method="post">
 						<input type="hidden" id="parTypeIdAdd" name="parTypeIdAdd"/>
 						<div class="form-group">
-							<label for="typeCode" class="col-sm-2 control-label">类型编码:</label>
+							<label for="typeCode" class="col-sm-2 control-label">类型编码:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="typeCode">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="typeName" class="col-sm-2 control-label">类型名称:</label>
+							<label for="typeName" class="col-sm-2 control-label">类型名称:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="typeName">
 							</div>
@@ -197,13 +197,13 @@
 						<input type="hidden" id="parTypeIdUpt" name="parTypeIdUpt"/>
 						<input type="hidden" id="typeSrcCode" name="typeSrcCode"/>
 						<div class="form-group">
-							<label for="typeCode" class="col-sm-2 control-label">类型编码:</label>
+							<label for="typeCode" class="col-sm-2 control-label">类型编码:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="typeUptCode" id="typeCode" readonly="readonly">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="typeName" class="col-sm-2 control-label">类型名称:</label>
+							<label for="typeName" class="col-sm-2 control-label">类型名称:<font color='red'>*</font></label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="typeUptName" id="typeName">
 							</div>
@@ -255,7 +255,7 @@
 
 		<div class="col-lg-4">
 			<div class="panel panel-default">
-				<div class="panel-heading">商品类别</div>
+				<div class="panel-heading">商品分类</div>
 				<div class="panel-body">
 					<div id="tree"></div>
 				</div>
@@ -264,7 +264,7 @@
 
 		<div class="col-lg-8">
 			<div class="panel panel-default">
-				<div class="panel-heading">商品子类别列表</div>
+				<div class="panel-heading">商品类别信息列表</div>
 				<div class="panel-body" id="typeMenuDiv">
 					<button type="button" class="btn btn-primary"
 						onclick="toAddType();">新增类别</button>
