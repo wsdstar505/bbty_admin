@@ -122,4 +122,13 @@ public class LoginController {
 		return resultPageURL;
 
 	}
+	
+	@RequestMapping(value = "/loginOut")
+	public String loginOut(HttpServletRequest request){
+		// 获取当前的Subject
+		Subject currentUser = SecurityUtils.getSubject();
+		String resultPageURL = "/main/login";
+		currentUser.logout();
+		return resultPageURL;
+	}
 }

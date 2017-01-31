@@ -91,19 +91,25 @@ public class UserController {
 
 		String userid = request.getParameter("userid");
 		String status = request.getParameter("status");
-		Role role = new Role();
+
+		Long empid = Long.parseLong(request.getParameter("empid"));
+		
+		User user = new User();
+		user.setEmpid(empid);
+		
+		user = userService.selectOneWithUserOper(user);
+		
 		UserOper userOper = new UserOper();
-		userOper.setUserid(userid);
-		userOper.setStatus(status);
-		userOper.setLastupttime(dateStr);
-		userOper.setUptempid(userSession.getEmpid());
+		if(user != null){
+			userOper.setUserid(user.getUserid());
+			userOper.setStatus(status);
+			userOper.setLastupttime(dateStr);
+			userOper.setUptempid(userSession.getEmpid());	
+		}
 
 		try {
 			userOperService.uptUserOperBySelective(userOper);
-			if (role != null) {
-				map.put("rtn", "success");
-			}
-
+			map.put("rtn", "success");
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("rtn", "fail");

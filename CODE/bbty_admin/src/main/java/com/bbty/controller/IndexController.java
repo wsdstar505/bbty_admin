@@ -11,6 +11,15 @@ public class IndexController {
 	 * 跳转到【角色管理】界面
 	 * @return
 	 */
+	@RequestMapping(value = "/toIndex")
+	public String toIndex(){
+		return "/main/index";
+	}
+	
+	/**
+	 * 跳转到【角色管理】界面
+	 * @return
+	 */
 	@RequestMapping(value = "/toRoleManager")
 	public String toRoleManager(){
 		return "/userRole/roleManager";

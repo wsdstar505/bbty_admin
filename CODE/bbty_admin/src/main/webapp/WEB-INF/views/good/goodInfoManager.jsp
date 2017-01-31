@@ -357,7 +357,7 @@
 		    					var nodes = data.nodes;
 		    					var isLeaf = data.isLeaf;
 		    					
-		    						if(nodes != null && isLeaf=="1"){
+		    						if(isLeaf=="1"){
 		    							$("#infoMenuDiv").show();
 			    						$("#infoTableDiv").show();
 			    						

@@ -262,10 +262,10 @@ public class GoodInfoController {
 				} else if (gt.getIsLeaf().equals("0")) {
 					//无子类别
 					//查询
+					t.setIsLeaf("1");
 					List<GoodTypeTree> temp = new ArrayList<GoodTypeTree>();
 					List<GoodInfo> gis = goodInfoService.getInfosByTypeId(String.valueOf(gt.getTypeId()));
 					if(gis != null && gis.size() !=0){
-						t.setIsLeaf("1");
 						for (GoodInfo goodInfo : gis) {
 							GoodTypeTree gtt = new GoodTypeTree();
 							gtt.setText(goodInfo.getInfoName());

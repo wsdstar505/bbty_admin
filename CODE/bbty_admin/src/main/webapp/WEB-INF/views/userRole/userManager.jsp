@@ -1025,10 +1025,10 @@
 		}
 		
 		//员工状态-更新为已停用
-		function stopStatus(userid){
+		function stopStatus(empid){
 			
 			$(".checkchild").each(function(){
-				if(userid == $(this).val()){
+				if(empid == $(this).val()){
 					 if (true == $(this).attr("checked")) {
 						 this.checked=false;
 	                } else {
@@ -1037,7 +1037,7 @@
 				}
 			});
 			
-			var user = {userid:userid,status:"0"};
+			var user = {empid:empid,status:"0"};
 			
 			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
 				oneRowAlert();
@@ -1063,10 +1063,9 @@
 		}
 		
 		//员工状态-更新为已启用
-		function openStatus(userid){
-			
+		function openStatus(empid){
 			$(".checkchild").each(function(){
-				if(userid == $(this).val()){
+				if(empid == $(this).val()){
 					 if (true == $(this).attr("checked")) {
 						 this.checked=false;
 	                } else {
@@ -1075,7 +1074,7 @@
 				}
 			});
 			
-			var user = {userid:userid,status:"1"};
+			var user = {empid:empid,status:"1"};
 			
 			if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
 				oneRowAlert();

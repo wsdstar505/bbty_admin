@@ -30,7 +30,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">棒棒体育后台管理系统</a>
+				<a class="navbar-brand" href="<%=contextPath %>/index/toIndex">棒棒体育后台管理系统</a>
 			</div>
 
 			<!-- 系统顶部	标题右侧-->
@@ -42,7 +42,7 @@
 					<ul class="dropdown-menu dropdown-user">
 						<li><a href="#"><i class="fa fa-user fa-fw"></i>个人信息</a></li>
 						<li class="divider"></li>
-						<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i>安全退出</a>
+						<li><a href="<%=contextPath %>/login/loginOut"><i class="fa fa-sign-out fa-fw"></i>安全退出</a>
 						</li>
 					</ul></li>
 			</ul>
@@ -51,7 +51,7 @@
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse">
 					<ul class="nav" id="side-menu">
-						<li><a href="#"><i class="fa fa-dashboard fa-fw"></i>系统首页</a>
+						<li><a href="<%=contextPath %>/index/toIndex"><i class="fa fa-dashboard fa-fw"></i>系统首页</a>
 						</li>
 						<li><a href="#"><i class="fa fa-table fa-fw"></i>商品管理<span
 								class="fa arrow"></span></a>

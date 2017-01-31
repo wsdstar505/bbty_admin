@@ -12,6 +12,9 @@
 		SELECT U.*,UO.STATUS FROM T_USER U,T_USER_OPER UO WHERE U.USERID=UO.USERID
 		<if test="empid != null">
 			AND U.EMPID=#{empid}
+		</if>
+		<if test="userid != null">
+			AND U.USERID=#{userid}
 		</if>	
 	</select>
 	

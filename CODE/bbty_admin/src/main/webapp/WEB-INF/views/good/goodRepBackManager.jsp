@@ -170,6 +170,7 @@
 	<script type="text/javascript">
 		var goodTypeTree;
 		var infoIdStr;
+		var repNum;
 		$(function() {
 			$("#repMenuDiv").hide();
 			
@@ -198,7 +199,6 @@
 		    						if(nodes == null && isLeaf=="0"){
 		    							$("#repMenuDiv").show();
 			    						$("#repTableDiv").show();
-			    						
 			    						
 			    						//表格初始化
 				    			        $('#goodRepTables').DataTable({
@@ -282,6 +282,7 @@
 			
 			
 			
+			
 	
 		});
 		
@@ -311,7 +312,7 @@
 		//关闭商品类型窗口
 		function closeModal(par) {
 			//清空表单验证
-			//$('#repBackForm').data('bootstrapValidator').resetForm();
+			$('#repBackForm').data('bootstrapValidator').resetForm();
 			//清空表单内容
 			$('#repBackForm').resetForm();
 			$("#repBackModal").modal('hide');
@@ -319,10 +320,13 @@
 
 		//跳转到采购退货信息
 		function toBackRep() {
+			
+		
 			if ($(".checkchild:checked").length == 0
 					|| $(".checkchild:checked").length > 1) {
 				oneRowAlert();
 			} else {
+				
 				var repId = $(".checkchild:checked").val();
 				var rep = {
 					repId : repId
@@ -340,6 +344,8 @@
 								$("#infoId").val(dataRtn.goodRep.infoId);
 								$("#pici").val(dataRtn.goodRep.pici);
 								$("#repNum").val(dataRtn.goodRep.repNum);
+								
+								repNum = $("#repNum").val();
 								
 								$("#uptMeterId").select2({
 						        	 placeholder: "请选择计量单位",
@@ -372,6 +378,41 @@
 							
 								$("#uptMeterId").val(meterId).trigger("change");
 								
+								
+								//退货信息表单校验
+						    	$('#repBackForm').bootstrapValidator({
+							            message: 'This value is not valid',
+							            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
+							                valid: 'glyphicon glyphicon-ok',
+							                invalid: 'glyphicon glyphicon-remove',
+							                validating: 'glyphicon glyphicon-refresh'
+							            },
+							            fields: {/*验证*/
+							            	backNum: {
+							                    message:'退货数量无效',
+							                    validators: {
+							                        notEmpty: {
+							                            message: '退货数量不能为空'
+							                        },
+							                        numeric:{
+							                        	message: '退货数量只能输入数字'
+							                        },
+							                        greaterThan:{
+							                        	value:1,
+							                        	message:'退货数量必须大于0',
+														isclusive:true							                       
+							                        },
+							                        lessThan:{
+							                        	value:Number($("#repNum").val())+1,
+							                        	message:'退货数量必须小于现有库存',
+														isclusive:true							                       
+							                        }
+							                    }
+							                }
+							            }
+							        });
+								
+								
 								$('#repBackModal').modal('show');
 							} else {
 								dangerAlert();
@@ -382,7 +423,7 @@
 		}
 	    
 		   //保存修改库存信息
-	    function uptRep(){
+	    function backRep(){
 	    	
 	    	var repBackForm = $('#repBackForm');
 	    	//验证表单
