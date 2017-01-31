@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbty.dao.good.GoodRepDao">
+	
+	<select id="getGoodRepsWithMeter" parameterType="com.bbty.pojo.good.GoodRep" resultType="com.bbty.pojo.good.GoodRep">
+		SELECT T.*,M.METERNAME FROM T_GOOD_REP T,T_GOOD_METER M WHERE T.METERID=M.METERID
+		<if test="infoId != null">
+			AND T.INFOID=#{infoId}
+		</if>
+	</select>
+	
+	<select id="getGoodRepWithMeter" parameterType="com.bbty.pojo.good.GoodRep" resultType="com.bbty.pojo.good.GoodRep">
+		SELECT T.*,M.METERNAME FROM T_GOOD_REP T,T_GOOD_METER M WHERE T.METERID=M.METERID
+		<if test="infoId != null">
+			AND T.INFOID=#{infoId}
+		</if>
+		<if test="repId != null">
+			AND T.REPID=#{repId}
+		</if>
+		<if test="pici != null">
+			AND T.PICI=#{pici}
+		</if>
+	</select>
+	
+	
+</mapper>
