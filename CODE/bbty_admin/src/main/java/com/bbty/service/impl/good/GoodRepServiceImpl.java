@@ -30,4 +30,31 @@ public class GoodRepServiceImpl implements GoodRepService {
 		return goodRepDao.selectOne(goodRep);
 	}
 
+	@Override
+	public void delRep(String[] repIds) {
+		for (String repId : repIds) {
+			goodRepDao.deleteByPrimaryKey(Long.valueOf(repId));
+		}		
+	}
+
+	@Override
+	public List<GoodRep> getGoodRepsWithMeter(GoodRep goodRep) {
+		return goodRepDao.getGoodRepsWithMeter(goodRep);
+	}
+
+	@Override
+	public GoodRep getGoodRepWithMeter(GoodRep goodRep) {
+		return goodRepDao.getGoodRepWithMeter(goodRep);
+	}
+
+	@Override
+	public void updateGoodRep(GoodRep goodRep) {
+		goodRepDao.updateByPrimaryKeySelective(goodRep);
+	}
+
+	@Override
+	public void delRep(GoodRep goodRep) {
+		goodRepDao.deleteByPrimaryKey(goodRep.getRepId());
+	}
+
 }

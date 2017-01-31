@@ -64,7 +64,7 @@
 								class="fa arrow"></span></a>
 							<ul class="nav nav-second-level">
 								<li><a href="javascript:void(0);" onclick="toTab('<%=contextPath %>/index/toGoodRepManager');">采购入库</a></li>
-								<li><a href="#">采购退货</a></li>
+								<li><a href="javascript:void(0);" onclick="toTab('<%=contextPath %>/index/toGoodRepBackManager');">采购退货</a></li>
 							</ul></li>
 						<li><a href="#"><i class="fa fa-files-o fa-fw"></i>销售管理<span
 								class="fa arrow"></span></a>

@@ -61,5 +61,14 @@ public class IndexController {
 		return "/good/goodRepManager";
 	}
 	
+	/**
+	 * 跳转到【采购退货】界面
+	 * @return
+	 */
+	@RequestMapping(value = "/toGoodRepBackManager")
+	public String toGoodRepBackManager(){
+		return "/good/goodRepBackManager";
+	}
+	
 	
 }

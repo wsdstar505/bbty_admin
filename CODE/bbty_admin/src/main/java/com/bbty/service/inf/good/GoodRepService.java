@@ -11,4 +11,14 @@ public interface GoodRepService {
 	void saveGoodRep(GoodRep goodRep);
 
 	GoodRep getGoodRep(GoodRep goodRep);
+
+	void delRep(String[] repIds);
+
+	List<GoodRep> getGoodRepsWithMeter(GoodRep goodRep);
+
+	GoodRep getGoodRepWithMeter(GoodRep goodRep);
+
+	void updateGoodRep(GoodRep goodRep);
+
+	void delRep(GoodRep goodRep);
 }

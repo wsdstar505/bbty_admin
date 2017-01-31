@@ -103,11 +103,11 @@
 					<button type="button" class="btn btn-warning btn-circle">
 						<i class="fa fa-exclamation"></i>
 					</button>
-					&nbsp;&nbsp;&nbsp;确定要删除选中的商品信息吗？若商品信息下还有库存则一并删除库存!
+					&nbsp;&nbsp;&nbsp;确定要删除选中的库存信息吗？
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger"
-						onclick="deleteInfos();">确定</button>
+						onclick="deleteReps();">确定</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 			</div>
@@ -176,6 +176,76 @@
 								onclick="saveRep();">保存</button>
 							<button type="button" class="btn btn-default"
 								onclick="closeModal(1);">关闭</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 修改库存信息 -->
+	<div class="modal fade" id="repUptModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" onclick="closeModal(2);">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title">修改库存信息</h4>
+				</div>
+				<div class="modal-body">
+					<form id="repUptForm" class="form-horizontal" role="form"
+						action="<%=contextPath%>/goodRep/uptGoodRep" method="post">
+						<input type="hidden" id="repId" name="repId"/>
+						<input type="hidden" id="infoId" name="infoId"/>
+						<div class="form-group">
+							<label for="pici" class="col-sm-2 control-label">批次:<font color='red'>*</font></label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="pici" id="pici" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="cbp" class="col-sm-2 control-label">成本价格:<font color='red'>*</font></label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="cbp" id="cbp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="pfp" class="col-sm-2 control-label">批发价格:<font color='red'>*</font></label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="pfp" id="pfp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sczdp" class="col-sm-2 control-label">市场指导价格:<font color='red'>*</font></label>
+							<div class="col-sm-10">
+								<input class="form-control" name="sczdp" id="sczdp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="xsp" class="col-sm-2 control-label">销售价格:<font color='red'>*</font></label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="xsp" id="xsp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="meterId" class="col-sm-2 control-label">计量单位:<font color='red'>*</font></label>
+							<div class="col-sm-6">
+								<select id="uptMeterId" name="meterId" style="width: 460px">
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="repNum" class="col-sm-2 control-label">数量:<font color='red'>*</font></label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="repNum" id="repNum">
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary"
+								onclick="uptRep();">保存</button>
+							<button type="button" class="btn btn-default"
+								onclick="closeModal(2);">关闭</button>
 						</div>
 					</form>
 				</div>
@@ -266,6 +336,9 @@
 				    							{
 				    								"data" : "pici",
 				    								"title" : "批次"
+				    							},{
+				    								"data" : "meterName",
+				    								"title" : "计量单位"
 				    							},{
 				    								"data" : "repNum",
 				    								"title" : "库存数量"
@@ -425,6 +498,98 @@
 		        });
 			
 			
+	    	//修改库存信息表单校验
+	    	$('#repUptForm').bootstrapValidator({
+		            message: 'This value is not valid',
+		            feedbackIcons: {/*输入框不同状态，显示图片的样式*/
+		                valid: 'glyphicon glyphicon-ok',
+		                invalid: 'glyphicon glyphicon-remove',
+		                validating: 'glyphicon glyphicon-refresh'
+		            },
+		            fields: {/*验证*/
+		            	pici: {/*键名username和input name值对应*/
+		                    message: '批次无效',
+		                    validators: {
+		                        notEmpty: {/*非空提示*/
+		                            message: '批次不能为空'
+		                        },
+		                        numeric:{
+		                        	message: '批次只能输入数字'
+		                        }
+		                    }
+	                       
+		                },
+		                cbp: {
+		                    message:'成本价格无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '成本价格不能为空'
+		                        },
+		                        numeric:{
+		                        	message: '成本价格只能输入数字'
+		                        }
+		                       
+		                    }
+		                },
+		                pfp: {
+		                    message:'批发价格无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '批发价格不能为空'
+		                        },
+		                        numeric:{
+		                        	message: '批发价格只能输入数字'
+		                        }
+		                       
+		                    }
+		                },
+		                sczdp: {
+		                    message:'市场指导价格无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '市场指导价格不能为空'
+		                        },
+		                        numeric:{
+		                        	message: '市场指导价格只能输入数字'
+		                        }
+		                       
+		                    }
+		                },
+		                xsp: {
+		                    message:'销售价格无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '销售价格不能为空'
+		                        },
+		                        numeric:{
+		                        	message: '销售价格只能输入数字'
+		                        }
+		                       
+		                    }
+		                },
+		                meterId: {
+		                    message:'计量单位无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '计量单位不能为空'
+		                        }
+		                    }
+		                },
+		                repNum: {
+		                    message:'数量无效',
+		                    validators: {
+		                        notEmpty: {
+		                            message: '数量不能为空'
+		                        },
+		                        numeric:{
+		                        	message: '数量只能输入数字'
+		                        }
+		                       
+		                    }
+		                }
+		            }
+		        });
+			
 	    	//初始化新增的select控件
 	        $("#meterId").select2({
 	        	 placeholder: "请选择计量单位",
@@ -447,134 +612,127 @@
 	
 		});
 		
-		 function successAlert(){
-		    	$("#successAlert").modal('show');
-		    	//setTimeout('$("#successAlert").hide()',3000);
-		    }
-		    
-		    function dangerAlert(){
-		    	$("#dangerAlert").modal('show');
-		    }
-		    
-		    function oneRowAlert(){
-		    	$("#oneRowAlert").modal('show');
-		    }
-		    
-		    function noRowAlert(){
-				$("#noRowAlert").modal('show');
-		    }
-	    
-	    function reloadTable(){
-	    	var goodRepTables = $('#goodRepTables').DataTable();
-	    	goodRepTables.ajax.reload();
-	    }
-	    
-	    //关闭商品类型窗口
-	    function closeModal(par){
-	  		if(par =="1"){
-	  			//清空表单验证
-	    		$('#repAddForm').data('bootstrapValidator').resetForm(); 
-	    		//清空表单内容
-	    		$('#repAddForm').resetForm();
-	  			$("#repAddModal").modal('hide');
-	  		}else if(par =="2"){
-	  			//清空表单验证
-	    		$('#repUptForm').data('bootstrapValidator').resetForm(); 
-	    		//清空表单内容
-	    		$('#repUptForm').resetForm();
-	    		
-	  			$("#repUptModal").modal('hide');
-	  		}else{
-	  			$("#confirmDelModal").modal('hide');
-	  		}
-	    	
-	    }
-	    
-	    //跳转到新增库存信息
-		function toAddRep(){
+		 
+		function successAlert() {
+			$("#successAlert").modal('show');
+			//setTimeout('$("#successAlert").hide()',3000);
+		}
+
+		function dangerAlert() {
+			$("#dangerAlert").modal('show');
+		}
+
+		function oneRowAlert() {
+			$("#oneRowAlert").modal('show');
+		}
+
+		function noRowAlert() {
+			$("#noRowAlert").modal('show');
+		}
+
+		function reloadTable() {
+			var goodRepTables = $('#goodRepTables').DataTable();
+			goodRepTables.ajax.reload();
+		}
+
+		//关闭商品类型窗口
+		function closeModal(par) {
+			if (par == "1") {
+				//清空表单验证
+				$('#repAddForm').data('bootstrapValidator').resetForm();
+				//清空表单内容
+				$('#repAddForm').resetForm();
+				$("#repAddModal").modal('hide');
+			} else if (par == "2") {
+				//清空表单验证
+				$('#repUptForm').data('bootstrapValidator').resetForm();
+				//清空表单内容
+				$('#repUptForm').resetForm();
+
+				$("#repUptModal").modal('hide');
+			} else {
+				$("#confirmDelModal").modal('hide');
+			}
+
+		}
+
+		//跳转到新增库存信息
+		function toAddRep() {
 			$('#repAddModal').modal('show');
 		}
-	    
-	    //保存新增库存信息
-	    function saveRep(){
-	    	 var infoIdStr = $("#infoIdStr").val();
-	    	 $("#infoIdAdd").val(infoIdStr);
-	    	 var repAddForm = $('#repAddForm');
-	    	//验证表单
-	    	var validator = $('#repAddForm').data('bootstrapValidator');
-	        
-	    	if (validator) {
-	        // 修复记忆的组件不验证
-	            validator.validate();
-	            if (!validator.isValid()) {
-	                return false;
-	            }
-	        }
-	        
-	        $.ajax({
-	            type : "post",
-	            url : repAddForm.attr("action"),
-	            data : repAddForm.serializeArray(),
-	            dataType : "json",
-	            cache : false,
-	            success : function (dataRtn){
-	            	var rtnStr = dataRtn.rtn;
-	            	//清空表单验证
-	        		$('#repAddForm').data('bootstrapValidator').resetForm(); 
-	        		//清空表单内容
-	        		$('#repAddForm').resetForm();
-	        		
-	            	if(rtnStr == "success"){
-	            		//关闭窗口
-	                	closeModal(1);
-	            		//成功提示
-	                	successAlert();
-	            		
-	            	}else{
-	            		//关闭窗口
-	                	closeModal(1);
-	            		//成功提示
-	                	dangerAlert();
-	            	}
-	            	
-	            	//列表刷新
-	            	reloadTable();
-	            }
-	        });
 
-	    }
-	    
-	    //跳转到删除商品信息
-	    function toDeleteInfos(){
-	    	//var goodInfoTables = $('#goodInfoTables').DataTable();
-			//var length = goodInfoTables.rows('.selected').data().length;
-			//if (length == 0) {
-			//	noRowAlert();
-			//} else {
-			//	$("#confirmDelModal").modal('show');
-			//}
-			
-			if($(".checkchild:checked").length == 0){
+		//保存新增库存信息
+		function saveRep() {
+			var infoIdStr = $("#infoIdStr").val();
+			$("#infoIdAdd").val(infoIdStr);
+			var repAddForm = $('#repAddForm');
+			//验证表单
+			var validator = $('#repAddForm').data('bootstrapValidator');
+
+			if (validator) {
+				// 修复记忆的组件不验证
+				validator.validate();
+				if (!validator.isValid()) {
+					return false;
+				}
+			}
+
+			$.ajax({
+				type : "post",
+				url : repAddForm.attr("action"),
+				data : repAddForm.serializeArray(),
+				dataType : "json",
+				cache : false,
+				success : function(dataRtn) {
+					var rtnStr = dataRtn.rtn;
+					//清空表单验证
+					$('#repAddForm').data('bootstrapValidator').resetForm();
+					//清空表单内容
+					$('#repAddForm').resetForm();
+
+					if (rtnStr == "success") {
+						//关闭窗口
+						closeModal(1);
+						//成功提示
+						successAlert();
+
+					} else {
+						//关闭窗口
+						closeModal(1);
+						//成功提示
+						dangerAlert();
+					}
+
+					//列表刷新
+					reloadTable();
+				}
+			});
+
+		}
+
+		//跳转到删除库存信息
+		function toDeleteReps() {
+			if ($(".checkchild:checked").length == 0) {
 				noRowAlert();
-			}else{
+			} else {
 				$("#confirmDelModal").modal('show');
 			}
-	    }
-	    
-	    //删除商品信息
-		function deleteInfos() {
+		}
+
+		//删除库存信息
+		function deleteReps() {
 			//var goodInfoTables = $('#goodInfoTables').DataTable();
 			//var rows = goodInfoTables.rows('.selected').data();
 			//var length = goodInfoTables.rows('.selected').data().length;
 			var rowIdArray = [];
 			var length = $(".checkchild:checked").length;
-			$(".checkchild:checked").each(function(){
+			$(".checkchild:checked").each(function() {
 				rowIdArray.push($(this).val());
 			});
-			
-	 		$.ajax({
-	            type : "post",
-	            url : "<%=contextPath%>/goodInfo/delGoodInfo",
+
+			$.ajax({
+				type : "post",
+				url : "<%=contextPath%>/goodRep/delGoodRep",
 	            data : JSON.stringify(rowIdArray),
 	            contentType:"application/json",
 	            dataType : "json",
@@ -594,16 +752,14 @@
 	                	dangerAlert();
 	            	}
 	            	
-	            	reloadTree();
-	            	
 	            	//列表刷新
 	            	reloadTable();
 	            }
 	        }); 
 		}
 	    
-		//跳转到修改商品信息
-		function toUptInfo(){
+		//跳转到修改库存信息
+		function toUptRep(){
 			//var goodInfoTables = $('#goodInfoTables').DataTable();
 	    	//var length = goodInfoTables.rows('.selected').data().length;
 	    	if($(".checkchild:checked").length == 0 || $(".checkchild:checked").length >1){
@@ -611,38 +767,58 @@
 	    	}else{
 	    		//var row = goodInfoTables.rows('.selected').data();
 	    		//var infoCode = row[0].infoCode;
-	    		var infoId = $(".checkchild:checked").val();
-	    		var info = {infoId:infoId};
+	    		var repId = $(".checkchild:checked").val();
+	    		var rep = {repId:repId};
 	    		$.ajax({
 	    			type : "post",
-	                url : "<%=contextPath%>/goodInfo/getGoodInfoByInfoId",
-						data : info,
+	                url : "<%=contextPath%>/goodRep/getGoodRep",
+						data : rep,
 						dataType : "json",
 						success : function(dataRtn) {
 							var rtnStr = dataRtn.rtn;
 							if (rtnStr == "success") {
-								$("#typeId").val(dataRtn.goodInfo.typeId);
-								$("#infoId").val(dataRtn.goodInfo.infoId);
-								$("#infoSrcCode").val(dataRtn.goodInfo.infoCode);
-								$("#infoCode").val(dataRtn.goodInfo.infoCode);
-								$("#infoName").val(dataRtn.goodInfo.infoName);
+								$("#repId").val(dataRtn.goodRep.repId);
+								$("#infoId").val(dataRtn.goodRep.infoId);
+								$("#pici").val(dataRtn.goodRep.pici);
+								$("#cbp").val(dataRtn.goodRep.cbp);
+								$("#pfp").val(dataRtn.goodRep.pfp);
+								$("#sczdp").val(dataRtn.goodRep.sczdp);
+								$("#xsp").val(dataRtn.goodRep.xsp);
 								
-								var status = dataRtn.goodInfo.status;
-								if(status=="1"){
-									$("#statusOpen").attr('checked','true');
-								}else if(status=="0"){
-									$("#statusStop").attr('checked','true');
-								}
+								$("#repNum").val(dataRtn.goodRep.repNum);
 								
-								$("#remark").val(dataRtn.goodInfo.remark);
-								$("#marker").val(dataRtn.goodInfo.marker);
-								$("#markAddress").val(dataRtn.goodInfo.markAddress);
-								$("#website").val(dataRtn.goodInfo.website);
-								$("#contact").val(dataRtn.goodInfo.contact);
-								$("#fax").val(dataRtn.goodInfo.fax);
-								$("#zipCode").val(dataRtn.goodInfo.zipCode);
+								$("#uptMeterId").select2({
+						        	 placeholder: "请选择计量单位",
+						        	 allowClear: true,
+						        	 closeOnSelect: true,
+						        	 minimumResultsForSearch:-1,
+						        	 separator: ",",  
+						        	 ajax: {
+						        		 url: "<%=contextPath%>/meter/getMeterJson",
+						        		 dataType: 'json',
+						        		 delay: 250,
+						        		 processResults: function (data, params) {
+						        		      return {
+						        		        results: data.selectJsons,
+						        		      };
+						        		 },
+						        		 cache: true
+						        	 }
+						        });
 								
-								$('#infoUptModal').modal('show');
+								var selectJson = dataRtn.selectJson;
+								var ht = $("#uptMeterId").html();
+									if(ht == ""){
+										$("#uptMeterId").html('<option value='+selectJson.id+'>'+selectJson.text+'</option>');
+									}else{
+										ht=ht+'<option value='+selectJson.id+'>'+selectJson.text+'</option>';
+										$("#uptMeterId").html(ht);
+									}
+								var	meterId =selectJson.id;
+							
+								$("#uptMeterId").val(meterId).trigger("change");
+								
+								$('#repUptModal').modal('show');
 							} else {
 								dangerAlert();
 							}
@@ -651,12 +827,12 @@
 				}
 		}
 	    
-		   //保存修改商品信息
-	    function uptInfo(){
+		   //保存修改库存信息
+	    function uptRep(){
 	    	
-	    	var infoUptForm = $('#infoUptForm');
+	    	var repUptForm = $('#repUptForm');
 	    	//验证表单
-	    	 var validator = $('#infoUptForm').data('bootstrapValidator');
+	    	 var validator = $('#repUptForm').data('bootstrapValidator');
 	        
 	    	if (validator) {
 	        // 修复记忆的组件不验证
@@ -668,19 +844,18 @@
 	        
 	        $.ajax({
 	            type : "post",
-	            url : infoUptForm.attr("action"),
-	            data : infoUptForm.serializeArray(),
+	            url : repUptForm.attr("action"),
+	            data : repUptForm.serializeArray(),
 	            dataType : "json",
 	            cache : false,
 	            success : function (dataRtn){
 	            	var rtnStr = dataRtn.rtn;
 	            	
 	            	//清空表单验证
-	        		$('#infoUptForm').data('bootstrapValidator').resetForm(); 
+	        		$('#repUptForm').data('bootstrapValidator').resetForm(); 
 	        		//清空表单内容
-	        		$('#infoUptForm').resetForm();
-	        		$("#statusOpen").removeAttr("checked");
-	        		$("#statusStop").removeAttr("checked");
+	        		$('#repUptForm').resetForm();
+	        		
 	            	if(rtnStr == "success"){
 	            		
 	            		//关闭窗口
@@ -696,119 +871,12 @@
 	                	dangerAlert();
 	            	}
 	            	
-	            	reloadTree();
-	            	
 	            	//列表刷新
 	            	reloadTable();
 	            }
 	        });
 
 	    }
-		   
-		function reloadTree(){
-			$.ajax({
-	            type : "post",
-	            url : "<%=contextPath%>/goodInfo/getGoodInfoTree",
-	            dataType : "json",
-	            cache : false,
-	            success : function (dataRtn){
-	            	goodTypeTree = dataRtn.treeList;
-	            	
-	        		$('#tree').treeview({
-	    				data : goodTypeTree,
-	    				emptyIcon : "glyphicon glyphicon-book",
-	    				onNodeSelected : function(event, data) {
-	    					
-	    					infoIdStr=data.tags;
-	    					var type = data.type;
-	    					
-	    					if(infoIdStr != "1" && type =="0"){
-	    						$("#infoIdStr").val(infoIdStr);
-		    					
-		    					var nodes = data.nodes;
-		    					var isLeaf = data.isLeaf;
-		    					
-		    						if(nodes == null && isLeaf=="0"){
-		    							$("#repMenuDiv").show();
-			    						$("#repTableDiv").show();
-			    						
-			    						
-			    						//表格初始化
-				    			        $('#goodRepTables').DataTable({
-				    			        	destroy:true,	    			        	
-				    			        	pagingType:"full_numbers",//设置分页控件的模式
-				    			        	searching: false,//datatales的查询框,true:开启;false:关闭
-				    			        	lengthMenu:[10,20,30],//设置一页展示多少条记录
-				    			        	lengthChange: false,//tables的一页展示多少条记录的下拉列表,true:开启;false:关闭
-				    			        	responsive: true,//是否需要分页控件,true:需要,false:不需要
-				    			            ajax: {
-				    			                "url": "<%=contextPath%>/goodRep/getRepsByGoodInfo?infoIdStr="+infoIdStr
-				    							},
-				    							columns : [ 
-				    							{
-				    								"data":"repId",
-				    								render:function(data,type,full,meta){
-				    									return '<input type="checkbox" class="checkchild" value="'+data+'" />';
-				    								},
-				    								"sortable":false
-				    							},	
-				    							{
-				    								"data" : "pici",
-				    								"title" : "批次"
-				    							},{
-				    								"data" : "repNum",
-				    								"title" : "库存数量"
-				    							}, {
-				    								"data" : "cbp",
-				    								"title" : "成本价格"
-				    							},{
-				    								"data" : "pfp",
-				    								"title" : "批发价格"
-				    							},{
-				    								"data" : "sczdp",
-				    								"title" : "市场指导价格"
-				    							},{
-				    								"data" : "xsp",
-				    								"title" : "销售价格"
-				    							}
-				    					         ],
-				    							language : {
-				    								loadingRecords : "加载中...",
-				    								processing : "查询中...",
-				    								search : "智能搜索:",
-				    								lengthMenu : "每页显示 _MENU_ 条记录",
-				    								zeroRecords : "没有找到记录",
-				    								info : "当前显示第 _START_ 至 _END_条记录，总共 _TOTAL_ 条记录",
-				    								infoEmpty : "无记录",
-				    								infoFiltered : "(从 _MAX_ 条记录过滤)",
-				    								paginate : {
-				    									first : "首页",
-				    									last : "尾页",
-				    									next : "下页",
-				    									previous : "上页"
-				    								}
-				    							}
-				    						});	
-		    						}else{
-		    							$("#repMenuDiv").hide();
-			    						$("#repTableDiv").hide();
-		    						}
-		    					
-		    						
-	    					}else{
-	    						$("#repMenuDiv").hide();
-	    						$("#repTableDiv").hide();
-	    					}
-	    				}
-	    			});
-	        		
-	        		//折叠树节点
-	        		 $('#tree').treeview('collapseAll', {
-	     				silent : true
-	     			});
-	            }
-	        });
-		}
 		
 	</script>
 

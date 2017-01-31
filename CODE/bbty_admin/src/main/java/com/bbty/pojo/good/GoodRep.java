@@ -56,6 +56,10 @@ public class GoodRep  implements Serializable{
 	@Column(name="REPEMPID")
 	private Long repEmpid;
 
+	
+	@Column(insertable=false,updatable=false)
+	private String meterName;
+	
 	public GoodRep() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -76,6 +80,14 @@ public class GoodRep  implements Serializable{
 		this.repDate = repDate;
 		this.repUptdate = repUptdate;
 		this.repEmpid = repEmpid;
+	}
+
+	public String getMeterName() {
+		return meterName;
+	}
+
+	public void setMeterName(String meterName) {
+		this.meterName = meterName;
 	}
 
 	public Long getMeterId() {
