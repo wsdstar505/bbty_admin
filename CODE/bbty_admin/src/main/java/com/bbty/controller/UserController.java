@@ -88,8 +88,6 @@ public class UserController {
 		Date date = new Date();
 		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		String dateStr = dateFormat.format(date);
-
-		String userid = request.getParameter("userid");
 		String status = request.getParameter("status");
 
 		Long empid = Long.parseLong(request.getParameter("empid"));
